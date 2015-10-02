@@ -51,8 +51,18 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
         // Butterknife injection
         ButterKnife.bind(this);
 
-        // Get location service ref
+        SharedPreferences myPrefs = getPreferences(Context.MODE_PRIVATE);
+        String possibleUserName = myPrefs.getString(getString(R.string.share_prefs_user_logged), "");
+
+        // Get location service ref for first location
         locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+
+        if (!possibleUserName.equals("")) {
+
+            // Redirect to weather list activity
+            Intent weatherListActivityIntent = new Intent(this, WeatherListActivity.class);
+            startActivity(weatherListActivityIntent);
+        }
 
     }
 
@@ -106,6 +116,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
     //endregion Activity lifecycle
 
 
+    //region UI events
     @SuppressWarnings("unused")
     @OnClick(R.id.loginLetsGoButton)
     public void LetsGoBtnClicked(Button target) {
@@ -126,6 +137,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
             startActivity(weatherListActivityIntent);
         }
     }
+    //endregion UI events
 
 
     //region LocationListener
