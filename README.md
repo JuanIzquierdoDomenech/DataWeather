@@ -2,7 +2,7 @@
 
 This is an Android project that is intended to store in a remote database the weather where the user is.
 
-![Alt text](https://s-media-cache-ak0.pinimg.com/236x/90/3e/ed/903eedfd245c3c1b757827423a67d24b.jpg "Snowhite")
+![Alt text](http://fulginitivo.com/wp-content/uploads/2015/09/rainy-day-wallpapers.jpg "Rainy day :)")
 
 ### How do I get set up? ###
 
