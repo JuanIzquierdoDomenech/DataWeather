@@ -39,6 +39,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
 
     private static final int ONE_MINUTES = 1000 * 60;
     private static final int FIVE_SECONDS = 1000 * 5;
+    private static final int THIRTY_SECONDS = 1000 * 30;
     private static final int FIVE_METERS = 5;
 
     //region Activity lifecycle
@@ -65,7 +66,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
         criteria.setAccuracy(Criteria.ACCURACY_FINE);
         provider = locationManager.getBestProvider(criteria, false);
 
-        locationManager.requestLocationUpdates(provider, FIVE_SECONDS, FIVE_METERS, this);
+        locationManager.requestLocationUpdates(provider, THIRTY_SECONDS, FIVE_METERS, this);
         Location lastLocation = locationManager.getLastKnownLocation(provider);
 
         // onLocationChanged will realize about the changes
@@ -86,46 +87,24 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
 
     @Override
     protected void onPause() {
+        Log.d("Login:onPause", "onPause");
         super.onPause();
     }
 
     @Override
     protected void onStop() {
-
+        Log.d("Login:onStop", "onStop");
         locationManager.removeUpdates(this);
         super.onStop();
     }
 
     @Override
     protected void onDestroy() {
+        Log.d("Login:onDestroy", "onDestroy");
         super.onDestroy();
     }
     //endregion Activity lifecycle
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        switch (id) {
-            case R.id.action_settings:
-                return true;
-            default:
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @SuppressWarnings("unused")
     @OnClick(R.id.loginLetsGoButton)
@@ -135,13 +114,13 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
         } else {
             String userName = userNameText.getText().toString();
 
+            // Store the user name in preferences
             SharedPreferences myPrefs = getPreferences(Context.MODE_PRIVATE);
             SharedPreferences.Editor prefEditor = myPrefs.edit();
             prefEditor.putString(getString(R.string.share_prefs_user_logged), userName);
             prefEditor.commit();
 
             Toast.makeText(this, getString(R.string.welcome) + " " + userName, Toast.LENGTH_SHORT).show();
-
 
             Intent weatherListActivityIntent = new Intent(this, WeatherListActivity.class);
             startActivity(weatherListActivityIntent);
