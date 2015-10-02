@@ -133,8 +133,15 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
         if (userNameText.length() == 0) {
             Toast.makeText(this, getString(R.string.cannot_empty_name), Toast.LENGTH_SHORT).show();
         } else {
-            SharedPreferences myPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-            
+            String userName = userNameText.getText().toString();
+
+            SharedPreferences myPrefs = getPreferences(Context.MODE_PRIVATE);
+            SharedPreferences.Editor prefEditor = myPrefs.edit();
+            prefEditor.putString(getString(R.string.share_prefs_user_logged), userName);
+            prefEditor.commit();
+
+            Toast.makeText(this, getString(R.string.welcome) + " " + userName, Toast.LENGTH_SHORT).show();
+
 
             Intent weatherListActivityIntent = new Intent(this, WeatherListActivity.class);
             startActivity(weatherListActivityIntent);
