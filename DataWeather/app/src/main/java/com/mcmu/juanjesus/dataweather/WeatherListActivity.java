@@ -23,8 +23,7 @@ public class WeatherListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Button v = new Button(this);
-        setContentView(v);
+        
         /*setContentView(R.layout.activity_login);
 
         final ListView listView = (ListView)findViewById(R.id.listView);
