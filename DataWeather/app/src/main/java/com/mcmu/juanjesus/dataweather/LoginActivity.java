@@ -2,6 +2,7 @@ package com.mcmu.juanjesus.dataweather;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Criteria;
 import android.location.Geocoder;
@@ -9,6 +10,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -131,6 +133,9 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
         if (userNameText.length() == 0) {
             Toast.makeText(this, getString(R.string.cannot_empty_name), Toast.LENGTH_SHORT).show();
         } else {
+            SharedPreferences myPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            
+
             Intent weatherListActivityIntent = new Intent(this, WeatherListActivity.class);
             startActivity(weatherListActivityIntent);
         }
