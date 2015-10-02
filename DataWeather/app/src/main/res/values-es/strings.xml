@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">DataWeather</string>
+    <string name="action_settings">Preferencias</string>
+
+    <string name="this_is_your_first_time">Esta es tu primera vez...</string>
+    <string name="please_insert_your_name">Por favor, escribe tu nombre</string>
+    <string name="lets_go">¡Empecemos!</string>
+    <string name="cannot_empty_name">El nombre no puede estar vacío</string>
+    <string name="loading_location">Cargando localización...</string>
+    <string name="your_location">Tu localización</string>
+    <string name="location_not_found">Localización no encontrada :_(</string>
+</resources>
