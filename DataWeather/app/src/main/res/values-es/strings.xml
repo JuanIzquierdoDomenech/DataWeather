@@ -11,6 +11,11 @@
     <string name="loading_location">Cargando localización...</string>
     <string name="your_location">Tu localización</string>
     <string name="location_not_found">Localización no encontrada :_(</string>
+    <string name="location_service_disabled">El servicio de localización está deshabilitado</string>
 
     <string name="share_prefs_user_logged">com.mcmu.juanjesus.dataweather.LOGGED_USER</string>
+    <string name="go_location_settings">Abrir opciones de localización</string>
+    <string name="enable">Habilitar</string>
+    <string name="disable">Deshabilitar</string>
+    <string name="cancel">Cancelar</string>
 </resources>

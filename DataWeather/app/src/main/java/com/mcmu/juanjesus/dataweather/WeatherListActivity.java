@@ -168,9 +168,6 @@ public class WeatherListActivity extends AppCompatActivity {
         prefEditor.putString(getString(R.string.share_prefs_user_logged), "");
         prefEditor.apply();
 
-        Log.d("CHANGING", myPrefs.getString(getString(R.string.share_prefs_user_logged), "DEFAULT"));
-
-        Log.d("GOING BACK", "GOING BACK");
         // Go back to login activity
         Intent loginActivityIntent = new Intent(this, LoginActivity.class);
         startActivity(loginActivityIntent);

@@ -1,6 +1,8 @@
 package com.mcmu.juanjesus.dataweather;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Address;
@@ -11,6 +13,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -57,14 +60,13 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
         // Get location service ref for first location
         locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
 
+        // Is the user already logged? => Redirect
         if (!possibleUserName.equals("")) {
 
             // Redirect to weather list activity
             Intent weatherListActivityIntent = new Intent(this, WeatherListActivity.class);
             startActivity(weatherListActivityIntent);
-            Log.d("REDIRECTING!", possibleUserName);
         }
-
     }
 
     @Override
@@ -121,6 +123,26 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
     @SuppressWarnings("unused")
     @OnClick(R.id.loginLetsGoButton)
     public void LetsGoBtnClicked(Button target) {
+
+        // Check if any location service is enabled
+        if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+                && !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+
+            AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            alert.setMessage(getString(R.string.location_service_disabled));
+            alert.setPositiveButton(getString(R.string.enable), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                    Intent locationSettingsIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    startActivity(locationSettingsIntent);
+                }
+            });
+            alert.setNegativeButton(getString(R.string.cancel), null);
+            alert.show();
+
+            return;
+        }
 
         if (userNameText.length() == 0) {
             Toast.makeText(this, getString(R.string.cannot_empty_name), Toast.LENGTH_SHORT).show();
