@@ -18,8 +18,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +42,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
     @Bind(R.id.loginUsernameEditText)protected EditText userNameText;
     @Bind(R.id.loginLetsGoButton)protected Button letsGoBtn;
     @Bind(R.id.loginYourLocationTextView) protected TextView yourLocationTextView;
+    @Bind(R.id.loginLoadingIndicator) protected ImageView loadingIndicator;
 
     private LocationManager locationManager;
     private String provider;
@@ -44,6 +51,9 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
     private static final int FIVE_SECONDS = 1000 * 5;
     private static final int THIRTY_SECONDS = 1000 * 30;
     private static final int FIVE_METERS = 5;
+
+    private Animation loadingIndicatorAnimation;
+
 
     //region Activity lifecycle
     @Override
@@ -67,27 +77,52 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
             Intent weatherListActivityIntent = new Intent(this, WeatherListActivity.class);
             startActivity(weatherListActivityIntent);
         }
+
+        // Start loading indicator animation
+        loadingIndicatorAnimation = new RotateAnimation(0.0f, 360.0f,
+                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,
+                0.5f);
+        loadingIndicatorAnimation.setRepeatCount(Animation.INFINITE);
+        loadingIndicatorAnimation.setRepeatMode(Animation.INFINITE);
+        loadingIndicatorAnimation.setDuration(1000);
+        loadingIndicatorAnimation.setInterpolator(new LinearInterpolator());
+        loadingIndicator.startAnimation(loadingIndicatorAnimation);
+        loadingIndicator.setVisibility(View.VISIBLE);
+
+        // Check if any location service is enabled
+        if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+                && !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+
+            showNoLocationSettingsEnabled();
+            return;
+        }
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
+        Log.d("DW_onStart", "onStart");
         Criteria criteria = new Criteria();
         criteria.setCostAllowed(false);
         criteria.setAltitudeRequired(false);
         criteria.setAccuracy(Criteria.ACCURACY_FINE);
         provider = locationManager.getBestProvider(criteria, false);
 
-        locationManager.requestLocationUpdates(provider, THIRTY_SECONDS, FIVE_METERS, this);
+        locationManager.requestLocationUpdates(provider, FIVE_SECONDS, FIVE_METERS, this);
         Location lastLocation = locationManager.getLastKnownLocation(provider);
 
+        Log.d("LOCATION", "LOCATION MANAGER REGISTERED - " + provider);
         // onLocationChanged will realize about the changes
         if (lastLocation != null) {
             String yourLocation = getString(R.string.your_location) + ": " + lastLocation.getLatitude() + ", " + lastLocation.getLongitude();
             yourLocationTextView.setText(yourLocation);
             String city = getLocationName(lastLocation);
             yourLocationTextView.append("(" + city + ")");
+
+            // Pause spinner animation if any location was found
+            loadingIndicator.clearAnimation();
+            loadingIndicator.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -108,6 +143,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
     protected void onStop() {
         Log.d("Login:onStop", "onStop");
         locationManager.removeUpdates(this);
+
         super.onStop();
     }
 
@@ -128,19 +164,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
         if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
                 && !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
 
-            AlertDialog.Builder alert = new AlertDialog.Builder(this);
-            alert.setMessage(getString(R.string.location_service_disabled));
-            alert.setPositiveButton(getString(R.string.enable), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-
-                    Intent locationSettingsIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                    startActivity(locationSettingsIntent);
-                }
-            });
-            alert.setNegativeButton(getString(R.string.cancel), null);
-            alert.show();
-
+            showNoLocationSettingsEnabled();
             return;
         }
 
@@ -159,8 +183,6 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
 
             Intent weatherListActivityIntent = new Intent(this, WeatherListActivity.class);
             startActivity(weatherListActivityIntent);
-
-            finish();
         }
     }
     //endregion UI events
@@ -175,8 +197,17 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
             yourLocationTextView.setText(yourLocation);
             String city = getLocationName(location);
             yourLocationTextView.append("(" + city + ")");
+
+            // Stop the animation if any is found
+            loadingIndicator.clearAnimation();
+            loadingIndicator.setVisibility(View.INVISIBLE);
         } else {
             yourLocationTextView.setText(getString(R.string.location_not_found));
+
+            // Start the animation if the location is lost
+            loadingIndicator.startAnimation(loadingIndicatorAnimation);
+            loadingIndicator.setVisibility(View.VISIBLE);
+
         }
     }
 
@@ -217,4 +248,22 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
         return result;
     }
     //endregion Geocoder
+
+
+    //region Alerts
+    private void showNoLocationSettingsEnabled() {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setMessage(getString(R.string.location_service_disabled));
+        alert.setPositiveButton(getString(R.string.enable), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                Intent locationSettingsIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivity(locationSettingsIntent);
+            }
+        });
+        alert.setNegativeButton(getString(R.string.cancel), null);
+        alert.show();
+    }
+    //endregion Alerts
 }

@@ -29,4 +29,12 @@
         android:textAlignment="center"
         android:text="@string/loading_location"/>
 
+    <ImageView
+        android:id="@+id/loginLoadingIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/loading_indicator_2"
+        android:layout_gravity="center"
+        />
+
 </LinearLayout>
