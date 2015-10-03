@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">DataWeather</string>
     <string name="action_settings">Preferencias</string>
+    <string name="action_change_user">Cambiar usuario</string>
 
     <string name="this_is_your_first_time">Esta es tu primera vez...</string>
     <string name="please_insert_your_name">Por favor, escribe tu nombre</string>

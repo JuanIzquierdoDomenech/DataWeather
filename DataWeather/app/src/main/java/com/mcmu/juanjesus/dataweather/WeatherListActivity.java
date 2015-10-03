@@ -1,10 +1,14 @@
 package com.mcmu.juanjesus.dataweather;
 
 import android.app.ActionBar;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -147,10 +151,28 @@ public class WeatherListActivity extends AppCompatActivity {
         switch (id) {
             case R.id.action_settings:
                 return true;
+            case R.id.action_change_user:
+                changeUser();
+                return true;
             default:
                 break;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void changeUser() {
+        // Override username value
+        SharedPreferences myPrefs = getSharedPreferences("MyPrefsFile", Context.MODE_PRIVATE);
+        SharedPreferences.Editor prefEditor = myPrefs.edit();
+        prefEditor.putString(getString(R.string.share_prefs_user_logged), "");
+        prefEditor.apply();
+
+        Log.d("CHANGING", myPrefs.getString(getString(R.string.share_prefs_user_logged), "DEFAULT"));
+
+        Log.d("GOING BACK", "GOING BACK");
+        // Go back to login activity
+        Intent loginActivityIntent = new Intent(this, LoginActivity.class);
+        startActivity(loginActivityIntent);
     }
 }

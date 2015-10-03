@@ -51,7 +51,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
         // Butterknife injection
         ButterKnife.bind(this);
 
-        SharedPreferences myPrefs = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences myPrefs = getSharedPreferences("MyPrefsFile", Context.MODE_PRIVATE);
         String possibleUserName = myPrefs.getString(getString(R.string.share_prefs_user_logged), "");
 
         // Get location service ref for first location
@@ -62,6 +62,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
             // Redirect to weather list activity
             Intent weatherListActivityIntent = new Intent(this, WeatherListActivity.class);
             startActivity(weatherListActivityIntent);
+            Log.d("REDIRECTING!", possibleUserName);
         }
 
     }
@@ -120,21 +121,24 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
     @SuppressWarnings("unused")
     @OnClick(R.id.loginLetsGoButton)
     public void LetsGoBtnClicked(Button target) {
+
         if (userNameText.length() == 0) {
             Toast.makeText(this, getString(R.string.cannot_empty_name), Toast.LENGTH_SHORT).show();
         } else {
             String userName = userNameText.getText().toString();
 
             // Store the user name in preferences
-            SharedPreferences myPrefs = getPreferences(Context.MODE_PRIVATE);
+            SharedPreferences myPrefs = getSharedPreferences("MyPrefsFile", Context.MODE_PRIVATE);
             SharedPreferences.Editor prefEditor = myPrefs.edit();
             prefEditor.putString(getString(R.string.share_prefs_user_logged), userName);
-            prefEditor.commit();
+            prefEditor.apply();
 
             Toast.makeText(this, getString(R.string.welcome) + " " + userName, Toast.LENGTH_SHORT).show();
 
             Intent weatherListActivityIntent = new Intent(this, WeatherListActivity.class);
             startActivity(weatherListActivityIntent);
+
+            finish();
         }
     }
     //endregion UI events
