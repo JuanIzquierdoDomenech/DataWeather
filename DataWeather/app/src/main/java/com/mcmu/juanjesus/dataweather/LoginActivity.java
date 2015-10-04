@@ -12,15 +12,15 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.Button;
@@ -28,6 +28,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.List;
@@ -56,6 +59,8 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
     private static final int FIVE_METERS = 5;
 
     private Animation loadingIndicatorAnimation;
+
+    private Handler mainThreadHandler;
 
 
     //region Activity lifecycle
@@ -103,13 +108,20 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
             showNoLocationSettingsEnabled();
             return;
         }
+
+
+        mainThreadHandler = new Handler(Looper.getMainLooper()) {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+            }
+        };
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        Log.d("DW_onStart", "onStart");
         Criteria criteria = new Criteria();
         criteria.setCostAllowed(false);
         criteria.setAltitudeRequired(false);
@@ -132,12 +144,19 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
             String city = getLocationName(lastLocation);
             yourLocationTextView.append("(" + city + ")");
 
+            // Store the current city in preferences
+            storeCity(city);
+            showWeatherData(city);
+
             // Pause spinner animation if any location was found
             loadingIndicator.clearAnimation();
             loadingIndicator.setVisibility(View.INVISIBLE);
 
+            // Notify location found
             locationFound();
         } else {
+
+            // Notify location lost
             locationLost();
         }
     }
@@ -214,10 +233,15 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
             String city = getLocationName(location);
             yourLocationTextView.append("(" + city + ")");
 
+            // Store the current city in preferences
+            storeCity(city);
+            showWeatherData(city);
+
             // Stop the animation if any is found
             loadingIndicator.clearAnimation();
             loadingIndicator.setVisibility(View.INVISIBLE);
 
+            // Notify location found
             locationFound();
         } else {
             yourLocationTextView.setText(getString(R.string.location_not_found));
@@ -226,6 +250,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
             loadingIndicator.startAnimation(loadingIndicatorAnimation);
             loadingIndicator.setVisibility(View.VISIBLE);
 
+            // Notify location lost
             locationLost();
         }
     }
@@ -294,6 +319,55 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
 
     private void locationLost() {
         letsGoBtn.setEnabled(false);
+    }
+
+    private void storeCity(String city) {
+        SharedPreferences myPrefs = getSharedPreferences("MyPrefsFile", Context.MODE_PRIVATE);
+        SharedPreferences.Editor prefEditor = myPrefs.edit();
+        prefEditor.putString(getString(R.string.share_prefs_current_city), city);
+        prefEditor.apply();
+    }
+
+    private String getStoredCity() {
+        SharedPreferences myPrefs = getSharedPreferences("MyPrefsFile", Context.MODE_PRIVATE);
+        return myPrefs.getString(getString(R.string.share_prefs_current_city), "");
+    }
+
+    private void showWeatherData(final String city) {
+        new Thread() {
+            @Override
+            public void run() {
+                final JSONObject json = HTTPWeatherFetch.getJSON(getApplicationContext(), city);
+                if(json == null) {
+                    mainThreadHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(),
+                                    getString(R.string.weather_data_not_found),
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    });
+                } else {
+                    mainThreadHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            showWeatherData(json);
+                        }
+                    });
+                }
+            }
+        }.start();
+    }
+
+    private void showWeatherData(JSONObject json) {
+        try {
+            JSONObject currentWeather = json.getJSONArray("weather").getJSONObject(0);
+            String description = currentWeather.getString("description");
+
+            Toast.makeText(this, description, Toast.LENGTH_LONG).show();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     //endregion Private methods
