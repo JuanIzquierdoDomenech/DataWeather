@@ -20,4 +20,5 @@
     <string name="cancel">Cancel</string>
     <string name="location_updates_frequency">Location updates frequency in seconds</string>
     <string name="location_updates_frequency_summary">How often the location system will ask for updates in user position</string>
+    <string name="location">Location</string>
 </resources>

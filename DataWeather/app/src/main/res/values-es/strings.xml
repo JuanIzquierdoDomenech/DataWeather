@@ -20,4 +20,5 @@
     <string name="cancel">Cancelar</string>
     <string name="location_updates_frequency">Frecuencia de actualización de la localización en segundos</string>
     <string name="location_updates_frequency_summary">Cada cuanto tiempo se llamará al sistema de localización para averiguar tu localización</string>
+    <string name="location">Localización</string>
 </resources>
