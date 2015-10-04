@@ -16,7 +16,8 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,6 +28,9 @@
         <activity
             android:name=".WeatherListActivity"
             android:theme="@style/AppTheme.WithActionBar">
+        </activity>
+
+        <activity android:name=".PreferencesActivity">
         </activity>
 
     </application>

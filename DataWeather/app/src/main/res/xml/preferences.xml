@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:key="preferences_screen">
+
+    <EditTextPreference
+        android:key="location_updates_frequency"
+        android:title="@string/location_updates_frequency"
+        android:summary="@string/location_updates_frequency_summary"
+        android:defaultValue="30"/>
+
+</PreferenceScreen>

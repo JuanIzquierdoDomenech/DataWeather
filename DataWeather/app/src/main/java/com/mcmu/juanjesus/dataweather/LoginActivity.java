@@ -109,7 +109,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
         criteria.setAccuracy(Criteria.ACCURACY_FINE);
         provider = locationManager.getBestProvider(criteria, false);
 
-        locationManager.requestLocationUpdates(provider, FIVE_SECONDS, FIVE_METERS, this);
+        locationManager.requestLocationUpdates(provider, THIRTY_SECONDS, FIVE_METERS, this);
         Location lastLocation = locationManager.getLastKnownLocation(provider);
 
         Log.d("LOCATION", "LOCATION MANAGER REGISTERED - " + provider);
@@ -123,6 +123,10 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
             // Pause spinner animation if any location was found
             loadingIndicator.clearAnimation();
             loadingIndicator.setVisibility(View.INVISIBLE);
+
+            locationFound();
+        } else {
+            locationLost();
         }
     }
 
@@ -201,6 +205,8 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
             // Stop the animation if any is found
             loadingIndicator.clearAnimation();
             loadingIndicator.setVisibility(View.INVISIBLE);
+
+            locationFound();
         } else {
             yourLocationTextView.setText(getString(R.string.location_not_found));
 
@@ -208,6 +214,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
             loadingIndicator.startAnimation(loadingIndicatorAnimation);
             loadingIndicator.setVisibility(View.VISIBLE);
 
+            locationLost();
         }
     }
 
@@ -266,4 +273,16 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
         alert.show();
     }
     //endregion Alerts
+
+
+    //region Private methods
+    private void locationFound() {
+        letsGoBtn.setEnabled(true);
+    }
+
+    private void locationLost() {
+        letsGoBtn.setEnabled(false);
+    }
+
+    //endregion Private methods
 }

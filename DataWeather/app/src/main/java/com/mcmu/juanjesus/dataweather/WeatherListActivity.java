@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.preference.PreferenceActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -134,6 +135,7 @@ public class WeatherListActivity extends AppCompatActivity {
     //endregion Activity lifecycle
 
 
+    //region Menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -150,6 +152,7 @@ public class WeatherListActivity extends AppCompatActivity {
 
         switch (id) {
             case R.id.action_settings:
+                showPreferences();
                 return true;
             case R.id.action_change_user:
                 changeUser();
@@ -160,7 +163,10 @@ public class WeatherListActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+    //endregion Menu
 
+
+    //region Private methods
     private void changeUser() {
         // Override username value
         SharedPreferences myPrefs = getSharedPreferences("MyPrefsFile", Context.MODE_PRIVATE);
@@ -172,4 +178,10 @@ public class WeatherListActivity extends AppCompatActivity {
         Intent loginActivityIntent = new Intent(this, LoginActivity.class);
         startActivity(loginActivityIntent);
     }
+
+    private void showPreferences() {
+        Intent preferencesActivityIntent = new Intent(this, PreferencesActivity.class);
+        startActivity(preferencesActivityIntent);
+    }
+    //endregion Private methods
 }
