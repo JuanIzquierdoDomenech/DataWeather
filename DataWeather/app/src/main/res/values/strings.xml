@@ -21,4 +21,5 @@
     <string name="location_updates_frequency">Location updates frequency in seconds</string>
     <string name="location_updates_frequency_summary">How often the location system will ask for updates in user position</string>
     <string name="location">Location</string>
+    <string name="share_prefs_update_freq">com.mcmu.juanjesus.dataweather.UPDATES_FREQ</string>
 </resources>

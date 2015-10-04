@@ -47,9 +47,12 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
     private LocationManager locationManager;
     private String provider;
 
+    private SharedPreferences userSharedPreferences;
+
     private static final int ONE_MINUTES = 1000 * 60;
     private static final int FIVE_SECONDS = 1000 * 5;
     private static final int THIRTY_SECONDS = 1000 * 30;
+    private static final int ONE_SECOND = 1000;
     private static final int FIVE_METERS = 5;
 
     private Animation loadingIndicatorAnimation;
@@ -64,6 +67,9 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
         // Butterknife injection
         ButterKnife.bind(this);
 
+        // Get preferences from preferences fragment
+        userSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
         SharedPreferences myPrefs = getSharedPreferences("MyPrefsFile", Context.MODE_PRIVATE);
         String possibleUserName = myPrefs.getString(getString(R.string.share_prefs_user_logged), "");
 
@@ -76,6 +82,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
             // Redirect to weather list activity
             Intent weatherListActivityIntent = new Intent(this, WeatherListActivity.class);
             startActivity(weatherListActivityIntent);
+            return;
         }
 
         // Start loading indicator animation
@@ -109,7 +116,12 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
         criteria.setAccuracy(Criteria.ACCURACY_FINE);
         provider = locationManager.getBestProvider(criteria, false);
 
-        locationManager.requestLocationUpdates(provider, THIRTY_SECONDS, FIVE_METERS, this);
+        String updateFrequencyStr = userSharedPreferences.getString(getString(R.string.share_prefs_update_freq), "30");
+        int updateFrequencyInt = Integer.parseInt(updateFrequencyStr);
+
+        Log.d("UPDATE FREQ", "" + updateFrequencyInt);
+
+        locationManager.requestLocationUpdates(provider, updateFrequencyInt * ONE_SECOND, FIVE_METERS, this);
         Location lastLocation = locationManager.getLastKnownLocation(provider);
 
         Log.d("LOCATION", "LOCATION MANAGER REGISTERED - " + provider);
