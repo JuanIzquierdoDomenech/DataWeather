@@ -19,6 +19,8 @@ import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
@@ -60,7 +62,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
 
     private Animation loadingIndicatorAnimation;
 
-    private Handler mainThreadHandler;
+    private static Handler mainThreadHandler;
 
 
     //region Activity lifecycle
@@ -78,6 +80,14 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
         SharedPreferences myPrefs = getSharedPreferences("MyPrefsFile", Context.MODE_PRIVATE);
         String possibleUserName = myPrefs.getString(getString(R.string.share_prefs_user_logged), "");
 
+        // Thread initialization
+        mainThreadHandler = new Handler(Looper.getMainLooper()) {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+            }
+        };
+
         // Get location service ref for first location
         locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
 
@@ -87,6 +97,10 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
             // Redirect to weather list activity
             Intent weatherListActivityIntent = new Intent(this, WeatherListActivity.class);
             startActivity(weatherListActivityIntent);
+
+            // Disable going back to this activity
+            finish();
+            
             return;
         }
 
@@ -109,13 +123,6 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
             return;
         }
 
-
-        mainThreadHandler = new Handler(Looper.getMainLooper()) {
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-            }
-        };
     }
 
     @Override
@@ -128,12 +135,8 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
         criteria.setAccuracy(Criteria.ACCURACY_FINE);
         provider = locationManager.getBestProvider(criteria, false);
 
-        String updateFrequencyStr = userSharedPreferences.getString(getString(R.string.share_prefs_update_freq), "30");
-        int updateFrequencyInt = Integer.parseInt(updateFrequencyStr);
+        registerLocationListener();
 
-        Log.d("UPDATE FREQ", "" + updateFrequencyInt);
-
-        locationManager.requestLocationUpdates(provider, updateFrequencyInt * ONE_SECOND, FIVE_METERS, this);
         Location lastLocation = locationManager.getLastKnownLocation(provider);
 
         Log.d("LOCATION", "LOCATION MANAGER REGISTERED - " + provider);
@@ -177,7 +180,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
     @Override
     protected void onStop() {
         Log.d("Login:onStop", "onStop");
-        locationManager.removeUpdates(this);
+        unregisterLocationListener();
 
         super.onStop();
     }
@@ -188,6 +191,34 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
         super.onDestroy();
     }
     //endregion Activity lifecycle
+
+
+    //region Menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_login_activity, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        switch (id) {
+            case R.id.action_settings:
+                showPreferences();
+                return true;
+            default:
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+    //endregion Menu
 
 
     //region UI events
@@ -218,6 +249,9 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
 
             Intent weatherListActivityIntent = new Intent(this, WeatherListActivity.class);
             startActivity(weatherListActivityIntent);
+
+            // Disable going back to this activity
+            finish();
         }
     }
     //endregion UI events
@@ -226,6 +260,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
     //region LocationListener
     @Override
     public void onLocationChanged(Location location) {
+
         Log.d("Login:onLocationChanged", location.toString());
         if (location != null) {
             String yourLocation = getString(R.string.your_location) + ": " + location.getLatitude() + ", " + location.getLongitude();
@@ -268,6 +303,20 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
     @Override
     public void onProviderDisabled(String provider) {
         Log.d("Login:onStatusChanged", provider);
+    }
+
+    private void registerLocationListener() {
+        String updateFrequencyStr = userSharedPreferences.getString(getString(R.string.share_prefs_update_freq), "1");
+        int updateFrequencyInt = Integer.parseInt(updateFrequencyStr);
+
+        Log.d("RegisterLocListener", "" + updateFrequencyInt);
+
+        locationManager.requestLocationUpdates(provider, updateFrequencyInt * ONE_SECOND, FIVE_METERS, this);
+    }
+
+    private void unregisterLocationListener() {
+        Log.d("UnregisterLocListener", "");
+        locationManager.removeUpdates(this);
     }
     //endregion LocationListener
 
@@ -368,6 +417,11 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    private void showPreferences() {
+        Intent preferencesActivityIntent = new Intent(this, PreferencesActivity.class);
+        startActivity(preferencesActivityIntent);
     }
 
     //endregion Private methods
