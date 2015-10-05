@@ -5,18 +5,29 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageButton;
 
 import com.mcmu.juanjesus.dataweather.R;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class WeatherListActivity extends AppCompatActivity {
+
+    @Bind(R.id.weatherListAddButton)protected ImageButton addWeatherButton;
 
     //region Activity lifecycle
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weatherlist);
+
+        // Butterknife injection
+        ButterKnife.bind(this);
 
         /*setContentView(R.layout.activity_login);
 
@@ -150,6 +161,12 @@ public class WeatherListActivity extends AppCompatActivity {
     }
     //endregion Menu
 
+    //region UI events
+    @OnClick(R.id.weatherListAddButton)
+    public void addWeatherButtonClicked(ImageButton imgBtn) {
+        Log.d("addWeatherButtonClicked", "addWeatherButtonClicked");
+    }
+    //endregion UI events
 
     //region Private methods
     private void changeUser() {

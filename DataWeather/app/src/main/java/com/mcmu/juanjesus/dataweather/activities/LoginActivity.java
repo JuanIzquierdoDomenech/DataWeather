@@ -123,7 +123,6 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
                 && !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
 
             showNoLocationSettingsEnabled();
-            return;
         }
 
     }
@@ -265,23 +264,24 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
     public void onLocationChanged(Location location) {
 
         Log.d("Login:onLocationChanged", location.toString());
-        if (location != null) {
-            String yourLocation = getString(R.string.your_location) + ": " + location.getLatitude() + ", " + location.getLongitude();
-            yourLocationTextView.setText(yourLocation);
-            String city = getLocationName(location);
-            yourLocationTextView.append("(" + city + ")");
 
-            // Store the current city in preferences
-            storeCity(city);
-            showWeatherData(city);
+        String yourLocation = getString(R.string.your_location) + ": " + location.getLatitude() + ", " + location.getLongitude();
+        yourLocationTextView.setText(yourLocation);
+        String city = getLocationName(location);
+        yourLocationTextView.append("(" + city + ")");
 
-            // Stop the animation if any is found
-            loadingIndicator.clearAnimation();
-            loadingIndicator.setVisibility(View.INVISIBLE);
+        // Store the current city in preferences
+        storeCity(city);
+        showWeatherData(city);
 
-            // Notify location found
-            locationFound();
-        } else {
+        // Stop the animation if any is found
+        loadingIndicator.clearAnimation();
+        loadingIndicator.setVisibility(View.INVISIBLE);
+
+        // Notify location found
+        locationFound();
+
+        /*if (location != null) {} else {
             yourLocationTextView.setText(getString(R.string.location_not_found));
 
             // Start the animation if the location is lost
@@ -290,13 +290,13 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
 
             // Notify location lost
             locationLost();
-        }
+        }*/
     }
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
         Log.d("Login:onStatusChanged", provider);
-}
+    }
 
     @Override
     public void onProviderEnabled(String provider) {
