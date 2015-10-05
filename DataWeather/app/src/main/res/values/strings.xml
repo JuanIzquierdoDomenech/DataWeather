@@ -26,4 +26,7 @@
     <string name="share_prefs_current_city">no city</string>
     <string name="weather_data_not_found">Weather data no found</string>
     <string name="action_share_current_weather">Share current weather</string>
+    <string name="no_weather_data_to_share">No weather data to share</string>
+    <string name="share_with">Share with...</string>
+    <string name="in">in</string>
 </resources>

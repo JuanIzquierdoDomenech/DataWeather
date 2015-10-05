@@ -229,7 +229,30 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
     }
 
     private void shareCurrentWeather() {
-        
+        if(lastJsonWeatherData == null) {
+            Toast.makeText(this, getString(R.string.no_weather_data_to_share), Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Try to get json data from last time
+        StringBuilder weatherString = new StringBuilder();
+        try {
+            JSONObject currentWeather = lastJsonWeatherData.getJSONArray("weather").getJSONObject(0);
+            weatherString.append(currentWeather.getString("description"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        if (weatherString.length() > 0) {
+
+            weatherString.append(" " + getString(R.string.in) + " " + getStoredCity());
+
+            Intent sendWeatherIntent = new Intent();
+            sendWeatherIntent.setAction(Intent.ACTION_SEND);
+            sendWeatherIntent.putExtra(Intent.EXTRA_TEXT, weatherString.toString());
+            sendWeatherIntent.setType("text/plain");
+            startActivity(Intent.createChooser(sendWeatherIntent, getString(R.string.share_with)));
+        }
     }
     //endregion Menu
 

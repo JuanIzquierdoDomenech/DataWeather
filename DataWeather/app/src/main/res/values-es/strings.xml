@@ -26,4 +26,7 @@
     <string name="share_prefs_current_city">no city</string>
     <string name="weather_data_not_found">No se han encontrado datos del tiempo</string>
     <string name="action_share_current_weather">Compartir tiempo actual</string>
+    <string name="no_weather_data_to_share">No hay datos del tiempo para compartir</string>
+    <string name="share_with">Compartir con...</string>
+    <string name="in">en</string>
 </resources>
