@@ -1,7 +1,9 @@
-package com.mcmu.juanjesus.dataweather;
+package com.mcmu.juanjesus.dataweather.activities;
 
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
+
+import com.mcmu.juanjesus.dataweather.R;
 
 public class PreferencesFragment extends PreferenceFragment {
 

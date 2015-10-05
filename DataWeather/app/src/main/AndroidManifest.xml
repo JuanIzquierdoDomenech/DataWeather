@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme.WithActionBar" >
 
         <activity
-            android:name=".LoginActivity"
+            android:name=".activities.LoginActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.WithActionBar" >
             <intent-filter>
@@ -25,11 +25,11 @@
         </activity>
 
         <activity
-            android:name=".WeatherListActivity"
+            android:name=".activities.WeatherListActivity"
             android:theme="@style/AppTheme.WithActionBar">
         </activity>
 
-        <activity android:name=".PreferencesActivity">
+        <activity android:name=".activities.PreferencesActivity">
         </activity>
 
     </application>

@@ -1,8 +1,7 @@
-package com.mcmu.juanjesus.dataweather;
+package com.mcmu.juanjesus.dataweather.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
 public class PreferencesActivity extends Activity {
 

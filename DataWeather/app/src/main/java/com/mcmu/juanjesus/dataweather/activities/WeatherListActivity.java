@@ -1,4 +1,4 @@
-package com.mcmu.juanjesus.dataweather;
+package com.mcmu.juanjesus.dataweather.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.mcmu.juanjesus.dataweather.R;
 
 public class WeatherListActivity extends AppCompatActivity {
 

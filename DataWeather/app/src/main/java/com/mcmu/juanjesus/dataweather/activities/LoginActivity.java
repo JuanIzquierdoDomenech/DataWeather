@@ -1,4 +1,4 @@
-package com.mcmu.juanjesus.dataweather;
+package com.mcmu.juanjesus.dataweather.activities;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -30,6 +30,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.mcmu.juanjesus.dataweather.HTTPWeatherFetch;
+import com.mcmu.juanjesus.dataweather.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -100,7 +103,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
 
             // Disable going back to this activity
             finish();
-            
+
             return;
         }
 
