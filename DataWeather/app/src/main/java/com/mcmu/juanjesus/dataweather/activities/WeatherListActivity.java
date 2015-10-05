@@ -8,17 +8,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ListView;
 
 import com.mcmu.juanjesus.dataweather.R;
+
+import java.util.Vector;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnItemClick;
+import butterknife.OnItemSelected;
 
 public class WeatherListActivity extends AppCompatActivity {
 
     @Bind(R.id.weatherListAddButton)protected ImageButton addWeatherButton;
+    @Bind(R.id.weatherList)protected ListView weatherList;
 
     //region Activity lifecycle
     @Override
@@ -28,6 +35,13 @@ public class WeatherListActivity extends AppCompatActivity {
 
         // Butterknife injection
         ButterKnife.bind(this);
+
+        Vector<String> sth = new Vector<>();
+        sth.add("asd");
+        sth.add("ojerg");
+        sth.add("ojor");
+        final ArrayAdapter<String> listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, sth);
+        weatherList.setAdapter(listAdapter);
 
         /*setContentView(R.layout.activity_login);
 
@@ -162,9 +176,16 @@ public class WeatherListActivity extends AppCompatActivity {
     //endregion Menu
 
     //region UI events
+    @SuppressWarnings("unused")
     @OnClick(R.id.weatherListAddButton)
     public void addWeatherButtonClicked(ImageButton imgBtn) {
         Log.d("addWeatherButtonClicked", "addWeatherButtonClicked");
+    }
+
+    @SuppressWarnings("unused")
+    @OnItemClick(R.id.weatherList)
+    public void itemSelected(int position) {
+        Log.d("itemSelected", "" + position);
     }
     //endregion UI events
 
