@@ -37,10 +37,8 @@ public class WeatherListActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         Vector<String> sth = new Vector<>();
-        sth.add("asd");
-        sth.add("ojerg");
-        sth.add("ojor");
-        final ArrayAdapter<String> listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, sth);
+        sth.add("Alcoy");sth.add("Elche");sth.add("Midgar");sth.add("Alcoy");sth.add("Elche");sth.add("Midgar");sth.add("Alcoy");sth.add("Elche");sth.add("Midgar");sth.add("Alcoy");sth.add("Elche");sth.add("Midgar");
+        final ArrayAdapter<String> listAdapter = new ArrayAdapter<>(this, R.layout.activity_weatherlist_item, R.id.weatherListItemCityText, sth);
         weatherList.setAdapter(listAdapter);
 
         /*setContentView(R.layout.activity_login);

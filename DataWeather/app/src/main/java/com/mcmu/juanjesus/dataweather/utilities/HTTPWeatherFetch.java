@@ -1,4 +1,4 @@
-package com.mcmu.juanjesus.dataweather;
+package com.mcmu.juanjesus.dataweather.utilities;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -9,6 +9,8 @@ import org.json.JSONObject;
 
 import android.content.Context;
 import android.util.Log;
+
+import com.mcmu.juanjesus.dataweather.R;
 
 public class HTTPWeatherFetch {
 

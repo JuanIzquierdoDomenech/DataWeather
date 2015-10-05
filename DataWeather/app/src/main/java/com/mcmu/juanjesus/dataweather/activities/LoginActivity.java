@@ -31,9 +31,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mcmu.juanjesus.dataweather.HTTPWeatherFetch;
+import com.mcmu.juanjesus.dataweather.utilities.HTTPWeatherFetch;
 import com.mcmu.juanjesus.dataweather.R;
-import com.mcmu.juanjesus.dataweather.WeatherUtilities;
+import com.mcmu.juanjesus.dataweather.utilities.WeatherUtilities;
 
 import org.json.JSONException;
 import org.json.JSONObject;

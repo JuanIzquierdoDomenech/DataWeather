@@ -1,4 +1,4 @@
-package com.mcmu.juanjesus.dataweather;
+package com.mcmu.juanjesus.dataweather.utilities;
 
 public final class WeatherUtilities {
 
