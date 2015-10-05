@@ -41,11 +41,31 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="WeatherListActivity.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="LoginActivity.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/mcmu/juanjesus/dataweather/activities/LoginActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.5510563">
+              <caret line="455" column="81" selection-start-line="455" selection-start-column="81" selection-end-line="455" selection-end-column="81" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="WeatherUtilities.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/mcmu/juanjesus/dataweather/WeatherUtilities.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="35" column="45" selection-start-line="35" selection-start-column="45" selection-end-line="35" selection-end-column="45" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="WeatherListActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/mcmu/juanjesus/dataweather/activities/WeatherListActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.58450705">
-              <caret line="185" column="34" selection-start-line="185" selection-start-column="34" selection-end-line="185" selection-end-column="34" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
               <folding>
                 <element signature="e#4473#4474#0" expanded="true" />
                 <element signature="e#4505#4506#0" expanded="true" />
@@ -59,11 +79,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="activity_weatherlist.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_weatherlist.xml">
+      <file leaf-file-name="activity_weatherlist_item.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_weatherlist_item.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.3448277">
-              <caret line="18" column="15" selection-start-line="18" selection-start-column="15" selection-end-line="18" selection-end-column="15" />
+            <state vertical-scroll-proportion="-4.6896553">
+              <caret line="8" column="47" selection-start-line="8" selection-start-column="47" selection-end-line="8" selection-end-column="47" />
               <folding />
             </state>
           </provider>
@@ -78,9 +98,10 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="layoutResourceFile_vertical" />
-        <option value="Class" />
         <option value="valueResourceFile" />
         <option value="resourceFile" />
+        <option value="layoutResourceFile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -1551,8 +1572,10 @@
         <option value="$PROJECT_DIR$/app/src/main/res/menu/menu_login_activity.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values-es/strings.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/mcmu/juanjesus/dataweather/activities/LoginActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/mcmu/juanjesus/dataweather/activities/WeatherListActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_weatherlist_item.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/mcmu/juanjesus/dataweather/WeatherUtilities.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/mcmu/juanjesus/dataweather/activities/LoginActivity.java" />
       </list>
     </option>
   </component>
@@ -2230,32 +2253,32 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#2879#2922#0" expanded="true" />
-            <element signature="e#5114#5147#0" expanded="true" />
-            <element signature="e#5895#5896#0" expanded="true" />
-            <element signature="e#5927#5928#0" expanded="true" />
-            <element signature="e#7687#7731#0" expanded="true" />
-            <element signature="e#8251#8273#0" expanded="true" />
-            <element signature="e#8619#8649#0" expanded="true" />
-            <element signature="e#9206#9243#0" expanded="true" />
-            <element signature="e#9604#9647#0" expanded="true" />
-            <element signature="e#9726#9753#0" expanded="true" />
-            <element signature="e#10259#10292#0" expanded="true" />
-            <element signature="e#11439#11440#0" expanded="true" />
+            <element signature="e#2935#2978#0" expanded="true" />
+            <element signature="e#5170#5203#0" expanded="true" />
+            <element signature="e#5951#5952#0" expanded="true" />
+            <element signature="e#5983#5984#0" expanded="true" />
+            <element signature="e#7743#7787#0" expanded="true" />
+            <element signature="e#8307#8329#0" expanded="true" />
+            <element signature="e#8675#8705#0" expanded="true" />
+            <element signature="e#9262#9299#0" expanded="true" />
+            <element signature="e#9660#9703#0" expanded="true" />
+            <element signature="e#9782#9809#0" expanded="true" />
+            <element signature="e#10315#10348#0" expanded="true" />
             <element signature="e#11495#11496#0" expanded="true" />
-            <element signature="e#11564#11565#0" expanded="true" />
+            <element signature="e#11551#11552#0" expanded="true" />
             <element signature="e#11620#11621#0" expanded="true" />
-            <element signature="e#11737#11780#0" expanded="true" />
-            <element signature="e#12980#13025#0" expanded="true" />
-            <element signature="e#13060#13086#0" expanded="true" />
-            <element signature="e#13435#13461#0" expanded="true" />
-            <element signature="e#13585#13586#0" expanded="true" />
-            <element signature="e#13627#13628#0" expanded="true" />
-            <element signature="e#13662#13663#0" expanded="true" />
-            <element signature="e#13705#13706#0" expanded="true" />
-            <element signature="e#13936#13980#0" expanded="true" />
-            <element signature="e#14189#14233#0" expanded="true" />
-            <element signature="e#14752#14794#0" expanded="true" />
+            <element signature="e#11676#11677#0" expanded="true" />
+            <element signature="e#11793#11836#0" expanded="true" />
+            <element signature="e#13036#13081#0" expanded="true" />
+            <element signature="e#13116#13142#0" expanded="true" />
+            <element signature="e#13491#13517#0" expanded="true" />
+            <element signature="e#13641#13642#0" expanded="true" />
+            <element signature="e#13683#13684#0" expanded="true" />
+            <element signature="e#13718#13719#0" expanded="true" />
+            <element signature="e#13761#13762#0" expanded="true" />
+            <element signature="e#13992#14036#0" expanded="true" />
+            <element signature="e#14245#14289#0" expanded="true" />
+            <element signature="e#14808#14850#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2265,32 +2288,32 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#2879#2922#0" expanded="true" />
-            <element signature="e#5114#5147#0" expanded="true" />
-            <element signature="e#5895#5896#0" expanded="true" />
-            <element signature="e#5927#5928#0" expanded="true" />
-            <element signature="e#7687#7731#0" expanded="true" />
-            <element signature="e#8251#8273#0" expanded="true" />
-            <element signature="e#8619#8649#0" expanded="true" />
-            <element signature="e#9206#9243#0" expanded="true" />
-            <element signature="e#9604#9647#0" expanded="true" />
-            <element signature="e#9726#9753#0" expanded="true" />
-            <element signature="e#10259#10292#0" expanded="true" />
-            <element signature="e#11439#11440#0" expanded="true" />
+            <element signature="e#2935#2978#0" expanded="true" />
+            <element signature="e#5170#5203#0" expanded="true" />
+            <element signature="e#5951#5952#0" expanded="true" />
+            <element signature="e#5983#5984#0" expanded="true" />
+            <element signature="e#7743#7787#0" expanded="true" />
+            <element signature="e#8307#8329#0" expanded="true" />
+            <element signature="e#8675#8705#0" expanded="true" />
+            <element signature="e#9262#9299#0" expanded="true" />
+            <element signature="e#9660#9703#0" expanded="true" />
+            <element signature="e#9782#9809#0" expanded="true" />
+            <element signature="e#10315#10348#0" expanded="true" />
             <element signature="e#11495#11496#0" expanded="true" />
-            <element signature="e#11564#11565#0" expanded="true" />
+            <element signature="e#11551#11552#0" expanded="true" />
             <element signature="e#11620#11621#0" expanded="true" />
-            <element signature="e#11737#11780#0" expanded="true" />
-            <element signature="e#12980#13025#0" expanded="true" />
-            <element signature="e#13060#13086#0" expanded="true" />
-            <element signature="e#13435#13461#0" expanded="true" />
-            <element signature="e#13585#13586#0" expanded="true" />
-            <element signature="e#13627#13628#0" expanded="true" />
-            <element signature="e#13662#13663#0" expanded="true" />
-            <element signature="e#13705#13706#0" expanded="true" />
-            <element signature="e#13936#13980#0" expanded="true" />
-            <element signature="e#14189#14233#0" expanded="true" />
-            <element signature="e#14752#14794#0" expanded="true" />
+            <element signature="e#11676#11677#0" expanded="true" />
+            <element signature="e#11793#11836#0" expanded="true" />
+            <element signature="e#13036#13081#0" expanded="true" />
+            <element signature="e#13116#13142#0" expanded="true" />
+            <element signature="e#13491#13517#0" expanded="true" />
+            <element signature="e#13641#13642#0" expanded="true" />
+            <element signature="e#13683#13684#0" expanded="true" />
+            <element signature="e#13718#13719#0" expanded="true" />
+            <element signature="e#13761#13762#0" expanded="true" />
+            <element signature="e#13992#14036#0" expanded="true" />
+            <element signature="e#14245#14289#0" expanded="true" />
+            <element signature="e#14808#14850#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2410,20 +2433,21 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/mcmu/juanjesus/dataweather/activities/LoginActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_weatherlist_item.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4190141">
-          <caret line="260" column="31" selection-start-line="260" selection-start-column="4" selection-end-line="260" selection-end-column="31" />
-          <folding>
-            <element signature="e#8251#8273#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="-4.6896553">
+          <caret line="8" column="47" selection-start-line="8" selection-start-column="47" selection-end-line="8" selection-end-column="47" />
+          <folding />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/mcmu/juanjesus/dataweather/activities/WeatherListActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.58450705">
-          <caret line="185" column="34" selection-start-line="185" selection-start-column="34" selection-end-line="185" selection-end-column="34" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
           <folding>
             <element signature="e#4473#4474#0" expanded="true" />
             <element signature="e#4505#4506#0" expanded="true" />
@@ -2433,6 +2457,22 @@
             <element signature="e#6207#6208#0" expanded="true" />
             <element signature="e#6518#6561#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/mcmu/juanjesus/dataweather/WeatherUtilities.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="35" column="45" selection-start-line="35" selection-start-column="45" selection-end-line="35" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/mcmu/juanjesus/dataweather/activities/LoginActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5510563">
+          <caret line="455" column="81" selection-start-line="455" selection-start-column="81" selection-end-line="455" selection-end-column="81" />
+          <folding />
         </state>
       </provider>
     </entry>

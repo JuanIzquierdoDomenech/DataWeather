@@ -33,6 +33,7 @@ import android.widget.Toast;
 
 import com.mcmu.juanjesus.dataweather.HTTPWeatherFetch;
 import com.mcmu.juanjesus.dataweather.R;
+import com.mcmu.juanjesus.dataweather.WeatherUtilities;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -450,7 +451,9 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
 
             lastJsonWeatherData = json;
             JSONObject currentWeather = json.getJSONArray("weather").getJSONObject(0);
-            String description = currentWeather.getString("description");
+            WeatherUtilities.WeatherType weatherType = WeatherUtilities.getWeatherType(currentWeather.getInt("id"));
+
+            String description = currentWeather.getString("description") + " (" + weatherType.toString() + ")";
 
             Toast.makeText(this, description, Toast.LENGTH_LONG).show();
         } catch (JSONException e) {
