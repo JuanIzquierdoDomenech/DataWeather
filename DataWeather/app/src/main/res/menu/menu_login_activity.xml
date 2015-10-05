@@ -5,9 +5,15 @@
     tools:context=".WeatherListActivity">
 
     <item
+        android:id="@+id/action_share_current_weather"
+        android:title="@string/action_share_current_weather"
+        android:orderInCategory="90"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/share"/>
+
+    <item
         android:id="@+id/action_settings"
         android:title="@string/action_settings"
         android:orderInCategory="100"
         app:showAsAction="never" />
-
 </menu>

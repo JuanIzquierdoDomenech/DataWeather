@@ -25,4 +25,5 @@
     <string name="OPEN_WEATHER_MAP_API_KEY">39678ab6884c663ab591e5d876a46555</string>
     <string name="share_prefs_current_city">no city</string>
     <string name="weather_data_not_found">Weather data no found</string>
+    <string name="action_share_current_weather">Share current weather</string>
 </resources>

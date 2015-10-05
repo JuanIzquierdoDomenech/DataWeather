@@ -67,6 +67,8 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
 
     private static Handler mainThreadHandler;
 
+    private JSONObject lastJsonWeatherData;
+
 
     //region Activity lifecycle
     @Override
@@ -211,11 +213,23 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
             case R.id.action_settings:
                 showPreferences();
                 return true;
+            case R.id.action_share_current_weather:
+                shareCurrentWeather();
+                break;
             default:
                 break;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showPreferences() {
+        Intent preferencesActivityIntent = new Intent(this, PreferencesActivity.class);
+        startActivity(preferencesActivityIntent);
+    }
+
+    private void shareCurrentWeather() {
+        
     }
     //endregion Menu
 
@@ -410,6 +424,8 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
 
     private void showWeatherData(JSONObject json) {
         try {
+
+            lastJsonWeatherData = json;
             JSONObject currentWeather = json.getJSONArray("weather").getJSONObject(0);
             String description = currentWeather.getString("description");
 
@@ -418,11 +434,5 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
             e.printStackTrace();
         }
     }
-
-    private void showPreferences() {
-        Intent preferencesActivityIntent = new Intent(this, PreferencesActivity.class);
-        startActivity(preferencesActivityIntent);
-    }
-
     //endregion Private methods
 }
