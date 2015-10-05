@@ -117,6 +117,11 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
         loadingIndicatorAnimation.setInterpolator(new LinearInterpolator());
         loadingIndicator.startAnimation(loadingIndicatorAnimation);
         loadingIndicator.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
 
         // Check if any location service is enabled
         if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
@@ -124,12 +129,6 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
 
             showNoLocationSettingsEnabled();
         }
-
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
 
         Criteria criteria = new Criteria();
         criteria.setCostAllowed(false);
@@ -141,8 +140,6 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
 
         Location lastLocation = locationManager.getLastKnownLocation(provider);
 
-        Log.d("LOCATION", "LOCATION MANAGER REGISTERED - " + provider);
-        // onLocationChanged will realize about the changes
         if (lastLocation != null) {
             String yourLocation = getString(R.string.your_location) + ": " + lastLocation.getLatitude() + ", " + lastLocation.getLongitude();
             yourLocationTextView.setText(yourLocation);
