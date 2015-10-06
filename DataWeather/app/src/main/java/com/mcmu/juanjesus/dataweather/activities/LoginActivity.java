@@ -94,14 +94,16 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
         Intent sendIntent = getIntent();
         String intentAction = sendIntent.getAction();
         String intentType = sendIntent.getType();
-        if(intentAction.equals(Intent.ACTION_SEND) && intentType != null) {
-            if(intentType.equals("text/plain")) {
+        if(intentAction != null) {
+            if(intentAction.equals(Intent.ACTION_SEND) && intentType != null) {
+                if(intentType.equals("text/plain")) {
 
-                // Only one time
-                if(!externalSendIntentReceived) {
-                    externalSendIntentReceived = true;
-                    Log.d("SEND INTENT RECEIVED", "SEND INTENT RECEIVED");
-                    handleSendIntent(sendIntent);
+                    // Only one time
+                    if(!externalSendIntentReceived) {
+                        externalSendIntentReceived = true;
+                        Log.d("SEND INTENT RECEIVED", "SEND INTENT RECEIVED");
+                        handleSendIntent(sendIntent);
+                    }
                 }
             }
         }
@@ -473,7 +475,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
                         public void run() {
                             Toast.makeText(getApplicationContext(),
                                     getString(R.string.weather_data_not_found),
-                                    Toast.LENGTH_LONG).show();
+                                    Toast.LENGTH_SHORT).show();
                         }
                     });
                 } else {
@@ -497,7 +499,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
 
             String description = currentWeather.getString("description") + " (" + weatherType.toString() + ")";
 
-            Toast.makeText(this, description, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, description, Toast.LENGTH_SHORT).show();
         } catch (JSONException e) {
             e.printStackTrace();
         }

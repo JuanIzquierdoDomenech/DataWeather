@@ -30,6 +30,7 @@ public class WeatherListActivity extends AppCompatActivity {
     //region Activity lifecycle
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("WeatherListActivity", "onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weatherlist);
 
@@ -40,87 +41,17 @@ public class WeatherListActivity extends AppCompatActivity {
         sth.add("Alcoy");sth.add("Elche");sth.add("Midgar");sth.add("Alcoy");sth.add("Elche");sth.add("Midgar");sth.add("Alcoy");sth.add("Elche");sth.add("Midgar");sth.add("Alcoy");sth.add("Elche");sth.add("Midgar");
         final ArrayAdapter<String> listAdapter = new ArrayAdapter<>(this, R.layout.activity_weatherlist_item, R.id.weatherListItemCityText, sth);
         weatherList.setAdapter(listAdapter);
-
-        /*setContentView(R.layout.activity_login);
-
-        final ListView listView = (ListView)findViewById(R.id.listView);
-        final EditText text = (EditText)findViewById(R.id.todoText);
-        final Button button = (Button)findViewById(R.id.addButton);
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new Firebase("https://dataweather.firebaseio.com/todoItems")
-                        .push()
-                        .child("text")
-                        .setValue(text.getText().toString());
-            }
-        });
-
-        final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1);
-
-        listView.setAdapter(adapter);
-
-        Firebase.setAndroidContext(this);
-
-        new Firebase("https://dataweather.firebaseio.com/todoItems")
-                .addChildEventListener(new ChildEventListener() {
-                    @Override
-                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                        adapter.add((String) dataSnapshot.child("text").getValue());
-                    }
-
-                    @Override
-                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                    }
-
-                    @Override
-                    public void onChildRemoved(DataSnapshot dataSnapshot) {
-                        adapter.remove((String) dataSnapshot.child("text").getValue());
-                    }
-
-                    @Override
-                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                    }
-
-                    @Override
-                    public void onCancelled(FirebaseError firebaseError) {
-
-                    }
-                });
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                new Firebase("https://dataweather.firebaseio.com/todoItems")
-                        .orderByChild("text")
-                        .equalTo((String)listView.getItemAtPosition(position))
-                        .addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                if(dataSnapshot.hasChildren()) {
-                                    DataSnapshot firstChild = dataSnapshot.getChildren().iterator().next();
-                                    firstChild.getRef().removeValue();
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(FirebaseError firebaseError) {
-
-                            }
-                        });
-            }
-        });*/
     }
 
     @Override
     protected void onStart() {
+        Log.d("WeatherListActivity", "onStart");
         super.onStart();
     }
 
     @Override
     protected void onResume() {
+        Log.d("WeatherListActivity", "onResume");
         super.onResume();
     }
 
@@ -128,16 +59,20 @@ public class WeatherListActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
+        Log.d("WeatherListActivity", "onPause");
         super.onPause();
     }
 
     @Override
     protected void onStop() {
+        Log.d("WeatherListActivity", "onStop");
         super.onStop();
     }
 
     @Override
     protected void onDestroy() {
+        Log.d("WeatherListActivity", "onDestroy");
+        changeUser();
         super.onDestroy();
     }
     //endregion Activity lifecycle
