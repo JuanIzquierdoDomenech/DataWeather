@@ -1,10 +1,12 @@
 package com.mcmu.juanjesus.dataweather.activities;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Criteria;
 import android.location.Geocoder;
@@ -17,6 +19,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -58,13 +61,11 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
 
     private SharedPreferences userSharedPreferences;
 
-    private static final int ONE_MINUTES = 1000 * 60;
-    private static final int FIVE_SECONDS = 1000 * 5;
-    private static final int THIRTY_SECONDS = 1000 * 30;
+    //private static final int ONE_MINUTES = 1000 * 60;
+    //private static final int FIVE_SECONDS = 1000 * 5;
+    //private static final int THIRTY_SECONDS = 1000 * 30;
     private static final int ONE_SECOND = 1000;
     private static final int FIVE_METERS = 5;
-
-    private Animation loadingIndicatorAnimation;
 
     private static Handler mainThreadHandler;
 
@@ -111,6 +112,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
         }
 
         // Start loading indicator animation
+        Animation loadingIndicatorAnimation;
         loadingIndicatorAnimation = new RotateAnimation(0.0f, 360.0f,
                 Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,
                 0.5f);
@@ -141,7 +143,11 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
 
         registerLocationListener();
 
-        Location lastLocation = locationManager.getLastKnownLocation(provider);
+        Location lastLocation = new Location(provider);
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            lastLocation = locationManager.getLastKnownLocation(provider);
+        }
 
         if (lastLocation != null) {
             String yourLocation = getString(R.string.your_location) + ": " + lastLocation.getLatitude() + ", " + lastLocation.getLongitude();
@@ -246,7 +252,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
 
         if (weatherString.length() > 0) {
 
-            weatherString.append(" " + getString(R.string.in) + " " + getStoredCity());
+            weatherString.append(" ").append(getString(R.string.in)).append(" ").append(getStoredCity());
 
             Intent sendWeatherIntent = new Intent();
             sendWeatherIntent.setAction(Intent.ACTION_SEND);
@@ -315,17 +321,6 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
 
         // Notify location found
         locationFound();
-
-        /*if (location != null) {} else {
-            yourLocationTextView.setText(getString(R.string.location_not_found));
-
-            // Start the animation if the location is lost
-            loadingIndicator.startAnimation(loadingIndicatorAnimation);
-            loadingIndicator.setVisibility(View.VISIBLE);
-
-            // Notify location lost
-            locationLost();
-        }*/
     }
 
     @Override
@@ -349,12 +344,18 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
 
         Log.d("RegisterLocListener", "" + updateFrequencyInt);
 
-        locationManager.requestLocationUpdates(provider, updateFrequencyInt * ONE_SECOND, FIVE_METERS, this);
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            locationManager.requestLocationUpdates(provider, updateFrequencyInt * ONE_SECOND, FIVE_METERS, this);
+        }
     }
 
     private void unregisterLocationListener() {
         Log.d("UnregisterLocListener", "");
-        locationManager.removeUpdates(this);
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            locationManager.removeUpdates(this);
+        }
     }
     //endregion LocationListener
 

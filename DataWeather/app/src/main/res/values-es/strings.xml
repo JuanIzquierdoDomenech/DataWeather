@@ -29,4 +29,5 @@
     <string name="no_weather_data_to_share">No hay datos del tiempo para compartir</string>
     <string name="share_with">Compartir con...</string>
     <string name="in">en</string>
+    <string name="filter_hint">Filtrar...</string>
 </resources>

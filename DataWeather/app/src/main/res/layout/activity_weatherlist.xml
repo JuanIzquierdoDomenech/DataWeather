@@ -19,10 +19,20 @@
     </ListView>
 
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_gravity="right" >
+
+        <!--
+        <EditText
+            android:id="@+id/weatherListFilter"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:hint="@string/filter_hint"
+            android:layout_toLeftOf="@+id/weatherListAddButton"
+            android:layout_toStartOf="@+id/weatherListAddButton" />
+            -->
 
         <ImageButton
             android:id="@+id/weatherListAddButton"
@@ -32,7 +42,11 @@
             android:padding="5dp"
             android:src="@drawable/add_btn"
             android:scaleType="fitXY"
-            android:background="@android:color/transparent" />
+            android:background="@android:color/transparent"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
     </RelativeLayout>
 
 </LinearLayout>

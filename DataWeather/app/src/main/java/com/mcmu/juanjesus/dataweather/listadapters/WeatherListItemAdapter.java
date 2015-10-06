@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,26 +15,26 @@ import com.mcmu.juanjesus.dataweather.R;
 
 import java.util.Vector;
 
-public class WeatherListItemAdapter extends BaseAdapter{
+public class WeatherListItemAdapter extends BaseAdapter {
 
     private final Activity activity;
-    private final Vector<String> dataList;
+    private final Vector<String> originalDataList;
 
     public WeatherListItemAdapter(Activity activity, Vector<String> dataList) {
         super();
         this.activity = activity;
-        this.dataList = dataList;
+        this.originalDataList = dataList;
     }
 
     //region BaseAdapter
     @Override
     public int getCount() {
-        return dataList.size();
+        return originalDataList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return dataList.elementAt(position);
+        return originalDataList.elementAt(position);
     }
 
     @Override
@@ -50,7 +52,7 @@ public class WeatherListItemAdapter extends BaseAdapter{
         TextView weatherTextView = (TextView)view.findViewById(R.id.weatherListItemCityText);
         ImageView weatherImageView = (ImageView)view.findViewById(R.id.weatherListItemWeatherIcon);
 
-        cityTextView.setText(dataList.elementAt(position));
+        cityTextView.setText(originalDataList.elementAt(position));
         dateTextView.setText("20-20-2020");
         weatherTextView.setText("Cloudy");
         weatherImageView.setImageResource(R.drawable.cloudy);
@@ -58,6 +60,7 @@ public class WeatherListItemAdapter extends BaseAdapter{
         return view;
     }
     //endregion BaseAdapter
+    
 }
 
 
