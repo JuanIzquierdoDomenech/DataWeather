@@ -508,9 +508,9 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
     //region Send intent handlers
     private void handleSendIntent(Intent sendIntent) {
         String sharedText = sendIntent.getStringExtra(Intent.EXTRA_TEXT);
-        // Log.d("Shared text", sharedText);
 
         Intent nyanActivityIntent = new Intent(this, NyanActivity.class);
+        nyanActivityIntent.putExtra("nyanText", sharedText);
         startActivity(nyanActivityIntent);
     }
     //endregion Send intent handlers
