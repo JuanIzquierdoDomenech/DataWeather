@@ -13,23 +13,39 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.WithActionBar" >
 
+        <!-- LoginActivity -->
         <activity
             android:name=".activities.LoginActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.WithActionBar" >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
 
+        <!-- WeatherListActivity -->
         <activity
             android:name=".activities.WeatherListActivity"
             android:theme="@style/AppTheme.WithActionBar">
         </activity>
 
-        <activity android:name=".activities.PreferencesActivity">
+        <!-- PreferencesActivity -->
+        <activity
+            android:name=".activities.PreferencesActivity">
+        </activity>
+
+        <!-- NyanActivity -->
+        <activity
+            android:name=".activities.NyanActivity"
+            android:theme="@style/Base.Theme.AppCompat.Dialog">
         </activity>
 
     </application>

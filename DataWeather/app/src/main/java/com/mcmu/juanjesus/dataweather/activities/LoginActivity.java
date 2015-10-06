@@ -71,6 +71,8 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
 
     private JSONObject lastJsonWeatherData;
 
+    private static boolean externalSendIntentReceived = false;
+
 
     //region Activity lifecycle
     @Override
@@ -80,6 +82,23 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
 
         // Butterknife injection
         ButterKnife.bind(this);
+
+        // Get SEND data
+        Intent sendIntent = getIntent();
+        String intentAction = sendIntent.getAction();
+        String intentType = sendIntent.getType();
+        if(intentAction.equals(Intent.ACTION_SEND) && intentType != null) {
+            if(intentType.equals("text/plain")) {
+
+                // Only one time
+                if(!externalSendIntentReceived) {
+                    externalSendIntentReceived = true;
+                    Log.d("SEND INTENT RECEIVED", "SEND INTENT RECEIVED");
+                    handleSendIntent(sendIntent);
+                }
+            }
+        }
+
 
         // Get preferences from preferences fragment
         userSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -106,7 +125,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
             startActivity(weatherListActivityIntent);
 
             // Disable going back to this activity
-            finish();
+            //finish();
 
             return;
         }
@@ -126,6 +145,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
 
     @Override
     protected void onStart() {
+        Log.d("Login", "onStart");
         super.onStart();
 
         // Check if any location service is enabled
@@ -174,6 +194,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
 
     @Override
     protected void onResume() {
+        Log.d("Login", "onResume");
         super.onResume();
     }
 
@@ -181,13 +202,13 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
 
     @Override
     protected void onPause() {
-        Log.d("Login:onPause", "onPause");
+        Log.d("Login", "onPause");
         super.onPause();
     }
 
     @Override
     protected void onStop() {
-        Log.d("Login:onStop", "onStop");
+        Log.d("Login", "onStop");
         unregisterLocationListener();
 
         super.onStop();
@@ -195,8 +216,21 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
 
     @Override
     protected void onDestroy() {
-        Log.d("Login:onDestroy", "onDestroy");
+        Log.d("Login", "onDestroy");
+        externalSendIntentReceived = false;
         super.onDestroy();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.d("Login", "onSaveInstanceState");
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        Log.d("Login", "onRestoreInstanceState");
     }
     //endregion Activity lifecycle
 
@@ -294,7 +328,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
             startActivity(weatherListActivityIntent);
 
             // Disable going back to this activity
-            finish();
+            //finish();
         }
     }
     //endregion UI events
@@ -400,7 +434,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
     //endregion Alerts
 
 
-    //region Private methods
+    //region Location and weather methods
     private void locationFound() {
         letsGoBtn.setEnabled(true);
     }
@@ -461,5 +495,16 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
             e.printStackTrace();
         }
     }
-    //endregion Private methods
+    //endregion Location and weather methods
+
+
+    //region Send intent handlers
+    private void handleSendIntent(Intent sendIntent) {
+        String sharedText = sendIntent.getStringExtra(Intent.EXTRA_TEXT);
+        Log.d("Shared text", sharedText);
+
+        Intent nyanActivityIntent = new Intent(this, NyanActivity.class);
+        startActivity(nyanActivityIntent);
+    }
+    //endregion Send intent handlers
 }
