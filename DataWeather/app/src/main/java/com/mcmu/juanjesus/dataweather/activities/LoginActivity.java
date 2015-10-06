@@ -71,17 +71,24 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
 
     private JSONObject lastJsonWeatherData;
 
-    private static boolean externalSendIntentReceived = false;
+    private boolean externalSendIntentReceived = false;
 
 
     //region Activity lifecycle
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("Login", "onCreate");
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_login);
 
         // Butterknife injection
         ButterKnife.bind(this);
+
+        if(savedInstanceState != null) {
+            externalSendIntentReceived = savedInstanceState.getBoolean("externalSendIntentReceived");
+            Log.d("onCreate", "savedInstanceState != null -> " + externalSendIntentReceived);
+        }
 
         // Get SEND data
         Intent sendIntent = getIntent();
@@ -98,7 +105,6 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
                 }
             }
         }
-
 
         // Get preferences from preferences fragment
         userSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -217,14 +223,15 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
     @Override
     protected void onDestroy() {
         Log.d("Login", "onDestroy");
-        externalSendIntentReceived = false;
         super.onDestroy();
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
         Log.d("Login", "onSaveInstanceState");
+
+        outState.putBoolean("externalSendIntentReceived", externalSendIntentReceived);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -410,7 +417,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
             e.printStackTrace();
         }
 
-        Log.d("DW:getLocationName", result);
+        // Log.d("DW:getLocationName", result);
         return result;
     }
     //endregion Geocoder
@@ -501,7 +508,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
     //region Send intent handlers
     private void handleSendIntent(Intent sendIntent) {
         String sharedText = sendIntent.getStringExtra(Intent.EXTRA_TEXT);
-        Log.d("Shared text", sharedText);
+        // Log.d("Shared text", sharedText);
 
         Intent nyanActivityIntent = new Intent(this, NyanActivity.class);
         startActivity(nyanActivityIntent);

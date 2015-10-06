@@ -56,17 +56,22 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="LoginActivity.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="LoginActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/mcmu/juanjesus/dataweather/activities/LoginActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6543438">
-              <caret line="505" column="34" selection-start-line="505" selection-start-column="34" selection-end-line="505" selection-end-column="34" />
-              <folding>
-                <element signature="e#3918#3919#0" expanded="true" />
-                <element signature="e#3974#3975#0" expanded="true" />
-                <element signature="e#12725#12726#0" expanded="true" />
-                <element signature="e#12781#12782#0" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="-11.703704">
+              <caret line="88" column="98" selection-start-line="88" selection-start-column="98" selection-end-line="88" selection-end-column="98" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.47887325">
+              <caret line="19" column="58" selection-start-line="19" selection-start-column="58" selection-end-line="19" selection-end-column="58" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -1555,9 +1560,9 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/mcmu/juanjesus/dataweather/listadapters/WeatherListItemAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_weatherlist.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/mcmu/juanjesus/dataweather/activities/NyanActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_nyan.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/mcmu/juanjesus/dataweather/activities/LoginActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
       </list>
     </option>
   </component>
@@ -1599,6 +1604,8 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="AndroidView">
         <subPane>
           <PATH>
@@ -1681,42 +1688,6 @@
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="layout" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DataWeather" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drawable" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DataWeather" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="java" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
             </PATH_ELEMENT>
@@ -1778,8 +1749,6 @@
         </subPane>
       </pane>
       <pane id="Scratches" />
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -2247,11 +2216,18 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/mcmu/juanjesus/dataweather/activities/LoginActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="505" column="34" selection-start-line="505" selection-start-column="34" selection-end-line="505" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/mcmu/juanjesus/dataweather/activities/WeatherListActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="39" column="216" selection-start-line="39" selection-start-column="216" selection-end-line="39" selection-end-column="216" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2259,9 +2235,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="62" column="4" selection-start-line="62" selection-start-column="4" selection-end-line="62" selection-end-column="4" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2269,19 +2242,18 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="39" column="216" selection-start-line="39" selection-start-column="216" selection-end-line="39" selection-end-column="216" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_weatherlist.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="22" column="21" selection-start-line="22" selection-start-column="21" selection-end-line="22" selection-end-column="21" />
           <folding />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/mcmu/juanjesus/dataweather/activities/LoginActivity.java">
@@ -2307,9 +2279,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="29" column="46" selection-start-line="29" selection-start-column="30" selection-end-line="29" selection-end-column="46" />
@@ -2317,6 +2286,9 @@
             <element signature="e#487#520#0" expanded="true" />
           </folding>
         </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/xml/preferences.xml">
@@ -2335,9 +2307,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="10" column="59" selection-start-line="3" selection-start-column="4" selection-end-line="11" selection-end-column="33" />
@@ -2345,6 +2314,9 @@
             <element signature="e#487#520#0" expanded="true" />
           </folding>
         </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
@@ -2389,21 +2361,20 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_weatherlist_item.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5992579">
           <caret line="48" column="37" selection-start-line="48" selection-start-column="37" selection-end-line="48" selection-end-column="37" />
           <folding />
         </state>
       </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/mcmu/juanjesus/dataweather/activities/PreferencesFragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.11971831">
           <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2419,7 +2390,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.568662">
           <caret line="39" column="216" selection-start-line="39" selection-start-column="216" selection-end-line="39" selection-end-column="216" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2427,21 +2397,18 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.5422535">
           <caret line="62" column="4" selection-start-line="62" selection-start-column="4" selection-end-line="62" selection-end-column="4" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_weatherlist.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.6307978">
           <caret line="20" column="19" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="19" />
           <folding />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
@@ -2455,14 +2422,6 @@
     <entry file="android-dummy:///Users/imacunit02/Desktop/DataWeather/DataWeather/app/Translations Editor">
       <provider selected="true" editor-type-id="string-resource-editor">
         <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.0176057">
-          <caret line="47" column="61" selection-start-line="47" selection-start-column="61" selection-end-line="47" selection-end-column="61" />
-          <folding />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/mcmu/juanjesus/dataweather/activities/NyanActivity.java">
@@ -2486,28 +2445,31 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_nyan.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.034483">
-          <caret line="12" column="37" selection-start-line="12" selection-start-column="37" selection-end-line="12" selection-end-column="37" />
+        <state vertical-scroll-proportion="0.37847868">
+          <caret line="12" column="39" selection-start-line="12" selection-start-column="39" selection-end-line="12" selection-end-column="39" />
           <folding>
-            <element signature="e#637#662#0" expanded="true" />
+            <element signature="e#639#664#0" expanded="true" />
           </folding>
         </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/mcmu/juanjesus/dataweather/activities/LoginActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6543438">
-          <caret line="505" column="34" selection-start-line="505" selection-start-column="34" selection-end-line="505" selection-end-column="34" />
-          <folding>
-            <element signature="e#3918#3919#0" expanded="true" />
-            <element signature="e#3974#3975#0" expanded="true" />
-            <element signature="e#12725#12726#0" expanded="true" />
-            <element signature="e#12781#12782#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="-11.703704">
+          <caret line="88" column="98" selection-start-line="88" selection-start-column="98" selection-end-line="88" selection-end-column="98" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.47887325">
+          <caret line="19" column="58" selection-start-line="19" selection-start-column="58" selection-end-line="19" selection-end-column="58" />
+          <folding />
         </state>
       </provider>
     </entry>
