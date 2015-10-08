@@ -382,7 +382,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
     }
 
     private void registerLocationListener() {
-        String updateFrequencyStr = userSharedPreferences.getString(getString(R.string.share_prefs_update_freq), "1");
+        String updateFrequencyStr = userSharedPreferences.getString(getString(R.string.share_prefs_update_freq), "0");
         int updateFrequencyInt = Integer.parseInt(updateFrequencyStr);
 
         Log.d("RegisterLocListener", "" + updateFrequencyInt);

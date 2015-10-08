@@ -9,7 +9,7 @@
             android:key="com.mcmu.juanjesus.dataweather.UPDATES_FREQ"
             android:title="@string/location_updates_frequency"
             android:summary="@string/location_updates_frequency_summary"
-            android:defaultValue="1"/>
+            android:defaultValue="0"/>
     </PreferenceCategory>
 
 </PreferenceScreen>

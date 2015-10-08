@@ -31,4 +31,11 @@
     <string name="in">in</string>
     <string name="filter_hint">Filter...</string>
     <string name="nyan_cat_thinks">Nyan Cat thinks</string>
+    <string name="weather_clear">Clear</string>
+    <string name="weather_thunderstorm">Thunderstorm</string>
+    <string name="weather_drizzle">Drizzle</string>
+    <string name="weather_foggy">Fog</string>
+    <string name="weather_cloudy">Clouds</string>
+    <string name="weather_snowy">Snow</string>
+    <string name="weather_rainy">Rain</string>
 </resources>

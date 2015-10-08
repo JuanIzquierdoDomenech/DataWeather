@@ -31,4 +31,11 @@
     <string name="in">en</string>
     <string name="filter_hint">Filtrar...</string>
     <string name="nyan_cat_thinks">Nyan cat piensa</string>
+    <string name="weather_clear">Despejado</string>
+    <string name="weather_thunderstorm">Tormenta</string>
+    <string name="weather_drizzle">Chispea</string>
+    <string name="weather_foggy">Neblinoso</string>
+    <string name="weather_cloudy">Nublado</string>
+    <string name="weather_snowy">Nieva</string>
+    <string name="weather_rainy">Lluvia</string>
 </resources>
