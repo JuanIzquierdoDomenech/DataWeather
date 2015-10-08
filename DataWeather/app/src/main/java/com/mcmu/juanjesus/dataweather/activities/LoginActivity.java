@@ -154,9 +154,6 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
         loadingIndicatorAnimation.setInterpolator(new LinearInterpolator());
         loadingIndicator.startAnimation(loadingIndicatorAnimation);
         loadingIndicator.setVisibility(View.VISIBLE);
-
-        // Create database helper
-        weatherSQLiteOpenHelper = new WeatherSQLiteOpenHelper(getApplicationContext());
     }
 
     @Override
@@ -229,6 +226,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
     protected void onStop() {
         Log.d("Login", "onStop");
         unregisterLocationListener();
+        weatherSQLiteOpenHelper = null;
 
         super.onStop();
     }
@@ -351,6 +349,12 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
                 weatherType = WeatherUtilities.getWeatherType(currentWeather.getInt("id"));
             } catch (JSONException e) {
                 e.printStackTrace();
+            }
+
+            if(weatherSQLiteOpenHelper == null) {
+
+                // Create database helper
+                weatherSQLiteOpenHelper = new WeatherSQLiteOpenHelper(getApplicationContext());
             }
 
             ContentValues values = new ContentValues();
