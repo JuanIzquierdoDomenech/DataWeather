@@ -86,14 +86,26 @@ public class WeatherSQLiteOpenHelper extends SQLiteOpenHelper{
      * @return
      */
     public Cursor getAllWeatherData() {
-        return _DB.query(WEATHER_TABLE, new String[]{FIELD_ROW_ID, FIELD_ROW_USER, FIELD_ROW_LOCATION, FIELD_ROW_LAT, FIELD_ROW_LON, FIELD_ROW_WEATHER}, null, null, null, null, null);
+        String[] projection = {FIELD_ROW_ID, FIELD_ROW_USER, FIELD_ROW_LOCATION, FIELD_ROW_LAT, FIELD_ROW_LON, FIELD_ROW_WEATHER, FIELD_ROW_DATE};
+        return _DB.query(WEATHER_TABLE, projection, null, null, null, null, null);
     }
 
     public Cursor getUserWeatherData(String user) {
-        String[] projection = {FIELD_ROW_ID, FIELD_ROW_LOCATION, FIELD_ROW_LAT, FIELD_ROW_LON, FIELD_ROW_WEATHER};
-        String order = FIELD_ROW_ID + " DESC";
 
-        return null;
+        /* Example read from DB
+            Cursor sampleC = weatherSQLiteOpenHelper.getUserWeatherData(userName);
+            sampleC.moveToFirst();
+            while (!sampleC.isAfterLast()) {
+                String someCityData = sampleC.getString(sampleC.getColumnIndex(WeatherSQLiteOpenHelper.FIELD_ROW_LOCATION));
+                sampleC.moveToNext();
+            }
+        */
+
+        String[] projection = {FIELD_ROW_ID, FIELD_ROW_LOCATION, FIELD_ROW_LAT, FIELD_ROW_LON, FIELD_ROW_WEATHER, FIELD_ROW_DATE};
+        String order = FIELD_ROW_ID + " DESC";
+        Cursor c = _DB.query(WEATHER_TABLE, projection, FIELD_ROW_USER+"=?", new String[]{user}, null, null, order);
+
+        return c;
     }
     //endregion DB methods
 }

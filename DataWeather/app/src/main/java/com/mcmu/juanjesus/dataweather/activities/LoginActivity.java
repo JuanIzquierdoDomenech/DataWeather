@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.Address;
 import android.location.Criteria;
@@ -138,7 +139,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
             startActivity(weatherListActivityIntent);
 
             // Disable going back to this activity
-            //finish();
+            finish();
 
             return;
         }
@@ -372,7 +373,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
             startActivity(weatherListActivityIntent);
 
             // Disable going back to this activity
-            //finish();
+            finish();
         }
     }
     //endregion UI events

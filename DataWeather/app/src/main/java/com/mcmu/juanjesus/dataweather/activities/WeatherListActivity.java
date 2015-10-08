@@ -72,7 +72,6 @@ public class WeatherListActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         Log.d("WeatherListActivity", "onDestroy");
-        changeUser();
         super.onDestroy();
     }
     //endregion Activity lifecycle
@@ -124,15 +123,22 @@ public class WeatherListActivity extends AppCompatActivity {
 
     //region Private methods
     private void changeUser() {
+
+        // Erase username from preferences
+        logOutUser();
+
+        // Go back to login activity
+        Intent loginActivityIntent = new Intent(this, LoginActivity.class);
+        startActivity(loginActivityIntent);
+    }
+
+    private void logOutUser() {
+
         // Override username value
         SharedPreferences myPrefs = getSharedPreferences("MyPrefsFile", Context.MODE_PRIVATE);
         SharedPreferences.Editor prefEditor = myPrefs.edit();
         prefEditor.putString(getString(R.string.share_prefs_user_logged), "");
         prefEditor.apply();
-
-        // Go back to login activity
-        Intent loginActivityIntent = new Intent(this, LoginActivity.class);
-        startActivity(loginActivityIntent);
     }
 
     private void showPreferences() {
