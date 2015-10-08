@@ -55,6 +55,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
     @Bind(R.id.loginLetsGoButton)protected Button letsGoBtn;
     @Bind(R.id.loginYourLocationTextView) protected TextView yourLocationTextView;
     @Bind(R.id.loginLoadingIndicator) protected ImageView loadingIndicator;
+    @Bind(R.id.loginCurrentWeatherImage) protected ImageView currentWeatherImage;
 
     private LocationManager locationManager;
     private String provider;
@@ -497,7 +498,41 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
             JSONObject currentWeather = json.getJSONArray("weather").getJSONObject(0);
             WeatherUtilities.WeatherType weatherType = WeatherUtilities.getWeatherType(currentWeather.getInt("id"));
 
-            String description = currentWeather.getString("description") + " (" + weatherType.toString() + ")";
+            //String description = currentWeather.getString("description");
+            String description = "";
+
+            switch (weatherType) {
+                case CLEAR:
+                    currentWeatherImage.setImageResource(R.drawable.clear);
+                    description = getString(R.string.weather_clear);
+                    break;
+                case CLOUDY:
+                    currentWeatherImage.setImageResource(R.drawable.cloudy);
+                    description = getString(R.string.weather_cloudy);
+                    break;
+                case DRIZZLE:
+                    currentWeatherImage.setImageResource(R.drawable.drizzle);
+                    description = getString(R.string.weather_drizzle);
+                    break;
+                case FOGGY:
+                    currentWeatherImage.setImageResource(R.drawable.foggy);
+                    description = getString(R.string.weather_foggy);
+                    break;
+                case RAINY:
+                    currentWeatherImage.setImageResource(R.drawable.rainy);
+                    description = getString(R.string.weather_rainy);
+                    break;
+                case SNOWY:
+                    currentWeatherImage.setImageResource(R.drawable.snowy);
+                    description = getString(R.string.weather_snowy);
+                    break;
+                case THUNDERSTORM:
+                    currentWeatherImage.setImageResource(R.drawable.thunderstorm);
+                    description = getString(R.string.weather_thunderstorm);
+                    break;
+            }
+
+            currentWeatherImage.setVisibility(View.VISIBLE);
 
             Toast.makeText(this, description, Toast.LENGTH_SHORT).show();
         } catch (JSONException e) {
