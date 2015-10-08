@@ -37,6 +37,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mcmu.juanjesus.dataweather.database.WeatherSQLiteOpenHelper;
+import com.mcmu.juanjesus.dataweather.utilities.DateUtilities;
 import com.mcmu.juanjesus.dataweather.utilities.HTTPWeatherFetch;
 import com.mcmu.juanjesus.dataweather.R;
 import com.mcmu.juanjesus.dataweather.utilities.WeatherUtilities;
@@ -85,7 +86,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_login);
-
+        
         // Butterknife injection
         ButterKnife.bind(this);
 
@@ -358,6 +359,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
             values.put(WeatherSQLiteOpenHelper.FIELD_ROW_LAT, lastLocationData.getLatitude());
             values.put(WeatherSQLiteOpenHelper.FIELD_ROW_LON, lastLocationData.getLongitude());
             values.put(WeatherSQLiteOpenHelper.FIELD_ROW_WEATHER, weatherType.toString());
+            values.put(WeatherSQLiteOpenHelper.FIELD_ROW_DATE, System.currentTimeMillis());
 
             weatherSQLiteOpenHelper.insert(values);
 

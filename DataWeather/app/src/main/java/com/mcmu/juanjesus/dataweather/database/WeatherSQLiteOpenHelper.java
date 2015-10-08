@@ -15,6 +15,7 @@ public class WeatherSQLiteOpenHelper extends SQLiteOpenHelper{
     public static final String FIELD_ROW_LAT = "lat";
     public static final String FIELD_ROW_LON = "lon";
     public static final String FIELD_ROW_WEATHER = "weather";
+    public static final String FIELD_ROW_DATE = "date";
     //endregion Public member variables
 
 
@@ -30,6 +31,7 @@ public class WeatherSQLiteOpenHelper extends SQLiteOpenHelper{
                     FIELD_ROW_LAT + " double, " +
                     FIELD_ROW_LON + " double, " +
                     FIELD_ROW_WEATHER + " text " +
+                    FIELD_ROW_DATE + " integer" +
                     " ) ";
 
     private SQLiteDatabase _DB;
@@ -83,6 +85,13 @@ public class WeatherSQLiteOpenHelper extends SQLiteOpenHelper{
      */
     public Cursor getAllWeatherData() {
         return _DB.query(WEATHER_TABLE, new String[]{FIELD_ROW_ID, FIELD_ROW_USER, FIELD_ROW_LOCATION, FIELD_ROW_LAT, FIELD_ROW_LON, FIELD_ROW_WEATHER}, null, null, null, null, null);
+    }
+
+    public Cursor getUserWeatherData(String user) {
+        String[] projection = {FIELD_ROW_ID, FIELD_ROW_LOCATION, FIELD_ROW_LAT, FIELD_ROW_LON, FIELD_ROW_WEATHER};
+        String order = FIELD_ROW_ID + " DESC";
+
+        return null;
     }
     //endregion DB methods
 }
