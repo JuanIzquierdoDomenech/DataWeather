@@ -50,7 +50,6 @@
             android:id="@+id/loginCurrentWeatherImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/cloudy"
             android:layout_gravity="center"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"

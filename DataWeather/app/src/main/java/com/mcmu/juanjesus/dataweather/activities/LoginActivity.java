@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.drawable.AnimationDrawable;
 import android.location.Address;
 import android.location.Criteria;
 import android.location.Geocoder;
@@ -53,6 +54,14 @@ import java.util.Locale;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.mcmu.juanjesus.dataweather.R.drawable.clear_weather_anim;
+import static com.mcmu.juanjesus.dataweather.R.drawable.cloudy_weather_anim;
+import static com.mcmu.juanjesus.dataweather.R.drawable.drizzle_weather_anim;
+import static com.mcmu.juanjesus.dataweather.R.drawable.foggy_weather_anim;
+import static com.mcmu.juanjesus.dataweather.R.drawable.rainy_weather_anim;
+import static com.mcmu.juanjesus.dataweather.R.drawable.snowy_weather_anim;
+import static com.mcmu.juanjesus.dataweather.R.drawable.thunderstorm_weather_anim;
 
 public class LoginActivity extends AppCompatActivity implements LocationListener {
 
@@ -538,36 +547,57 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
 
             //String description = currentWeather.getString("description");
             String description = "";
+            AnimationDrawable spriteAnim = null;
 
             switch (weatherType) {
                 case CLEAR:
-                    currentWeatherImage.setImageResource(R.drawable.clear);
+                    //currentWeatherImage.setImageResource(R.drawable.clear);
+                    currentWeatherImage.setBackgroundResource(clear_weather_anim);
+                    spriteAnim = (AnimationDrawable)currentWeatherImage.getBackground();
                     description = getString(R.string.weather_clear);
                     break;
                 case CLOUDY:
-                    currentWeatherImage.setImageResource(R.drawable.cloudy);
+                    //currentWeatherImage.setImageResource(R.drawable.cloudy);
+                    currentWeatherImage.setBackgroundResource(cloudy_weather_anim);
+                    spriteAnim = (AnimationDrawable)currentWeatherImage.getBackground();
                     description = getString(R.string.weather_cloudy);
                     break;
                 case DRIZZLE:
-                    currentWeatherImage.setImageResource(R.drawable.drizzle);
+                    //currentWeatherImage.setImageResource(R.drawable.drizzle);
+                    currentWeatherImage.setBackgroundResource(drizzle_weather_anim);
+                    spriteAnim = (AnimationDrawable)currentWeatherImage.getBackground();
                     description = getString(R.string.weather_drizzle);
                     break;
                 case FOGGY:
-                    currentWeatherImage.setImageResource(R.drawable.foggy);
+                    //currentWeatherImage.setImageResource(R.drawable.foggy);
+                    currentWeatherImage.setBackgroundResource(foggy_weather_anim);
+                    spriteAnim = (AnimationDrawable)currentWeatherImage.getBackground();
                     description = getString(R.string.weather_foggy);
                     break;
                 case RAINY:
-                    currentWeatherImage.setImageResource(R.drawable.rainy);
+                    //currentWeatherImage.setImageResource(R.drawable.rainy);
+                    currentWeatherImage.setBackgroundResource(rainy_weather_anim);
+                    spriteAnim = (AnimationDrawable)currentWeatherImage.getBackground();
                     description = getString(R.string.weather_rainy);
                     break;
                 case SNOWY:
-                    currentWeatherImage.setImageResource(R.drawable.snowy);
+                    //currentWeatherImage.setImageResource(R.drawable.snowy);
+                    currentWeatherImage.setBackgroundResource(snowy_weather_anim);
+                    spriteAnim = (AnimationDrawable)currentWeatherImage.getBackground();
                     description = getString(R.string.weather_snowy);
                     break;
                 case THUNDERSTORM:
-                    currentWeatherImage.setImageResource(R.drawable.thunderstorm);
+                    //currentWeatherImage.setImageResource(R.drawable.thunderstorm);
+                    currentWeatherImage.setBackgroundResource(thunderstorm_weather_anim);
+                    spriteAnim = (AnimationDrawable)currentWeatherImage.getBackground();
                     description = getString(R.string.weather_thunderstorm);
                     break;
+                default:
+                    break;
+            }
+
+            if(spriteAnim != null) {
+                spriteAnim.start();
             }
 
             currentWeatherImage.setVisibility(View.VISIBLE);
