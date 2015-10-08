@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class WeatherSQLiteOpenHelper extends SQLiteOpenHelper{
 
@@ -30,7 +31,7 @@ public class WeatherSQLiteOpenHelper extends SQLiteOpenHelper{
                     FIELD_ROW_LOCATION + " text, " +
                     FIELD_ROW_LAT + " double, " +
                     FIELD_ROW_LON + " double, " +
-                    FIELD_ROW_WEATHER + " text " +
+                    FIELD_ROW_WEATHER + " text, " +
                     FIELD_ROW_DATE + " integer" +
                     " ) ";
 
@@ -67,6 +68,7 @@ public class WeatherSQLiteOpenHelper extends SQLiteOpenHelper{
      */
     public long insert(ContentValues contentValues) {
         long rowID = _DB.insert(WEATHER_TABLE, null, contentValues);
+        Log.d("WEATHER DB", "INSERT -> " + contentValues.toString());
         return rowID;
     }
 

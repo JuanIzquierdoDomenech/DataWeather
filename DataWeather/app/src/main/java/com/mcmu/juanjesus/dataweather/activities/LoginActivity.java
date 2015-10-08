@@ -86,7 +86,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_login);
-        
+
         // Butterknife injection
         ButterKnife.bind(this);
 
