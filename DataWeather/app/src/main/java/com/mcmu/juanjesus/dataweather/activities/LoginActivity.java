@@ -2,11 +2,13 @@ package com.mcmu.juanjesus.dataweather.activities;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.location.Address;
 import android.location.Criteria;
 import android.location.Geocoder;
@@ -34,6 +36,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mcmu.juanjesus.dataweather.database.WeatherSQLiteOpenHelper;
 import com.mcmu.juanjesus.dataweather.utilities.HTTPWeatherFetch;
 import com.mcmu.juanjesus.dataweather.R;
 import com.mcmu.juanjesus.dataweather.utilities.WeatherUtilities;
@@ -62,15 +65,15 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
 
     private SharedPreferences userSharedPreferences;
 
-    //private static final int ONE_MINUTES = 1000 * 60;
-    //private static final int FIVE_SECONDS = 1000 * 5;
-    //private static final int THIRTY_SECONDS = 1000 * 30;
     private static final int ONE_SECOND = 1000;
     private static final int FIVE_METERS = 5;
 
     private static Handler mainThreadHandler;
 
     private JSONObject lastJsonWeatherData;
+    private Location lastLocationData;
+
+    private WeatherSQLiteOpenHelper weatherSQLiteOpenHelper;
 
     private boolean externalSendIntentReceived = false;
 
@@ -150,6 +153,9 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
         loadingIndicatorAnimation.setInterpolator(new LinearInterpolator());
         loadingIndicator.startAnimation(loadingIndicatorAnimation);
         loadingIndicator.setVisibility(View.VISIBLE);
+
+        // Create database helper
+        weatherSQLiteOpenHelper = new WeatherSQLiteOpenHelper(getApplicationContext());
     }
 
     @Override
@@ -179,6 +185,9 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
         }
 
         if (lastLocation != null) {
+
+            lastLocationData = lastLocation;
+
             String yourLocation = getString(R.string.your_location) + ": " + lastLocation.getLatitude() + ", " + lastLocation.getLongitude();
             yourLocationTextView.setText(yourLocation);
             String city = getLocationName(lastLocation);
@@ -334,6 +343,25 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
 
             Toast.makeText(this, getString(R.string.welcome) + " " + userName, Toast.LENGTH_SHORT).show();
 
+            // Insert first entry into database
+            WeatherUtilities.WeatherType weatherType = WeatherUtilities.WeatherType.CLEAR;
+            try {
+                JSONObject currentWeather = lastJsonWeatherData.getJSONArray("weather").getJSONObject(0);
+                weatherType = WeatherUtilities.getWeatherType(currentWeather.getInt("id"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            ContentValues values = new ContentValues();
+            values.put(WeatherSQLiteOpenHelper.FIELD_ROW_USER, userName);
+            values.put(WeatherSQLiteOpenHelper.FIELD_ROW_LOCATION, getLocationName(lastLocationData));
+            values.put(WeatherSQLiteOpenHelper.FIELD_ROW_LAT, lastLocationData.getLatitude());
+            values.put(WeatherSQLiteOpenHelper.FIELD_ROW_LON, lastLocationData.getLongitude());
+            values.put(WeatherSQLiteOpenHelper.FIELD_ROW_WEATHER, weatherType.toString());
+
+            weatherSQLiteOpenHelper.insert(values);
+
+            // Change activity
             Intent weatherListActivityIntent = new Intent(this, WeatherListActivity.class);
             startActivity(weatherListActivityIntent);
 
@@ -349,6 +377,9 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
     public void onLocationChanged(Location location) {
 
         Log.d("Login:onLocationChanged", location.toString());
+
+        // Store last location data
+        lastLocationData = location;
 
         String yourLocation = getString(R.string.your_location) + ": " + location.getLatitude() + ", " + location.getLongitude();
         yourLocationTextView.setText(yourLocation);
