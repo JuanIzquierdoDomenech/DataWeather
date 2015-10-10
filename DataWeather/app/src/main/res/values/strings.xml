@@ -38,4 +38,7 @@
     <string name="weather_cloudy">Clouds</string>
     <string name="weather_snowy">Snow</string>
     <string name="weather_rainy">Rain</string>
+    <string name="location_min_distance">Minimum distance</string>
+    <string name="location_min_distance_summary">Minimum distance in meters for the system to request location updates</string>
+    <string name="share_prefs_update_meters">com.mcmu.juanjesus.dataweather.MIN_DISTANCE</string>
 </resources>

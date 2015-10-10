@@ -38,4 +38,7 @@
     <string name="weather_cloudy">Nublado</string>
     <string name="weather_snowy">Nieva</string>
     <string name="weather_rainy">Lluvia</string>
+    <string name="location_min_distance">Distancia minima</string>
+    <string name="location_min_distance_summary">Distancia minima, en metros, entre actualizaciones</string>
+    <string name="share_prefs_update_meters">com.mcmu.juanjesus.dataweather.MIN_DISTANCE</string>
 </resources>

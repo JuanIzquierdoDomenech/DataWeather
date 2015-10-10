@@ -24,12 +24,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
+            <!--
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
                 <category android:name="android.intent.category.default" />
                 <data android:mimeType="text/plain" />
             </intent-filter>
+            -->
         </activity>
+
 
         <!-- WeatherListActivity -->
         <activity

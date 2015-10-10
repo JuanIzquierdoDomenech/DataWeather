@@ -6,10 +6,16 @@
     <PreferenceCategory
         android:title="@string/location">
         <EditTextPreference
-            android:key="com.mcmu.juanjesus.dataweather.UPDATES_FREQ"
+            android:key="@string/share_prefs_update_freq"
             android:title="@string/location_updates_frequency"
             android:summary="@string/location_updates_frequency_summary"
             android:defaultValue="0"/>
+
+        <EditTextPreference
+            android:key="@string/share_prefs_update_meters"
+            android:title="@string/location_min_distance"
+            android:summary="@string/location_min_distance_summary"
+            android:defaultValue="10" />
     </PreferenceCategory>
 
 </PreferenceScreen>

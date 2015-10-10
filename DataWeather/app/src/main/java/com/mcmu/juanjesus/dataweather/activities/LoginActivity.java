@@ -77,7 +77,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
     private SharedPreferences userSharedPreferences;
 
     private static final int ONE_SECOND = 1000;
-    private static final int FIVE_METERS = 5;
+    // private static final int TEN_METERS = 10;
 
     private static Handler mainThreadHandler;
 
@@ -443,13 +443,16 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
 
     private void registerLocationListener() {
         String updateFrequencyStr = userSharedPreferences.getString(getString(R.string.share_prefs_update_freq), "0");
+        String updateMetersStr = userSharedPreferences.getString(getString(R.string.share_prefs_update_meters), "10");
+
         int updateFrequencyInt = Integer.parseInt(updateFrequencyStr);
+        int updateMetersInt = Integer.parseInt(updateMetersStr);
 
         Log.d("RegisterLocListener", "" + updateFrequencyInt);
 
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            locationManager.requestLocationUpdates(provider, updateFrequencyInt * ONE_SECOND, FIVE_METERS, this);
+            locationManager.requestLocationUpdates(provider, updateFrequencyInt * ONE_SECOND, updateMetersInt, this);
         }
     }
 
