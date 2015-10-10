@@ -106,7 +106,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
         }
 
         // Get SEND data
-        Intent sendIntent = getIntent();
+        /*Intent sendIntent = getIntent();
         String intentAction = sendIntent.getAction();
         String intentType = sendIntent.getType();
         if(intentAction != null) {
@@ -121,7 +121,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
                     }
                 }
             }
-        }
+        }*/
 
         // Get preferences from preferences fragment
         userSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -453,6 +453,14 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             locationManager.requestLocationUpdates(provider, updateFrequencyInt * ONE_SECOND, updateMetersInt, this);
+
+            if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, updateFrequencyInt * ONE_SECOND, updateMetersInt, this);
+            }
+
+            if(locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, updateFrequencyInt * ONE_SECOND, updateMetersInt, this);
+            }
         }
     }
 
@@ -619,12 +627,12 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
 
 
     //region Send intent handlers
-    private void handleSendIntent(Intent sendIntent) {
+    /*private void handleSendIntent(Intent sendIntent) {
         String sharedText = sendIntent.getStringExtra(Intent.EXTRA_TEXT);
 
         Intent nyanActivityIntent = new Intent(this, NyanActivity.class);
         nyanActivityIntent.putExtra("nyanText", sharedText);
         startActivity(nyanActivityIntent);
-    }
+    }*/
     //endregion Send intent handlers
 }
