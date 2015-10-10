@@ -7,6 +7,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.mcmu.juanjesus.dataweather.models.WeatherData;
+
+import java.util.Vector;
+
 public class WeatherSQLiteOpenHelper extends SQLiteOpenHelper{
 
     //region Public member variables
@@ -32,7 +36,7 @@ public class WeatherSQLiteOpenHelper extends SQLiteOpenHelper{
                     FIELD_ROW_LAT + " double, " +
                     FIELD_ROW_LON + " double, " +
                     FIELD_ROW_WEATHER + " text, " +
-                    FIELD_ROW_DATE + " integer" +
+                    FIELD_ROW_DATE + " text" +
                     " ) ";
 
     private SQLiteDatabase _DB;
@@ -106,6 +110,41 @@ public class WeatherSQLiteOpenHelper extends SQLiteOpenHelper{
         Cursor c = _DB.query(WEATHER_TABLE, projection, FIELD_ROW_USER+"=?", new String[]{user}, null, null, order);
 
         return c;
+    }
+
+    public Vector<WeatherData> getUserWeatherDataVector(String user) {
+
+        Log.d("WeatherSQLiteOpenHelper", "getUserWeatherDataVector 1");
+        Cursor cursor = getUserWeatherData(user);
+
+        Vector<WeatherData> result = new Vector<>();
+
+        String location;
+        float latitude = 0;
+        float longitude = 0;
+        String weather;
+        String date;
+
+        Log.d("WeatherSQLiteOpenHelper", "getUserWeatherDataVector 2");
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast()) {
+            location = cursor.getString(cursor.getColumnIndex(WeatherSQLiteOpenHelper.FIELD_ROW_LOCATION));
+            latitude = cursor.getFloat(cursor.getColumnIndex(WeatherSQLiteOpenHelper.FIELD_ROW_LAT));
+            longitude = cursor.getFloat(cursor.getColumnIndex(WeatherSQLiteOpenHelper.FIELD_ROW_LON));
+            weather = cursor.getString(cursor.getColumnIndex(WeatherSQLiteOpenHelper.FIELD_ROW_WEATHER));
+            date = cursor.getString(cursor.getColumnIndex(WeatherSQLiteOpenHelper.FIELD_ROW_DATE));
+
+            WeatherData newData = new WeatherData(user, location, latitude, longitude, weather, date);
+            result.add(newData);
+
+            cursor.moveToNext();
+
+            Log.d("WeatherSQLiteOpenHelper", "getUserWeatherDataVector Iterating");
+        }
+
+        cursor.close();
+
+        return result;
     }
     //endregion DB methods
 }

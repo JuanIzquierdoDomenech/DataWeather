@@ -48,6 +48,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -373,7 +374,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
             values.put(WeatherSQLiteOpenHelper.FIELD_ROW_LAT, lastLocationData.getLatitude());
             values.put(WeatherSQLiteOpenHelper.FIELD_ROW_LON, lastLocationData.getLongitude());
             values.put(WeatherSQLiteOpenHelper.FIELD_ROW_WEATHER, weatherType.toString());
-            values.put(WeatherSQLiteOpenHelper.FIELD_ROW_DATE, System.currentTimeMillis());
+            values.put(WeatherSQLiteOpenHelper.FIELD_ROW_DATE, DateUtilities.milisToDate(System.currentTimeMillis()));
 
             weatherSQLiteOpenHelper.insert(values);
 

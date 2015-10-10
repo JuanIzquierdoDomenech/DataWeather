@@ -13,6 +13,9 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.mcmu.juanjesus.dataweather.R;
+import com.mcmu.juanjesus.dataweather.database.WeatherSQLiteOpenHelper;
+import com.mcmu.juanjesus.dataweather.listadapters.WeatherListItemAdapter;
+import com.mcmu.juanjesus.dataweather.models.WeatherData;
 
 import java.util.Vector;
 
@@ -27,6 +30,8 @@ public class WeatherListActivity extends AppCompatActivity {
     @Bind(R.id.weatherListAddButton)protected ImageButton addWeatherButton;
     @Bind(R.id.weatherList)protected ListView weatherList;
 
+    private WeatherSQLiteOpenHelper weatherDB;
+
     //region Activity lifecycle
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +42,10 @@ public class WeatherListActivity extends AppCompatActivity {
         // Butterknife injection
         ButterKnife.bind(this);
 
-        Vector<String> sth = new Vector<>();
-        sth.add("Alcoy");sth.add("Elche");sth.add("Midgar");sth.add("Alcoy");sth.add("Elche");sth.add("Midgar");sth.add("Alcoy");sth.add("Elche");sth.add("Midgar");sth.add("Alcoy");sth.add("Elche");sth.add("Midgar");
-        final ArrayAdapter<String> listAdapter = new ArrayAdapter<>(this, R.layout.activity_weatherlist_item, R.id.weatherListItemCityText, sth);
-        weatherList.setAdapter(listAdapter);
+        //Vector<String> sth = new Vector<>();
+        //sth.add("Alcoy");sth.add("Elche");sth.add("Midgar");sth.add("Alcoy");sth.add("Elche");sth.add("Midgar");sth.add("Alcoy");sth.add("Elche");sth.add("Midgar");sth.add("Alcoy");sth.add("Elche");sth.add("Midgar");
+        //final ArrayAdapter<String> listAdapter = new ArrayAdapter<>(this, R.layout.activity_weatherlist_item, R.id.weatherListItemCityText, sth);
+        //weatherList.setAdapter(listAdapter);
     }
 
     @Override
@@ -53,6 +58,18 @@ public class WeatherListActivity extends AppCompatActivity {
     protected void onResume() {
         Log.d("WeatherListActivity", "onResume");
         super.onResume();
+
+        if(weatherDB == null) {
+            weatherDB = new WeatherSQLiteOpenHelper(this);
+        }
+
+        SharedPreferences myPrefs = getSharedPreferences("MyPrefsFile", Context.MODE_PRIVATE);
+        String currentUser = myPrefs.getString(getString(R.string.share_prefs_user_logged), "");
+        Vector<WeatherData> weatherData = weatherDB.getUserWeatherDataVector(currentUser);
+
+        weatherList.setAdapter(new WeatherListItemAdapter(this, weatherData));
+
+        Log.d("WeatherListActivity", "onResume -> showing data for this user -> " + currentUser + ", entries " + weatherData.size());
     }
 
     // -------------------------------------------------------------------> Activity running
