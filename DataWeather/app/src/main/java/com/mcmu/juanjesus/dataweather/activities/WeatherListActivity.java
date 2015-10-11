@@ -80,6 +80,9 @@ public class WeatherListActivity extends AppCompatActivity implements LocationLi
 
     private SharedPreferences defaultSharedPreferences;
 
+    private WeatherListItemAdapter weatherListItemAdapter;
+    private Vector<WeatherData> weatherDataVector;
+
     //region Activity lifecycle
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +107,9 @@ public class WeatherListActivity extends AppCompatActivity implements LocationLi
         };
 
         locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+
+        // Disable add button until location found
+        //addWeatherButton.setEnabled(false);
     }
 
     @Override
@@ -119,10 +125,11 @@ public class WeatherListActivity extends AppCompatActivity implements LocationLi
 
         registerLocationListener();
 
-        Location lastLocation = new Location(provider);
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            lastLocation = locationManager.getLastKnownLocation(provider);
+
+            lastLocationData = locationManager.getLastKnownLocation(provider);
+            //addWeatherButton.setEnabled(false);
         }
     }
 
@@ -137,13 +144,14 @@ public class WeatherListActivity extends AppCompatActivity implements LocationLi
 
         SharedPreferences myPrefs = getSharedPreferences("MyPrefsFile", Context.MODE_PRIVATE);
         String currentUser = myPrefs.getString(getString(R.string.share_prefs_user_logged), "");
-        Vector<WeatherData> weatherData = weatherDB.getUserWeatherDataVector(currentUser);
+        weatherDataVector = weatherDB.getUserWeatherDataVector(currentUser);
+
+        weatherListItemAdapter = new WeatherListItemAdapter(this, weatherDataVector);
+        weatherList.setAdapter(weatherListItemAdapter);
 
         usernameTextView.setText(currentUser);
 
-        weatherList.setAdapter(new WeatherListItemAdapter(this, weatherData));
-
-        Log.d("WeatherListActivity", "onResume -> showing data for this user -> " + currentUser + ", entries " + weatherData.size());
+        Log.d("WeatherListActivity", "onResume -> showing data for this user -> " + currentUser + ", entries " + weatherDataVector.size());
     }
 
     // -------------------------------------------------------------------> Activity running
@@ -228,6 +236,7 @@ public class WeatherListActivity extends AppCompatActivity implements LocationLi
             weatherDB = new WeatherSQLiteOpenHelper(getApplicationContext());
         }
 
+        // Insert into database
         SharedPreferences myPrefs = getSharedPreferences("MyPrefsFile", Context.MODE_PRIVATE);
         String currentUser = myPrefs.getString(getString(R.string.share_prefs_user_logged), "");
 
@@ -240,7 +249,11 @@ public class WeatherListActivity extends AppCompatActivity implements LocationLi
         values.put(WeatherSQLiteOpenHelper.FIELD_ROW_DATE, DateUtilities.milisToDate(System.currentTimeMillis()));
 
         Log.d("WeatherListActivity", "addWeatherButtonClicked inserting " + values.toString());
-        //weatherDB.insert(values);
+        weatherDB.insert(values);
+
+        // Notify the adapter for vector data changes
+        weatherDataVector = weatherDB.getUserWeatherDataVector(currentUser);
+        weatherListItemAdapter.updateItems(weatherDataVector);
     }
 
     @SuppressWarnings("unused")
@@ -291,6 +304,8 @@ public class WeatherListActivity extends AppCompatActivity implements LocationLi
         // Store the current city in preferences
         storeCity(city);
         storeWeatherData(city);
+
+        //addWeatherButton.setEnabled(true);
     }
 
     @Override

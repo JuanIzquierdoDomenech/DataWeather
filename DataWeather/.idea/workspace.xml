@@ -56,40 +56,38 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="WeatherListActivity.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/mcmu/juanjesus/dataweather/activities/WeatherListActivity.java">
+      <file leaf-file-name="WeatherListItemAdapter.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/mcmu/juanjesus/dataweather/listadapters/WeatherListItemAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.71428573">
-              <caret line="292" column="24" selection-start-line="292" selection-start-column="24" selection-end-line="292" selection-end-column="24" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="102" column="31" selection-start-line="102" selection-start-column="31" selection-end-line="102" selection-end-column="31" />
               <folding>
-                <element signature="e#5129#5172#0" expanded="true" />
-                <element signature="e#7355#7397#0" expanded="true" />
-                <element signature="e#7487#7525#0" expanded="true" />
-                <element signature="e#8229#8272#0" expanded="true" />
-                <element signature="e#9139#9140#0" expanded="true" />
-                <element signature="e#9191#9192#0" expanded="true" />
-                <element signature="e#9766#9809#0" expanded="true" />
-                <element signature="e#10329#10362#0" expanded="true" />
-                <element signature="e#11169#11212#0" expanded="true" />
-                <element signature="e#11288#11333#0" expanded="true" />
-                <element signature="e#13173#13217#0" expanded="true" />
-                <element signature="e#13426#13470#0" expanded="true" />
-                <element signature="e#13990#14032#0" expanded="true" />
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LoginActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/mcmu/juanjesus/dataweather/activities/LoginActivity.java">
+      <file leaf-file-name="WeatherListActivity.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/mcmu/juanjesus/dataweather/activities/WeatherListActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.5555553">
-              <caret line="625" column="5" selection-start-line="564" selection-start-column="4" selection-end-line="625" selection-end-column="5" />
+            <state vertical-scroll-proportion="3.2962184">
+              <caret line="213" column="39" selection-start-line="213" selection-start-column="39" selection-end-line="213" selection-end-column="39" />
               <folding>
-                <element signature="e#19299#19300#0" expanded="true" />
-                <element signature="e#19341#19342#0" expanded="true" />
-                <element signature="e#19903#19947#0" expanded="true" />
-                <element signature="e#22883#22916#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+                <element signature="e#5337#5380#0" expanded="true" />
+                <element signature="e#7618#7660#0" expanded="true" />
+                <element signature="e#7750#7788#0" expanded="true" />
+                <element signature="e#8524#8567#0" expanded="true" />
+                <element signature="e#9627#9628#0" expanded="true" />
+                <element signature="e#9679#9680#0" expanded="true" />
+                <element signature="e#10254#10297#0" expanded="true" />
+                <element signature="e#10817#10850#0" expanded="true" />
+                <element signature="e#11703#11746#0" expanded="true" />
+                <element signature="e#11822#11867#0" expanded="true" />
+                <element signature="e#13707#13751#0" expanded="true" />
+                <element signature="e#13960#14004#0" expanded="true" />
+                <element signature="e#14524#14566#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -1591,10 +1589,10 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/mcmu/juanjesus/dataweather/utilities/DateUtilities.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/mcmu/juanjesus/dataweather/database/WeatherSQLiteOpenHelper.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/mcmu/juanjesus/dataweather/models/WeatherData.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/mcmu/juanjesus/dataweather/listadapters/WeatherListItemAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_weatherlist.xml" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/mcmu/juanjesus/dataweather/activities/LoginActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/mcmu/juanjesus/dataweather/listadapters/WeatherListItemAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/mcmu/juanjesus/dataweather/activities/WeatherListActivity.java" />
       </list>
     </option>
@@ -1680,28 +1678,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="values" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DataWeather" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="values" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="strings.xml" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResGroupNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -2308,7 +2284,7 @@
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.28381255" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32807216" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2985469" sideWeight="0.49713877" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2985469" sideWeight="0.49713877" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32893" sideWeight="0.5028612" order="8" side_tool="true" content_ui="tabs" />
@@ -2496,14 +2472,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/mcmu/juanjesus/dataweather/listadapters/WeatherListItemAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.5">
@@ -2590,24 +2558,35 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/mcmu/juanjesus/dataweather/listadapters/WeatherListItemAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="102" column="31" selection-start-line="102" selection-start-column="31" selection-end-line="102" selection-end-column="31" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/mcmu/juanjesus/dataweather/activities/WeatherListActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.71428573">
-          <caret line="292" column="24" selection-start-line="292" selection-start-column="24" selection-end-line="292" selection-end-column="24" />
+        <state vertical-scroll-proportion="3.2962184">
+          <caret line="213" column="39" selection-start-line="213" selection-start-column="39" selection-end-line="213" selection-end-column="39" />
           <folding>
-            <element signature="e#5129#5172#0" expanded="true" />
-            <element signature="e#7355#7397#0" expanded="true" />
-            <element signature="e#7487#7525#0" expanded="true" />
-            <element signature="e#8229#8272#0" expanded="true" />
-            <element signature="e#9139#9140#0" expanded="true" />
-            <element signature="e#9191#9192#0" expanded="true" />
-            <element signature="e#9766#9809#0" expanded="true" />
-            <element signature="e#10329#10362#0" expanded="true" />
-            <element signature="e#11169#11212#0" expanded="true" />
-            <element signature="e#11288#11333#0" expanded="true" />
-            <element signature="e#13173#13217#0" expanded="true" />
-            <element signature="e#13426#13470#0" expanded="true" />
-            <element signature="e#13990#14032#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#5337#5380#0" expanded="true" />
+            <element signature="e#7618#7660#0" expanded="true" />
+            <element signature="e#7750#7788#0" expanded="true" />
+            <element signature="e#8524#8567#0" expanded="true" />
+            <element signature="e#9627#9628#0" expanded="true" />
+            <element signature="e#9679#9680#0" expanded="true" />
+            <element signature="e#10254#10297#0" expanded="true" />
+            <element signature="e#10817#10850#0" expanded="true" />
+            <element signature="e#11703#11746#0" expanded="true" />
+            <element signature="e#11822#11867#0" expanded="true" />
+            <element signature="e#13707#13751#0" expanded="true" />
+            <element signature="e#13960#14004#0" expanded="true" />
+            <element signature="e#14524#14566#0" expanded="true" />
           </folding>
         </state>
       </provider>

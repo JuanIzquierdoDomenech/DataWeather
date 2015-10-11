@@ -18,7 +18,7 @@ import java.util.Vector;
 public class WeatherListItemAdapter extends BaseAdapter {
 
     private final Activity activity;
-    private final Vector<WeatherData> originalWeatherDataList;
+    private Vector<WeatherData> originalWeatherDataList;
 
     public WeatherListItemAdapter(Activity activity, Vector<WeatherData> dataList) {
         super();
@@ -96,6 +96,12 @@ public class WeatherListItemAdapter extends BaseAdapter {
         return view;
     }
     //endregion BaseAdapter
+
+
+    public void updateItems(Vector<WeatherData> newItems) {
+        originalWeatherDataList = newItems;
+        notifyDataSetChanged();
+    }
     
 }
 
