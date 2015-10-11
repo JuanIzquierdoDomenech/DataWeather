@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.mcmu.juanjesus.dataweather.R;
 import com.mcmu.juanjesus.dataweather.database.WeatherSQLiteOpenHelper;
@@ -29,6 +30,7 @@ public class WeatherListActivity extends AppCompatActivity {
 
     @Bind(R.id.weatherListAddButton)protected ImageButton addWeatherButton;
     @Bind(R.id.weatherList)protected ListView weatherList;
+    @Bind(R.id.weatherListUsernameTextView)protected TextView usernameTextView;
 
     private WeatherSQLiteOpenHelper weatherDB;
 
@@ -41,11 +43,6 @@ public class WeatherListActivity extends AppCompatActivity {
 
         // Butterknife injection
         ButterKnife.bind(this);
-
-        //Vector<String> sth = new Vector<>();
-        //sth.add("Alcoy");sth.add("Elche");sth.add("Midgar");sth.add("Alcoy");sth.add("Elche");sth.add("Midgar");sth.add("Alcoy");sth.add("Elche");sth.add("Midgar");sth.add("Alcoy");sth.add("Elche");sth.add("Midgar");
-        //final ArrayAdapter<String> listAdapter = new ArrayAdapter<>(this, R.layout.activity_weatherlist_item, R.id.weatherListItemCityText, sth);
-        //weatherList.setAdapter(listAdapter);
     }
 
     @Override
@@ -66,6 +63,8 @@ public class WeatherListActivity extends AppCompatActivity {
         SharedPreferences myPrefs = getSharedPreferences("MyPrefsFile", Context.MODE_PRIVATE);
         String currentUser = myPrefs.getString(getString(R.string.share_prefs_user_logged), "");
         Vector<WeatherData> weatherData = weatherDB.getUserWeatherDataVector(currentUser);
+
+        usernameTextView.setText(currentUser);
 
         weatherList.setAdapter(new WeatherListItemAdapter(this, weatherData));
 

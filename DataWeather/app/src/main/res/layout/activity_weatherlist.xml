@@ -32,6 +32,18 @@
             android:layout_toLeftOf="@+id/weatherListAddButton"
             android:layout_toStartOf="@+id/weatherListAddButton" />
             -->
+        <TextView
+            android:id="@+id/weatherListUsernameTextView"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:text="superman"
+            android:textSize="42dp"
+            android:gravity="center"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_toLeftOf="@+id/weatherListAddButton"
+            android:layout_toStartOf="@+id/weatherListAddButton" />
 
         <ImageButton
             android:id="@+id/weatherListAddButton"

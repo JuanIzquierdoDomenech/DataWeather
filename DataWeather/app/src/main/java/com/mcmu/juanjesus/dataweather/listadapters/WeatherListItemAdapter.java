@@ -1,22 +1,17 @@
 package com.mcmu.juanjesus.dataweather.listadapters;
 
 import android.app.Activity;
-import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mcmu.juanjesus.dataweather.R;
 import com.mcmu.juanjesus.dataweather.models.WeatherData;
-import com.mcmu.juanjesus.dataweather.utilities.DateUtilities;
 import com.mcmu.juanjesus.dataweather.utilities.WeatherUtilities;
-import com.mcmu.juanjesus.dataweather.utilities.WeatherUtilities.WeatherType;
 
 import java.util.Vector;
 

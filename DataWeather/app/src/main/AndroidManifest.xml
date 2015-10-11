@@ -17,7 +17,8 @@
         <activity
             android:name=".activities.LoginActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.WithActionBar" >
+            android:theme="@style/AppTheme.WithActionBar"
+            android:launchMode="singleTask" >
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,7 +38,8 @@
         <!-- WeatherListActivity -->
         <activity
             android:name=".activities.WeatherListActivity"
-            android:theme="@style/AppTheme.WithActionBar">
+            android:theme="@style/AppTheme.WithActionBar"
+            android:launchMode="singleTask" >
         </activity>
 
         <!-- PreferencesActivity -->
