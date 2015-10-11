@@ -75,7 +75,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
     private LocationManager locationManager;
     private String provider;
 
-    private SharedPreferences userSharedPreferences;
+    private SharedPreferences defaultSharedPreferences;
 
     private static final int ONE_SECOND = 1000;
     // private static final int TEN_METERS = 10;
@@ -125,7 +125,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
         }*/
 
         // Get preferences from preferences fragment
-        userSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        defaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         SharedPreferences myPrefs = getSharedPreferences("MyPrefsFile", Context.MODE_PRIVATE);
         String possibleUserName = myPrefs.getString(getString(R.string.share_prefs_user_logged), "");
@@ -443,8 +443,8 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
     }
 
     private void registerLocationListener() {
-        String updateFrequencyStr = userSharedPreferences.getString(getString(R.string.share_prefs_update_freq), "0");
-        String updateMetersStr = userSharedPreferences.getString(getString(R.string.share_prefs_update_meters), "10");
+        String updateFrequencyStr = defaultSharedPreferences.getString(getString(R.string.share_prefs_update_freq), "0");
+        String updateMetersStr = defaultSharedPreferences.getString(getString(R.string.share_prefs_update_meters), "10");
 
         int updateFrequencyInt = Integer.parseInt(updateFrequencyStr);
         int updateMetersInt = Integer.parseInt(updateMetersStr);
