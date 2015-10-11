@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.AnimationDrawable;
 import android.location.Address;
 import android.location.Criteria;
 import android.location.Geocoder;
@@ -23,8 +22,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -50,15 +47,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
-import butterknife.OnItemSelected;
-
-import static com.mcmu.juanjesus.dataweather.R.drawable.clear_weather_anim;
-import static com.mcmu.juanjesus.dataweather.R.drawable.cloudy_weather_anim;
-import static com.mcmu.juanjesus.dataweather.R.drawable.drizzle_weather_anim;
-import static com.mcmu.juanjesus.dataweather.R.drawable.foggy_weather_anim;
-import static com.mcmu.juanjesus.dataweather.R.drawable.rainy_weather_anim;
-import static com.mcmu.juanjesus.dataweather.R.drawable.snowy_weather_anim;
-import static com.mcmu.juanjesus.dataweather.R.drawable.thunderstorm_weather_anim;
 
 public class WeatherListActivity extends AppCompatActivity implements LocationListener {
 
@@ -209,6 +197,7 @@ public class WeatherListActivity extends AppCompatActivity implements LocationLi
     }
     //endregion Menu
 
+
     //region UI events
     @SuppressWarnings("unused")
     @OnClick(R.id.weatherListAddButton)
@@ -259,7 +248,10 @@ public class WeatherListActivity extends AppCompatActivity implements LocationLi
     @SuppressWarnings("unused")
     @OnItemClick(R.id.weatherList)
     public void itemSelected(int position) {
-        Log.d("itemSelected", "" + position);
+        Log.d("WeatherListActivity", "itemSelected at" + position);
+
+        WeatherData weatherRowData = (WeatherData) weatherListItemAdapter.getItem(position);
+        Log.d("WeatherListActivity", "itemSelected -> " + weatherRowData);
     }
     //endregion UI events
 
@@ -330,7 +322,7 @@ public class WeatherListActivity extends AppCompatActivity implements LocationLi
         int updateFrequencyInt = Integer.parseInt(updateFrequencyStr);
         int updateMetersInt = Integer.parseInt(updateMetersStr);
 
-        Log.d("RegisterLocListener", "" + updateFrequencyInt);
+        Log.d("WeatherListActivity", "registerLocationListener " + updateFrequencyInt + " --- " + updateMetersInt);
 
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -347,7 +339,7 @@ public class WeatherListActivity extends AppCompatActivity implements LocationLi
     }
 
     private void unregisterLocationListener() {
-        Log.d("UnregisterLocListener", "");
+        Log.d("WeatherListActivity", "unregisterLocationListener");
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             locationManager.removeUpdates(this);
@@ -404,7 +396,6 @@ public class WeatherListActivity extends AppCompatActivity implements LocationLi
         String result = "";
 
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-
         try {
             List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
             if (addresses.size() > 0) {
@@ -414,7 +405,6 @@ public class WeatherListActivity extends AppCompatActivity implements LocationLi
             e.printStackTrace();
         }
 
-        // Log.d("DW:getLocationName", result);
         return result;
     }
     //endregion Geocoder
