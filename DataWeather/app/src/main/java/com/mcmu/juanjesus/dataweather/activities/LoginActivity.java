@@ -38,6 +38,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.mcmu.juanjesus.dataweather.database.WeatherSQLiteOpenHelper;
 import com.mcmu.juanjesus.dataweather.utilities.AlertDialogUtilities;
 import com.mcmu.juanjesus.dataweather.utilities.DateUtilities;
@@ -65,7 +68,8 @@ import static com.mcmu.juanjesus.dataweather.R.drawable.rainy_weather_anim;
 import static com.mcmu.juanjesus.dataweather.R.drawable.snowy_weather_anim;
 import static com.mcmu.juanjesus.dataweather.R.drawable.thunderstorm_weather_anim;
 
-public class LoginActivity extends AppCompatActivity implements LocationListener {
+public class LoginActivity extends AppCompatActivity
+        implements LocationListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     @Bind(R.id.loginUsernameEditText)protected EditText userNameText;
     @Bind(R.id.loginLetsGoButton)protected Button letsGoBtn;
@@ -73,23 +77,21 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
     @Bind(R.id.loginLoadingIndicator) protected ImageView loadingIndicator;
     @Bind(R.id.loginCurrentWeatherImage) protected ImageView currentWeatherImage;
 
-    private LocationManager locationManager;
-    private String provider;
+    private LocationManager mLocationManager;
+    private String mProvider;
 
-    private SharedPreferences defaultSharedPreferences;
+    private SharedPreferences mDefaultSharedPreferences;
+
+    private static Handler mMainThreadHandler;
+
+    private JSONObject mLastJsonWeatherData;
+    private Location mLastLocationData;
+
+    private WeatherSQLiteOpenHelper mWeatherSQLiteOpenHelper;
+
+    private boolean mExternalSendIntentReceived = false;
 
     private static final int ONE_SECOND = 1000;
-    // private static final int TEN_METERS = 10;
-
-    private static Handler mainThreadHandler;
-
-    private JSONObject lastJsonWeatherData;
-    private Location lastLocationData;
-
-    private WeatherSQLiteOpenHelper weatherSQLiteOpenHelper;
-
-    private boolean externalSendIntentReceived = false;
-
 
     //region Activity lifecycle
     @Override
@@ -103,8 +105,8 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
         ButterKnife.bind(this);
 
         if(savedInstanceState != null) {
-            externalSendIntentReceived = savedInstanceState.getBoolean("externalSendIntentReceived");
-            Log.d("onCreate", "savedInstanceState != null -> " + externalSendIntentReceived);
+            mExternalSendIntentReceived = savedInstanceState.getBoolean("externalSendIntentReceived");
+            Log.d("onCreate", "savedInstanceState != null -> " + mExternalSendIntentReceived);
         }
 
         // Get SEND data
@@ -126,13 +128,13 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
         }*/
 
         // Get preferences from preferences fragment
-        defaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        mDefaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         SharedPreferences myPrefs = getSharedPreferences("MyPrefsFile", Context.MODE_PRIVATE);
         String possibleUserName = myPrefs.getString(getString(R.string.share_prefs_user_logged), "");
 
         // Thread initialization
-        mainThreadHandler = new Handler(Looper.getMainLooper()) {
+        mMainThreadHandler = new Handler(Looper.getMainLooper()) {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
@@ -140,7 +142,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
         };
 
         // Get location service ref for first location
-        locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        mLocationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
 
         // Is the user already logged? => Redirect
         if (!possibleUserName.equals("")) {
@@ -174,8 +176,8 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
         super.onStart();
 
         // Check if any location service is enabled
-        if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
-                && !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+        if(!mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+                && !mLocationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
 
             AlertDialogUtilities.showNoLocationSettingsEnabledAlert(this);
         }
@@ -184,19 +186,19 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
         criteria.setCostAllowed(false);
         criteria.setAltitudeRequired(false);
         criteria.setAccuracy(Criteria.ACCURACY_FINE);
-        provider = locationManager.getBestProvider(criteria, false);
+        mProvider = mLocationManager.getBestProvider(criteria, false);
 
         registerLocationListener();
 
-        Location lastLocation = new Location(provider);
+        Location lastLocation = new Location(mProvider);
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            lastLocation = locationManager.getLastKnownLocation(provider);
+            lastLocation = mLocationManager.getLastKnownLocation(mProvider);
         }
 
         if (lastLocation != null) {
 
-            lastLocationData = lastLocation;
+            mLastLocationData = lastLocation;
 
             String yourLocation = getString(R.string.your_location) + ": " + lastLocation.getLatitude() + ", " + lastLocation.getLongitude();
             yourLocationTextView.setText(yourLocation);
@@ -238,7 +240,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
     protected void onStop() {
         Log.d("Login", "onStop");
         unregisterLocationListener();
-        weatherSQLiteOpenHelper = null;
+        mWeatherSQLiteOpenHelper = null;
 
         super.onStop();
     }
@@ -253,7 +255,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
     protected void onSaveInstanceState(Bundle outState) {
         Log.d("Login", "onSaveInstanceState");
 
-        outState.putBoolean("externalSendIntentReceived", externalSendIntentReceived);
+        outState.putBoolean("externalSendIntentReceived", mExternalSendIntentReceived);
         super.onSaveInstanceState(outState);
     }
 
@@ -300,7 +302,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
     }
 
     private void shareCurrentWeather() {
-        if(lastJsonWeatherData == null) {
+        if(mLastJsonWeatherData == null) {
             Toast.makeText(this, getString(R.string.no_weather_data_to_share), Toast.LENGTH_SHORT).show();
             return;
         }
@@ -308,7 +310,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
         // Try to get json data from last time
         StringBuilder weatherString = new StringBuilder();
         try {
-            JSONObject currentWeather = lastJsonWeatherData.getJSONArray("weather").getJSONObject(0);
+            JSONObject currentWeather = mLastJsonWeatherData.getJSONArray("weather").getJSONObject(0);
             weatherString.append(currentWeather.getString("description"));
         } catch (JSONException e) {
             e.printStackTrace();
@@ -334,8 +336,8 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
     public void LetsGoBtnClicked(Button target) {
 
         // Check if any location service is enabled
-        if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
-                && !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+        if(!mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+                && !mLocationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
 
             AlertDialogUtilities.showNoLocationSettingsEnabledAlert(this);
             return;
@@ -357,27 +359,27 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
             // Insert first entry into database
             WeatherUtilities.WeatherType weatherType = WeatherUtilities.WeatherType.CLEAR;
             try {
-                JSONObject currentWeather = lastJsonWeatherData.getJSONArray("weather").getJSONObject(0);
+                JSONObject currentWeather = mLastJsonWeatherData.getJSONArray("weather").getJSONObject(0);
                 weatherType = WeatherUtilities.getWeatherType(currentWeather.getInt("id"));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-            if(weatherSQLiteOpenHelper == null) {
+            if(mWeatherSQLiteOpenHelper == null) {
 
                 // Create database helper
-                weatherSQLiteOpenHelper = new WeatherSQLiteOpenHelper(getApplicationContext());
+                mWeatherSQLiteOpenHelper = new WeatherSQLiteOpenHelper(getApplicationContext());
             }
 
             ContentValues values = new ContentValues();
             values.put(WeatherSQLiteOpenHelper.FIELD_ROW_USER, userName);
-            values.put(WeatherSQLiteOpenHelper.FIELD_ROW_LOCATION, getLocationName(lastLocationData));
-            values.put(WeatherSQLiteOpenHelper.FIELD_ROW_LAT, lastLocationData.getLatitude());
-            values.put(WeatherSQLiteOpenHelper.FIELD_ROW_LON, lastLocationData.getLongitude());
+            values.put(WeatherSQLiteOpenHelper.FIELD_ROW_LOCATION, getLocationName(mLastLocationData));
+            values.put(WeatherSQLiteOpenHelper.FIELD_ROW_LAT, mLastLocationData.getLatitude());
+            values.put(WeatherSQLiteOpenHelper.FIELD_ROW_LON, mLastLocationData.getLongitude());
             values.put(WeatherSQLiteOpenHelper.FIELD_ROW_WEATHER, weatherType.toString());
             values.put(WeatherSQLiteOpenHelper.FIELD_ROW_DATE, DateUtilities.milisToDate(System.currentTimeMillis()));
 
-            weatherSQLiteOpenHelper.insert(values);
+            mWeatherSQLiteOpenHelper.insert(values);
 
             // Change activity
             Intent weatherListActivityIntent = new Intent(this, WeatherListActivity.class);
@@ -409,7 +411,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
         Log.d("Login:onLocationChanged", location.toString());
 
         // Store last location data
-        lastLocationData = location;
+        mLastLocationData = location;
 
         String yourLocation = getString(R.string.your_location) + ": " + location.getLatitude() + ", " + location.getLongitude();
         yourLocationTextView.setText(yourLocation);
@@ -444,8 +446,8 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
     }
 
     private void registerLocationListener() {
-        String updateFrequencyStr = defaultSharedPreferences.getString(getString(R.string.share_prefs_update_freq), "0");
-        String updateMetersStr = defaultSharedPreferences.getString(getString(R.string.share_prefs_update_meters), "10");
+        String updateFrequencyStr = mDefaultSharedPreferences.getString(getString(R.string.share_prefs_update_freq), "0");
+        String updateMetersStr = mDefaultSharedPreferences.getString(getString(R.string.share_prefs_update_meters), "10");
 
         int updateFrequencyInt = Integer.parseInt(updateFrequencyStr);
         int updateMetersInt = Integer.parseInt(updateMetersStr);
@@ -454,14 +456,14 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
 
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            locationManager.requestLocationUpdates(provider, updateFrequencyInt * ONE_SECOND, updateMetersInt, this);
+            mLocationManager.requestLocationUpdates(mProvider, updateFrequencyInt * ONE_SECOND, updateMetersInt, this);
 
-            if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, updateFrequencyInt * ONE_SECOND, updateMetersInt, this);
+            if(mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, updateFrequencyInt * ONE_SECOND, updateMetersInt, this);
             }
 
-            if(locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, updateFrequencyInt * ONE_SECOND, updateMetersInt, this);
+            if(mLocationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+                mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, updateFrequencyInt * ONE_SECOND, updateMetersInt, this);
             }
         }
     }
@@ -470,7 +472,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
         Log.d("UnregisterLocListener", "");
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            locationManager.removeUpdates(this);
+            mLocationManager.removeUpdates(this);
         }
     }
     //endregion LocationListener
@@ -525,7 +527,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
             public void run() {
                 final JSONObject json = HTTPWeatherFetch.getJSON(getApplicationContext(), city);
                 if(json == null) {
-                    mainThreadHandler.post(new Runnable() {
+                    mMainThreadHandler.post(new Runnable() {
                         @Override
                         public void run() {
                             Toast.makeText(getApplicationContext(),
@@ -534,7 +536,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
                         }
                     });
                 } else {
-                    mainThreadHandler.post(new Runnable() {
+                    mMainThreadHandler.post(new Runnable() {
                         @Override
                         public void run() {
                             showWeatherData(json);
@@ -548,7 +550,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
     private void showWeatherData(JSONObject json) {
         try {
 
-            lastJsonWeatherData = json;
+            mLastJsonWeatherData = json;
             JSONObject currentWeather = json.getJSONArray("weather").getJSONObject(0);
             WeatherUtilities.WeatherType weatherType = WeatherUtilities.getWeatherType(currentWeather.getInt("id"));
 
@@ -608,6 +610,27 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
         }
     }
     //endregion Location and weather methods
+
+
+    //region GoogleApiClient.ConnectionCallbacks
+    @Override
+    public void onConnected(Bundle bundle) {
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+    //endregion GoogleApiClient.ConnectionCallbacks
+
+
+    //region GoogleApiClient.OnConnectionFailedListener
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+
+    }
+    //endregion GoogleApiClient.OnConnectionFailedListener
 
 
     //region Send intent handlers

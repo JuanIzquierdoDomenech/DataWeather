@@ -39,14 +39,14 @@ public class WeatherSQLiteOpenHelper extends SQLiteOpenHelper{
                     FIELD_ROW_DATE + " text" +
                     " ) ";
 
-    private SQLiteDatabase _DB;
+    private SQLiteDatabase mDB;
     //endregion Private member variables
 
 
     //region Constructor
     public WeatherSQLiteOpenHelper(Context context) {
         super(context, DB_NAME, null, VERSION);
-        _DB = getWritableDatabase();
+        mDB = getWritableDatabase();
     }
     //endregion Constructor
 
@@ -71,7 +71,7 @@ public class WeatherSQLiteOpenHelper extends SQLiteOpenHelper{
      * @return row id
      */
     public long insert(ContentValues contentValues) {
-        long rowID = _DB.insert(WEATHER_TABLE, null, contentValues);
+        long rowID = mDB.insert(WEATHER_TABLE, null, contentValues);
         Log.d("WEATHER DB", "INSERT -> " + contentValues.toString());
         return rowID;
     }
@@ -81,7 +81,7 @@ public class WeatherSQLiteOpenHelper extends SQLiteOpenHelper{
      * @return deleted rows count
      */
     public int del() {
-        int cnt = _DB.delete(WEATHER_TABLE, null, null);
+        int cnt = mDB.delete(WEATHER_TABLE, null, null);
         return cnt;
     }
 
@@ -89,7 +89,7 @@ public class WeatherSQLiteOpenHelper extends SQLiteOpenHelper{
         String whereClause = FIELD_ROW_USER + " = ? and " + FIELD_ROW_LOCATION + " = ? and " + FIELD_ROW_DATE + " = ?";
         String[] whereArgs = new String[]{wd.getUserName(), wd.getLocation(), wd.getDate()};
 
-        return _DB.delete(WEATHER_TABLE, whereClause, whereArgs);
+        return mDB.delete(WEATHER_TABLE, whereClause, whereArgs);
     }
 
     /**
@@ -98,7 +98,7 @@ public class WeatherSQLiteOpenHelper extends SQLiteOpenHelper{
      */
     public Cursor getAllWeatherData() {
         String[] projection = {FIELD_ROW_ID, FIELD_ROW_USER, FIELD_ROW_LOCATION, FIELD_ROW_LAT, FIELD_ROW_LON, FIELD_ROW_WEATHER, FIELD_ROW_DATE};
-        return _DB.query(WEATHER_TABLE, projection, null, null, null, null, null);
+        return mDB.query(WEATHER_TABLE, projection, null, null, null, null, null);
     }
 
     public Cursor getUserWeatherData(String user) {
@@ -114,7 +114,7 @@ public class WeatherSQLiteOpenHelper extends SQLiteOpenHelper{
 
         String[] projection = {FIELD_ROW_ID, FIELD_ROW_LOCATION, FIELD_ROW_LAT, FIELD_ROW_LON, FIELD_ROW_WEATHER, FIELD_ROW_DATE};
         String order = FIELD_ROW_ID + " DESC";
-        Cursor c = _DB.query(WEATHER_TABLE, projection, FIELD_ROW_USER+"=?", new String[]{user}, null, null, order);
+        Cursor c = mDB.query(WEATHER_TABLE, projection, FIELD_ROW_USER+"=?", new String[]{user}, null, null, order);
 
         return c;
     }

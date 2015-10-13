@@ -19,24 +19,24 @@ import java.util.Vector;
 
 public class WeatherListItemAdapter extends BaseAdapter {
 
-    private final Activity activity;
-    private Vector<WeatherData> originalWeatherDataList;
+    private final Activity mActivity;
+    private Vector<WeatherData> mOriginalWeatherDataList;
 
     public WeatherListItemAdapter(Activity activity, Vector<WeatherData> dataList) {
         super();
-        this.activity = activity;
-        this.originalWeatherDataList = dataList;
+        this.mActivity = activity;
+        this.mOriginalWeatherDataList = dataList;
     }
 
     //region BaseAdapter
     @Override
     public int getCount() {
-        return originalWeatherDataList.size();
+        return mOriginalWeatherDataList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return originalWeatherDataList.elementAt(position);
+        return mOriginalWeatherDataList.elementAt(position);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class WeatherListItemAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = activity.getLayoutInflater();
+        LayoutInflater inflater = mActivity.getLayoutInflater();
         View view = inflater.inflate(R.layout.activity_weatherlist_item, null, true);
 
         TextView cityTextView = (TextView)view.findViewById(R.id.weatherListItemCityText);
@@ -55,7 +55,7 @@ public class WeatherListItemAdapter extends BaseAdapter {
         TextView weatherTextView = (TextView)view.findViewById(R.id.weatherListItemWeatherText);
         ImageView weatherImageView = (ImageView)view.findViewById(R.id.weatherListItemWeatherIcon);
 
-        WeatherData rowData = originalWeatherDataList.elementAt(position);
+        WeatherData rowData = mOriginalWeatherDataList.elementAt(position);
         StringBuilder latLng = new StringBuilder();
         latLng.append(rowData.getLatitude()).append(", ").append(rowData.getLongitude());
 
@@ -101,12 +101,12 @@ public class WeatherListItemAdapter extends BaseAdapter {
 
 
     public void updateItems(Vector<WeatherData> newItems) {
-        originalWeatherDataList = newItems;
+        mOriginalWeatherDataList = newItems;
         notifyDataSetChanged();
     }
 
     public void sort(final String field) {
-        Collections.sort(originalWeatherDataList, new Comparator<WeatherData>() {
+        Collections.sort(mOriginalWeatherDataList, new Comparator<WeatherData>() {
             @Override
             public int compare(WeatherData lhs, WeatherData rhs) {
                 if (field.equals("location")) {

@@ -58,26 +58,25 @@ public class WeatherListActivity extends AppCompatActivity implements LocationLi
     @Bind(R.id.weatherList)protected ListView weatherList;
     @Bind(R.id.weatherListUsernameTextView)protected TextView usernameTextView;
 
-    private WeatherSQLiteOpenHelper weatherDB;
+    private WeatherSQLiteOpenHelper mWeatherDB;
+
+    private LocationManager mLocationManager;
+    private String mProvider;
+
+    private static Handler mMainThreadHandler;
+
+    private JSONObject mLastJsonWeatherData;
+    private Location mLastLocationData;
+
+    private SharedPreferences mDefaultSharedPreferences;
+
+    private WeatherListItemAdapter mWeatherListItemAdapter;
+    private Vector<WeatherData> mWeatherDataVector;
+
+    private Timer mTimer;
+    private TimerTask mTimerTask;
 
     private static final int ONE_SECOND = 1000;
-
-    private LocationManager locationManager;
-    private String provider;
-
-    private static Handler mainThreadHandler;
-
-    private JSONObject lastJsonWeatherData;
-    private Location lastLocationData;
-
-    private SharedPreferences defaultSharedPreferences;
-
-    private WeatherListItemAdapter weatherListItemAdapter;
-    private Vector<WeatherData> weatherDataVector;
-
-    private Timer timer;
-    private TimerTask timerTask;
-
 
     //region Activity lifecycle
     @Override
@@ -90,19 +89,19 @@ public class WeatherListActivity extends AppCompatActivity implements LocationLi
         ButterKnife.bind(this);
 
         // Get preferences from preferences fragment
-        defaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        mDefaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         SharedPreferences myPrefs = getSharedPreferences("MyPrefsFile", Context.MODE_PRIVATE);
 
         // Thread initialization
-        mainThreadHandler = new Handler(Looper.getMainLooper()) {
+        mMainThreadHandler = new Handler(Looper.getMainLooper()) {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
             }
         };
 
-        locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        mLocationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
 
         // Disable add button until location found
         //addWeatherButton.setEnabled(false);
@@ -117,20 +116,20 @@ public class WeatherListActivity extends AppCompatActivity implements LocationLi
         criteria.setCostAllowed(false);
         criteria.setAltitudeRequired(false);
         criteria.setAccuracy(Criteria.ACCURACY_FINE);
-        provider = locationManager.getBestProvider(criteria, false);
+        mProvider = mLocationManager.getBestProvider(criteria, false);
 
         registerLocationListener();
 
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
-            lastLocationData = locationManager.getLastKnownLocation(provider);
+            mLastLocationData = mLocationManager.getLastKnownLocation(mProvider);
             //addWeatherButton.setEnabled(false);
         }
 
         // Check if any location service is enabled
-        if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
-                && !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+        if(!mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+                && !mLocationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
 
             AlertDialogUtilities.showNoLocationSettingsEnabledAlert(this);
         }
@@ -141,36 +140,36 @@ public class WeatherListActivity extends AppCompatActivity implements LocationLi
         Log.d("WeatherListActivity", "onResume");
         super.onResume();
 
-        if(weatherDB == null) {
-            weatherDB = new WeatherSQLiteOpenHelper(this);
+        if(mWeatherDB == null) {
+            mWeatherDB = new WeatherSQLiteOpenHelper(this);
         }
 
         // Get DB data for current user
         SharedPreferences myPrefs = getSharedPreferences("MyPrefsFile", Context.MODE_PRIVATE);
         String currentUser = myPrefs.getString(getString(R.string.share_prefs_user_logged), "");
-        weatherDataVector = weatherDB.getUserWeatherDataVector(currentUser);
+        mWeatherDataVector = mWeatherDB.getUserWeatherDataVector(currentUser);
 
         // Create the adapter for the list and update it
-        weatherListItemAdapter = new WeatherListItemAdapter(this, weatherDataVector);
-        weatherList.setAdapter(weatherListItemAdapter);
+        mWeatherListItemAdapter = new WeatherListItemAdapter(this, mWeatherDataVector);
+        weatherList.setAdapter(mWeatherListItemAdapter);
 
         // Show user name in textview
         usernameTextView.setText(currentUser);
 
-        Log.d("WeatherListActivity", "onResume -> showing data for this user -> " + currentUser + ", entries " + weatherDataVector.size());
+        Log.d("WeatherListActivity", "onResume -> showing data for this user -> " + currentUser + ", entries " + mWeatherDataVector.size());
 
         // Insert into database every X minutes
-        String insertFrequencyMinutesStr = defaultSharedPreferences.getString(getString(R.string.share_prefs_insert_freq), "60");
+        String insertFrequencyMinutesStr = mDefaultSharedPreferences.getString(getString(R.string.share_prefs_insert_freq), "60");
         int insertFrequencyMinutesInt = Integer.parseInt(insertFrequencyMinutesStr);
         insertFrequencyMinutesInt *= 60;    // Translate to minutes
 
-        timer = new Timer();
-        timerTask = new TimerTask() {
+        mTimer = new Timer();
+        mTimerTask = new TimerTask() {
             @Override
             public void run() {
                 Log.d("WeatherListActivity", "onResume -> Timer schedule executing");
-                if(lastJsonWeatherData != null) {
-                    mainThreadHandler.post(new Runnable() {
+                if(mLastJsonWeatherData != null) {
+                    mMainThreadHandler.post(new Runnable() {
                         @Override
                         public void run() {
                             insertIntoDB();
@@ -180,7 +179,7 @@ public class WeatherListActivity extends AppCompatActivity implements LocationLi
             }
         };
         Log.d("WeatherListActivity", "onResume -> scheculing timer every " + (insertFrequencyMinutesInt/60) + " minutes");
-        timer.scheduleAtFixedRate(timerTask, insertFrequencyMinutesInt*1000, insertFrequencyMinutesInt*1000); // Delay X minutes since activity onResume
+        mTimer.scheduleAtFixedRate(mTimerTask, insertFrequencyMinutesInt*1000, insertFrequencyMinutesInt*1000); // Delay X minutes since activity onResume
     }
 
     // -------------------------------------------------------------------> Activity running
@@ -231,10 +230,10 @@ public class WeatherListActivity extends AppCompatActivity implements LocationLi
                 changeUser();
                 return true;
             case R.id.action_sort_by_location:
-                weatherListItemAdapter.sort("location");
+                mWeatherListItemAdapter.sort("location");
                 break;
             case R.id.action_sort_by_date:
-                weatherListItemAdapter.sort("date");
+                mWeatherListItemAdapter.sort("date");
                 break;
             default:
                 break;
@@ -251,7 +250,7 @@ public class WeatherListActivity extends AppCompatActivity implements LocationLi
     public void addWeatherButtonClicked(ImageButton imgBtn) {
         Log.d("WeatherListActivity", "addWeatherButtonClicked");
 
-        if(lastJsonWeatherData == null) {
+        if(mLastJsonWeatherData == null) {
             Toast.makeText(this, getString(R.string.no_location_data_available), Toast.LENGTH_SHORT).show();
             return;
         }
@@ -267,7 +266,7 @@ public class WeatherListActivity extends AppCompatActivity implements LocationLi
     public void itemListClick(int position) {
         Log.d("WeatherListActivity", "itemListClick at" + position);
 
-        WeatherData weatherRowData = (WeatherData) weatherListItemAdapter.getItem(position);
+        WeatherData weatherRowData = (WeatherData) mWeatherListItemAdapter.getItem(position);
         Log.d("WeatherListActivity", "itemListClick -> " + weatherRowData);
     }
 
@@ -276,7 +275,7 @@ public class WeatherListActivity extends AppCompatActivity implements LocationLi
     public boolean itemListLongClick(int position) {
         Log.d("WeatherListActivity", "itemListLongClick at" + position);
 
-        WeatherData weatherRowData = (WeatherData) weatherListItemAdapter.getItem(position);
+        WeatherData weatherRowData = (WeatherData) mWeatherListItemAdapter.getItem(position);
         Log.d("WeatherListActivity", "itemListLongClick -> " + weatherRowData);
 
         deleteEntryFromDB(weatherRowData);
@@ -291,9 +290,9 @@ public class WeatherListActivity extends AppCompatActivity implements LocationLi
         logOutUser();
 
         // Stop timer task
-        timerTask.cancel();
-        timer.cancel();
-        timer.purge();
+        mTimerTask.cancel();
+        mTimer.cancel();
+        mTimer.purge();
 
         // Go back to login activity
         Intent loginActivityIntent = new Intent(this, LoginActivity.class);
@@ -322,7 +321,7 @@ public class WeatherListActivity extends AppCompatActivity implements LocationLi
         Log.d("WeatherListActivity", "onLocationChanged");
 
         // Store last location data
-        lastLocationData = location;
+        mLastLocationData = location;
 
         String yourLocation = getString(R.string.your_location) + ": " + location.getLatitude() + ", " + location.getLongitude();
         String city = getLocationName(location);
@@ -350,8 +349,8 @@ public class WeatherListActivity extends AppCompatActivity implements LocationLi
     }
 
     private void registerLocationListener() {
-        String updateFrequencyStr = defaultSharedPreferences.getString(getString(R.string.share_prefs_update_freq), "0");
-        String updateMetersStr = defaultSharedPreferences.getString(getString(R.string.share_prefs_update_meters), "10");
+        String updateFrequencyStr = mDefaultSharedPreferences.getString(getString(R.string.share_prefs_update_freq), "0");
+        String updateMetersStr = mDefaultSharedPreferences.getString(getString(R.string.share_prefs_update_meters), "10");
 
         int updateFrequencyInt = Integer.parseInt(updateFrequencyStr);
         int updateMetersInt = Integer.parseInt(updateMetersStr);
@@ -360,14 +359,14 @@ public class WeatherListActivity extends AppCompatActivity implements LocationLi
 
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            locationManager.requestLocationUpdates(provider, updateFrequencyInt * ONE_SECOND, updateMetersInt, this);
+            mLocationManager.requestLocationUpdates(mProvider, updateFrequencyInt * ONE_SECOND, updateMetersInt, this);
 
-            if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, updateFrequencyInt * ONE_SECOND, updateMetersInt, this);
+            if(mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, updateFrequencyInt * ONE_SECOND, updateMetersInt, this);
             }
 
-            if(locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, updateFrequencyInt * ONE_SECOND, updateMetersInt, this);
+            if(mLocationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+                mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, updateFrequencyInt * ONE_SECOND, updateMetersInt, this);
             }
         }
     }
@@ -376,7 +375,7 @@ public class WeatherListActivity extends AppCompatActivity implements LocationLi
         Log.d("WeatherListActivity", "unregisterLocationListener");
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            locationManager.removeUpdates(this);
+            mLocationManager.removeUpdates(this);
         }
     }
     //endregion LocationListener
@@ -401,7 +400,7 @@ public class WeatherListActivity extends AppCompatActivity implements LocationLi
             public void run() {
                 final JSONObject json = HTTPWeatherFetch.getJSON(getApplicationContext(), city);
                 if(json == null) {
-                    mainThreadHandler.post(new Runnable() {
+                    mMainThreadHandler.post(new Runnable() {
                         @Override
                         public void run() {
                             Toast.makeText(getApplicationContext(),
@@ -410,10 +409,10 @@ public class WeatherListActivity extends AppCompatActivity implements LocationLi
                         }
                     });
                 } else {
-                    mainThreadHandler.post(new Runnable() {
+                    mMainThreadHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            lastJsonWeatherData = json;
+                            mLastJsonWeatherData = json;
                             Log.d("WeatherListActivity", "showWeatherData weather data found");
                         }
                     });
@@ -450,16 +449,16 @@ public class WeatherListActivity extends AppCompatActivity implements LocationLi
 
         WeatherUtilities.WeatherType weatherType = WeatherUtilities.WeatherType.CLEAR;
         try {
-            JSONObject currentWeather = lastJsonWeatherData.getJSONArray("weather").getJSONObject(0);
+            JSONObject currentWeather = mLastJsonWeatherData.getJSONArray("weather").getJSONObject(0);
             weatherType = WeatherUtilities.getWeatherType(currentWeather.getInt("id"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        if(weatherDB == null) {
+        if(mWeatherDB == null) {
 
             // Create database helper
-            weatherDB = new WeatherSQLiteOpenHelper(getApplicationContext());
+            mWeatherDB = new WeatherSQLiteOpenHelper(getApplicationContext());
         }
 
         // Insert into database
@@ -468,19 +467,19 @@ public class WeatherListActivity extends AppCompatActivity implements LocationLi
 
         ContentValues values = new ContentValues();
         values.put(WeatherSQLiteOpenHelper.FIELD_ROW_USER, currentUser);
-        values.put(WeatherSQLiteOpenHelper.FIELD_ROW_LOCATION, getLocationName(lastLocationData));
+        values.put(WeatherSQLiteOpenHelper.FIELD_ROW_LOCATION, getLocationName(mLastLocationData));
         // values.put(WeatherSQLiteOpenHelper.FIELD_ROW_LOCATION, "Cocentaina");
-        values.put(WeatherSQLiteOpenHelper.FIELD_ROW_LAT, lastLocationData.getLatitude());
-        values.put(WeatherSQLiteOpenHelper.FIELD_ROW_LON, lastLocationData.getLongitude());
+        values.put(WeatherSQLiteOpenHelper.FIELD_ROW_LAT, mLastLocationData.getLatitude());
+        values.put(WeatherSQLiteOpenHelper.FIELD_ROW_LON, mLastLocationData.getLongitude());
         values.put(WeatherSQLiteOpenHelper.FIELD_ROW_WEATHER, weatherType.toString());
         values.put(WeatherSQLiteOpenHelper.FIELD_ROW_DATE, DateUtilities.milisToDate(System.currentTimeMillis()));
 
         Log.d("WeatherListActivity", "insertIntoDB inserting " + values.toString());
-        weatherDB.insert(values);
+        mWeatherDB.insert(values);
 
         // Notify the adapter for vector data changes
-        weatherDataVector = weatherDB.getUserWeatherDataVector(currentUser);
-        weatherListItemAdapter.updateItems(weatherDataVector);
+        mWeatherDataVector = mWeatherDB.getUserWeatherDataVector(currentUser);
+        mWeatherListItemAdapter.updateItems(mWeatherDataVector);
     }
 
     private void deleteEntryFromDB(final WeatherData wd) {
@@ -490,9 +489,9 @@ public class WeatherListActivity extends AppCompatActivity implements LocationLi
             @Override
             public void run() {
 
-                weatherDB.deleteEntry(wd);
-                weatherDataVector = weatherDB.getUserWeatherDataVector(wd.getUserName());
-                weatherListItemAdapter.updateItems(weatherDataVector);
+                mWeatherDB.deleteEntry(wd);
+                mWeatherDataVector = mWeatherDB.getUserWeatherDataVector(wd.getUserName());
+                mWeatherListItemAdapter.updateItems(mWeatherDataVector);
             }
         };
 
