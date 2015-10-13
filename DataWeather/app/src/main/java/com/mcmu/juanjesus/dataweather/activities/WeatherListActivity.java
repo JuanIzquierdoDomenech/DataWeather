@@ -483,14 +483,16 @@ public class WeatherListActivity extends AppCompatActivity implements LocationLi
         weatherListItemAdapter.updateItems(weatherDataVector);
     }
 
-    private void deleteEntryFromDB(WeatherData wd) {
+    private void deleteEntryFromDB(final WeatherData wd) {
         Log.d("WeatherListActivity", "deleteEntryFromDB: " + wd);
 
         Runnable delete = new Runnable() {
             @Override
             public void run() {
 
-                
+                weatherDB.deleteEntry(wd);
+                weatherDataVector = weatherDB.getUserWeatherDataVector(wd.getUserName());
+                weatherListItemAdapter.updateItems(weatherDataVector);
             }
         };
 

@@ -85,6 +85,13 @@ public class WeatherSQLiteOpenHelper extends SQLiteOpenHelper{
         return cnt;
     }
 
+    public int deleteEntry(WeatherData wd) {
+        String whereClause = FIELD_ROW_USER + " = ? and " + FIELD_ROW_LOCATION + " = ? and " + FIELD_ROW_DATE + " = ?";
+        String[] whereArgs = new String[]{wd.getUserName(), wd.getLocation(), wd.getDate()};
+
+        return _DB.delete(WEATHER_TABLE, whereClause, whereArgs);
+    }
+
     /**
      * Gets all weather table rows
      * @return
