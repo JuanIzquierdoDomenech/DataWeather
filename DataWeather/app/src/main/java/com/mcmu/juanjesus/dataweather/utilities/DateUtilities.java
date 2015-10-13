@@ -10,16 +10,18 @@ import java.util.TimeZone;
 
 public final class DateUtilities {
 
+    private static String TIME_FORMAT = "dd/MM/yyyy HH:mm:ss";
+
     public static String milisToDate(long milis) {
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd hh:mm aaa", Locale.getDefault());
+        SimpleDateFormat sdf = new SimpleDateFormat(TIME_FORMAT, Locale.getDefault());
         Date resultdate = new Date(milis);
 
         return sdf.format(resultdate);
     }
 
     public static String getUTCstring(Location location) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat(TIME_FORMAT, Locale.getDefault());
         sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
         String date = sdf.format(new Date(location.getTime()));
 
