@@ -54,6 +54,25 @@
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
             android:visibility="gone"/>
+
+        <!-- sign-in button -->
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/signInButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
+
+        <!-- sign-out button -->
+        <Button
+            android:id="@+id/signOutButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sign_out"
+            android:visibility="gone"
+            android:layout_alignTop="@+id/signInButton"
+            android:layout_centerHorizontal="true" />
+
     </RelativeLayout>
 
 

@@ -39,8 +39,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.google.android.gms.*;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.games.Games;
+import com.google.example.games.basegameutils.BaseGameUtils;
 import com.mcmu.juanjesus.dataweather.database.WeatherSQLiteOpenHelper;
 import com.mcmu.juanjesus.dataweather.utilities.AlertDialogUtilities;
 import com.mcmu.juanjesus.dataweather.utilities.DateUtilities;
@@ -52,7 +55,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -69,13 +71,18 @@ import static com.mcmu.juanjesus.dataweather.R.drawable.snowy_weather_anim;
 import static com.mcmu.juanjesus.dataweather.R.drawable.thunderstorm_weather_anim;
 
 public class LoginActivity extends AppCompatActivity
-        implements LocationListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+        implements LocationListener,
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener {
 
     @Bind(R.id.loginUsernameEditText)protected EditText userNameText;
     @Bind(R.id.loginLetsGoButton)protected Button letsGoBtn;
     @Bind(R.id.loginYourLocationTextView) protected TextView yourLocationTextView;
     @Bind(R.id.loginLoadingIndicator) protected ImageView loadingIndicator;
     @Bind(R.id.loginCurrentWeatherImage) protected ImageView currentWeatherImage;
+
+    @Bind(R.id.signInButton) protected com.google.android.gms.common.SignInButton signInButton;
+    @Bind(R.id.signOutButton) protected Button signOutButton;
 
     private LocationManager mLocationManager;
     private String mProvider;
@@ -89,6 +96,12 @@ public class LoginActivity extends AppCompatActivity
 
     private WeatherSQLiteOpenHelper mWeatherSQLiteOpenHelper;
 
+    private GoogleApiClient mGoogleApiClient;
+    private static int RC_SIGN_IN = 9001;
+    private boolean mResolvingConnectionFailure = false;
+    private boolean mAutoStartSignInFlow = true;
+    private boolean mSignInClicked = false;
+
     private boolean mExternalSendIntentReceived = false;
 
     private static final int ONE_SECOND = 1000;
@@ -96,7 +109,7 @@ public class LoginActivity extends AppCompatActivity
     //region Activity lifecycle
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d("Login", "onCreate");
+        Log.d("LoginActivity", "onCreate");
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_login);
@@ -108,6 +121,14 @@ public class LoginActivity extends AppCompatActivity
             mExternalSendIntentReceived = savedInstanceState.getBoolean("externalSendIntentReceived");
             Log.d("onCreate", "savedInstanceState != null -> " + mExternalSendIntentReceived);
         }
+
+        // Build google api client
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(Games.API)
+                .addScope(Games.SCOPE_GAMES)
+                .build();
 
         // Get SEND data
         /*Intent sendIntent = getIntent();
@@ -172,8 +193,11 @@ public class LoginActivity extends AppCompatActivity
 
     @Override
     protected void onStart() {
-        Log.d("Login", "onStart");
+        Log.d("LoginActivity", "onStart");
         super.onStart();
+
+        // Connect google api client
+        // mGoogleApiClient.connect();
 
         // Check if any location service is enabled
         if(!mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
@@ -224,7 +248,7 @@ public class LoginActivity extends AppCompatActivity
 
     @Override
     protected void onResume() {
-        Log.d("Login", "onResume");
+        Log.d("LoginActivity", "onResume");
         super.onResume();
     }
 
@@ -232,28 +256,33 @@ public class LoginActivity extends AppCompatActivity
 
     @Override
     protected void onPause() {
-        Log.d("Login", "onPause");
+        Log.d("LoginActivity", "onPause");
         super.onPause();
     }
 
     @Override
     protected void onStop() {
-        Log.d("Login", "onStop");
+        Log.d("LoginActivity", "onStop");
+
+        // Stop requesting connection updates
         unregisterLocationListener();
         mWeatherSQLiteOpenHelper = null;
+
+        // Disconnect google api client
+        // mGoogleApiClient.disconnect();
 
         super.onStop();
     }
 
     @Override
     protected void onDestroy() {
-        Log.d("Login", "onDestroy");
+        Log.d("LoginActivity", "onDestroy");
         super.onDestroy();
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        Log.d("Login", "onSaveInstanceState");
+        Log.d("LoginActivity", "onSaveInstanceState");
 
         outState.putBoolean("externalSendIntentReceived", mExternalSendIntentReceived);
         super.onSaveInstanceState(outState);
@@ -262,7 +291,7 @@ public class LoginActivity extends AppCompatActivity
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        Log.d("Login", "onRestoreInstanceState");
+        Log.d("LoginActivity", "onRestoreInstanceState");
     }
     //endregion Activity lifecycle
 
@@ -401,6 +430,29 @@ public class LoginActivity extends AppCompatActivity
             anim.start();
         }
     }
+
+    @SuppressWarnings("unused")
+    @OnClick(R.id.signInButton)
+    public void signInButtonClicked(com.google.android.gms.common.SignInButton btn) {
+        Log.d("LoginActivity", "signInButtonClicked");
+
+        // start the asynchronous sign in flow
+        mSignInClicked = true;
+        mGoogleApiClient.connect();
+    }
+
+    @SuppressWarnings("unused")
+    @OnClick(R.id.signOutButton)
+    public void signOutButtonClicked(Button btn) {
+        Log.d("LoginActivity", "signOutButtonClicked");
+
+        mSignInClicked = false;
+        Games.signOut(mGoogleApiClient);
+
+        // Show the sign in button, hide the sign out button
+        signInButton.setVisibility(View.VISIBLE);
+        signOutButton.setVisibility(View.GONE);
+    }
     //endregion UI events
 
 
@@ -408,7 +460,7 @@ public class LoginActivity extends AppCompatActivity
     @Override
     public void onLocationChanged(Location location) {
 
-        Log.d("Login:onLocationChanged", location.toString());
+        Log.d("LoginActivity", "onLocationChanged -> " + location.toString());
 
         // Store last location data
         mLastLocationData = location;
@@ -432,17 +484,17 @@ public class LoginActivity extends AppCompatActivity
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
-        Log.d("Login:onStatusChanged", provider);
+        Log.d("LoginActivity", "onStatusChanged -> " + provider);
     }
 
     @Override
     public void onProviderEnabled(String provider) {
-        Log.d("Login:onStatusChanged", provider);
+        Log.d("LoginActivity", "onProviderEnabled -> " + provider);
     }
 
     @Override
     public void onProviderDisabled(String provider) {
-        Log.d("Login:onStatusChanged", provider);
+        Log.d("LoginActivity", "onProviderDisabled -> " + provider);
     }
 
     private void registerLocationListener() {
@@ -452,7 +504,7 @@ public class LoginActivity extends AppCompatActivity
         int updateFrequencyInt = Integer.parseInt(updateFrequencyStr);
         int updateMetersInt = Integer.parseInt(updateMetersStr);
 
-        Log.d("RegisterLocListener", "" + updateFrequencyInt);
+        Log.d("LoginActivity", "registerLocationListener -> " + updateFrequencyInt);
 
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -469,7 +521,7 @@ public class LoginActivity extends AppCompatActivity
     }
 
     private void unregisterLocationListener() {
-        Log.d("UnregisterLocListener", "");
+        Log.d("LoginActivity", "unregisterLocationListener");
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             mLocationManager.removeUpdates(this);
@@ -615,12 +667,19 @@ public class LoginActivity extends AppCompatActivity
     //region GoogleApiClient.ConnectionCallbacks
     @Override
     public void onConnected(Bundle bundle) {
+        Log.d("LoginActivity", "onConnected(google api client)");
 
+        // Once connected, show the sign out button and hide the sign in
+        signInButton.setVisibility(View.GONE);
+        signOutButton.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onConnectionSuspended(int i) {
+        Log.d("LoginActivity", "onConnectionSuspended(google api client)");
 
+        // Attempt to reconnect
+        mGoogleApiClient.connect();
     }
     //endregion GoogleApiClient.ConnectionCallbacks
 
@@ -628,7 +687,31 @@ public class LoginActivity extends AppCompatActivity
     //region GoogleApiClient.OnConnectionFailedListener
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
+        Log.d("LoginActivity", "onConnectionFailed(google api client)");
 
+        if (mResolvingConnectionFailure) {
+            // already resolving
+            return;
+        }
+
+        if (mSignInClicked || mAutoStartSignInFlow) {
+            mAutoStartSignInFlow = false;
+            mSignInClicked = false;
+            mResolvingConnectionFailure = true;
+
+            // Attempt to resolve the connection failure using BaseGameUtils.
+            // The R.string.signin_other_error value should reference a generic
+            // error string in your strings.xml file, such as "There was
+            // an issue with sign in, please try again later."
+            if (!BaseGameUtils.resolveConnectionFailure(this,
+                    mGoogleApiClient, connectionResult,
+                    RC_SIGN_IN, getString(R.string.error_connect_google_play_services))) {
+                mResolvingConnectionFailure = false;
+            }
+        }
+
+        // Put code here to display the sign-in button
+        Log.d("LoginActivity", "onConnectionFailed -> display sign-in button");
     }
     //endregion GoogleApiClient.OnConnectionFailedListener
 

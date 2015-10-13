@@ -52,4 +52,6 @@
     <string name="delete_entry">Borrar fila de la base de datos</string>
     <string name="are_you_sure">¿Estás seguro?</string>
     <string name="delete">Borrar</string>
+    <string name="error_connect_google_play_services">Ha habido un problema con el registro. Inténtelo mas tarde.</string>
+    <string name="sign_out">Desconectarse</string>
 </resources>
