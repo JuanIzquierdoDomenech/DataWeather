@@ -177,7 +177,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
         if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
                 && !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
 
-            AlertDialogUtilities.showNoLocationSettingsEnabled(this);
+            AlertDialogUtilities.showNoLocationSettingsEnabledAlert(this);
         }
 
         Criteria criteria = new Criteria();
@@ -337,7 +337,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
         if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
                 && !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
 
-            AlertDialogUtilities.showNoLocationSettingsEnabled(this);
+            AlertDialogUtilities.showNoLocationSettingsEnabledAlert(this);
             return;
         }
 

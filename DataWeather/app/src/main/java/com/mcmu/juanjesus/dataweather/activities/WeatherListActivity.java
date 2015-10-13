@@ -132,7 +132,7 @@ public class WeatherListActivity extends AppCompatActivity implements LocationLi
         if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
                 && !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
 
-            AlertDialogUtilities.showNoLocationSettingsEnabled(this);
+            AlertDialogUtilities.showNoLocationSettingsEnabledAlert(this);
         }
     }
 
@@ -485,6 +485,16 @@ public class WeatherListActivity extends AppCompatActivity implements LocationLi
 
     private void deleteEntryFromDB(WeatherData wd) {
         Log.d("WeatherListActivity", "deleteEntryFromDB: " + wd);
+
+        Runnable delete = new Runnable() {
+            @Override
+            public void run() {
+
+                
+            }
+        };
+
+        AlertDialogUtilities.showDeleteFromDatabaseAlert(this, delete);
     }
     //endregion DB
 }
