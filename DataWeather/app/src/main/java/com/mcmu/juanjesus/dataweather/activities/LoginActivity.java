@@ -39,6 +39,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mcmu.juanjesus.dataweather.database.WeatherSQLiteOpenHelper;
+import com.mcmu.juanjesus.dataweather.utilities.AlertDialogUtilities;
 import com.mcmu.juanjesus.dataweather.utilities.DateUtilities;
 import com.mcmu.juanjesus.dataweather.utilities.HTTPWeatherFetch;
 import com.mcmu.juanjesus.dataweather.R;
@@ -176,7 +177,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
         if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
                 && !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
 
-            showNoLocationSettingsEnabled();
+            AlertDialogUtilities.showNoLocationSettingsEnabled(this);
         }
 
         Criteria criteria = new Criteria();
@@ -336,7 +337,7 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
         if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
                 && !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
 
-            showNoLocationSettingsEnabled();
+            AlertDialogUtilities.showNoLocationSettingsEnabled(this);
             return;
         }
 
@@ -495,24 +496,6 @@ public class LoginActivity extends AppCompatActivity implements LocationListener
         return result;
     }
     //endregion Geocoder
-
-
-    //region Alerts
-    private void showNoLocationSettingsEnabled() {
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setMessage(getString(R.string.location_service_disabled));
-        alert.setPositiveButton(getString(R.string.enable), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                Intent locationSettingsIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                startActivity(locationSettingsIntent);
-            }
-        });
-        alert.setNegativeButton(getString(R.string.cancel), null);
-        alert.show();
-    }
-    //endregion Alerts
 
 
     //region Location and weather methods

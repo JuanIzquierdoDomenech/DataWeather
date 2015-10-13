@@ -31,6 +31,7 @@ import com.mcmu.juanjesus.dataweather.R;
 import com.mcmu.juanjesus.dataweather.database.WeatherSQLiteOpenHelper;
 import com.mcmu.juanjesus.dataweather.listadapters.WeatherListItemAdapter;
 import com.mcmu.juanjesus.dataweather.models.WeatherData;
+import com.mcmu.juanjesus.dataweather.utilities.AlertDialogUtilities;
 import com.mcmu.juanjesus.dataweather.utilities.DateUtilities;
 import com.mcmu.juanjesus.dataweather.utilities.HTTPWeatherFetch;
 import com.mcmu.juanjesus.dataweather.utilities.WeatherUtilities;
@@ -119,6 +120,13 @@ public class WeatherListActivity extends AppCompatActivity implements LocationLi
             lastLocationData = locationManager.getLastKnownLocation(provider);
             //addWeatherButton.setEnabled(false);
         }
+
+        // Check if any location service is enabled
+        if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+                && !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+
+            AlertDialogUtilities.showNoLocationSettingsEnabled(this);
+        }
     }
 
     @Override
@@ -153,8 +161,8 @@ public class WeatherListActivity extends AppCompatActivity implements LocationLi
     @Override
     protected void onStop() {
         Log.d("WeatherListActivity", "onStop");
-        unregisterLocationListener();
-        weatherDB = null;
+        //unregisterLocationListener(); We will listen for location changes even when the app is not visible
+        //weatherDB = null;
 
         super.onStop();
     }
