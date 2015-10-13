@@ -33,7 +33,6 @@
     </layouts>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="WeatherListActivity" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
@@ -56,7 +55,32 @@
     <favorites_list name="DataWeather" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="WeatherListActivity.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/mcmu/juanjesus/dataweather/activities/WeatherListActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.60336137">
+              <caret line="279" column="55" selection-start-line="279" selection-start-column="55" selection-end-line="279" selection-end-column="55" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#5204#5247#0" expanded="true" />
+                <element signature="e#5885#5928#0" expanded="true" />
+                <element signature="e#9041#9087#0" expanded="true" />
+                <element signature="e#9177#9215#0" expanded="true" />
+                <element signature="e#10757#10800#0" expanded="true" />
+                <element signature="e#11320#11353#0" expanded="true" />
+                <element signature="e#12206#12249#0" expanded="true" />
+                <element signature="e#12325#12370#0" expanded="true" />
+                <element signature="e#14287#14331#0" expanded="true" />
+                <element signature="e#14540#14584#0" expanded="true" />
+                <element signature="e#15104#15146#0" expanded="true" />
+                <element signature="e#17039#17082#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -1557,8 +1581,8 @@
         <option value="$PROJECT_DIR$/app/src/main/res/menu/menu_weather_list_activity.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/mcmu/juanjesus/dataweather/utilities/AlertDialogUtilities.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/mcmu/juanjesus/dataweather/activities/LoginActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/mcmu/juanjesus/dataweather/activities/WeatherListActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/xml/preferences.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/mcmu/juanjesus/dataweather/activities/WeatherListActivity.java" />
       </list>
     </option>
   </component>
@@ -1618,68 +1642,6 @@
               <option name="myItemId" value="app" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="xml" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DataWeather" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="values" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DataWeather" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="values" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="strings.xml" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResGroupNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DataWeather" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -1693,28 +1655,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="java" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DataWeather" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="dataweather" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="utilities" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -1755,16 +1695,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="activities" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DataWeather" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -2195,14 +2125,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1920" height="1003" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.28381255" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32807216" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
-      <window_info id="Android Monitor" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.29763246" sideWeight="0.49713877" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.29763246" sideWeight="0.49713877" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32893" sideWeight="0.5028612" order="8" side_tool="true" content_ui="tabs" />
@@ -2267,24 +2197,18 @@
           <caret line="244" column="32" selection-start-line="244" selection-start-column="32" selection-end-line="244" selection-end-column="32" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#5168#5211#0" expanded="true" />
-            <element signature="e#5849#5892#0" expanded="true" />
-            <element signature="e#6104#6585#0" expanded="true" />
-            <element signature="e#6355#6541#0" expanded="true" />
-            <element signature="e#6540#6541#0" expanded="true" />
-            <element signature="e#6584#6585#0" expanded="true" />
-            <element signature="e#9005#9051#0" expanded="true" />
-            <element signature="e#9141#9179#0" expanded="true" />
-            <element signature="e#10319#10362#0" expanded="true" />
-            <element signature="e#10882#10915#0" expanded="true" />
-            <element signature="e#11768#11811#0" expanded="true" />
-            <element signature="e#11887#11932#0" expanded="true" />
-            <element signature="e#13849#13893#0" expanded="true" />
-            <element signature="e#14102#14146#0" expanded="true" />
-            <element signature="e#14467#14821#0" expanded="true" />
-            <element signature="e#14666#14708#0" expanded="true" />
-            <element signature="e#14820#14821#0" expanded="true" />
-            <element signature="e#16601#16644#0" expanded="true" />
+            <element signature="e#5204#5247#0" expanded="true" />
+            <element signature="e#5885#5928#0" expanded="true" />
+            <element signature="e#9041#9087#0" expanded="true" />
+            <element signature="e#9177#9215#0" expanded="true" />
+            <element signature="e#10757#10800#0" expanded="true" />
+            <element signature="e#11320#11353#0" expanded="true" />
+            <element signature="e#12206#12249#0" expanded="true" />
+            <element signature="e#12325#12370#0" expanded="true" />
+            <element signature="e#14287#14331#0" expanded="true" />
+            <element signature="e#14540#14584#0" expanded="true" />
+            <element signature="e#15104#15146#0" expanded="true" />
+            <element signature="e#17039#17082#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2327,24 +2251,18 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#5168#5211#0" expanded="true" />
-            <element signature="e#5849#5892#0" expanded="true" />
-            <element signature="e#6104#6585#0" expanded="true" />
-            <element signature="e#6355#6541#0" expanded="true" />
-            <element signature="e#6540#6541#0" expanded="true" />
-            <element signature="e#6584#6585#0" expanded="true" />
-            <element signature="e#9005#9051#0" expanded="true" />
-            <element signature="e#9141#9179#0" expanded="true" />
-            <element signature="e#10319#10362#0" expanded="true" />
-            <element signature="e#10882#10915#0" expanded="true" />
-            <element signature="e#11768#11811#0" expanded="true" />
-            <element signature="e#11887#11932#0" expanded="true" />
-            <element signature="e#13849#13893#0" expanded="true" />
-            <element signature="e#14102#14146#0" expanded="true" />
-            <element signature="e#14467#14821#0" expanded="true" />
-            <element signature="e#14666#14708#0" expanded="true" />
-            <element signature="e#14820#14821#0" expanded="true" />
-            <element signature="e#16601#16644#0" expanded="true" />
+            <element signature="e#5204#5247#0" expanded="true" />
+            <element signature="e#5885#5928#0" expanded="true" />
+            <element signature="e#9041#9087#0" expanded="true" />
+            <element signature="e#9177#9215#0" expanded="true" />
+            <element signature="e#10757#10800#0" expanded="true" />
+            <element signature="e#11320#11353#0" expanded="true" />
+            <element signature="e#12206#12249#0" expanded="true" />
+            <element signature="e#12325#12370#0" expanded="true" />
+            <element signature="e#14287#14331#0" expanded="true" />
+            <element signature="e#14540#14584#0" expanded="true" />
+            <element signature="e#15104#15146#0" expanded="true" />
+            <element signature="e#17039#17082#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2587,34 +2505,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/mcmu/juanjesus/dataweather/activities/WeatherListActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.21302816">
-          <caret line="161" column="125" selection-start-line="161" selection-start-column="125" selection-end-line="161" selection-end-column="125" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#5168#5211#0" expanded="true" />
-            <element signature="e#5849#5892#0" expanded="true" />
-            <element signature="e#6104#6585#0" expanded="true" />
-            <element signature="e#6355#6541#0" expanded="true" />
-            <element signature="e#6540#6541#0" expanded="true" />
-            <element signature="e#6584#6585#0" expanded="true" />
-            <element signature="e#9005#9051#0" expanded="true" />
-            <element signature="e#9141#9179#0" expanded="true" />
-            <element signature="e#10319#10362#0" expanded="true" />
-            <element signature="e#10882#10915#0" expanded="true" />
-            <element signature="e#11768#11811#0" expanded="true" />
-            <element signature="e#11887#11932#0" expanded="true" />
-            <element signature="e#13849#13893#0" expanded="true" />
-            <element signature="e#14102#14146#0" expanded="true" />
-            <element signature="e#14467#14821#0" expanded="true" />
-            <element signature="e#14666#14708#0" expanded="true" />
-            <element signature="e#14820#14821#0" expanded="true" />
-            <element signature="e#16601#16644#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.6296296">
@@ -2626,6 +2516,28 @@
     <entry file="android-dummy:///Users/imacunit02/Desktop/DataWeather/DataWeather/app/Translations Editor">
       <provider selected="true" editor-type-id="string-resource-editor">
         <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/mcmu/juanjesus/dataweather/activities/WeatherListActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.60336137">
+          <caret line="279" column="55" selection-start-line="279" selection-start-column="55" selection-end-line="279" selection-end-column="55" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#5204#5247#0" expanded="true" />
+            <element signature="e#5885#5928#0" expanded="true" />
+            <element signature="e#9041#9087#0" expanded="true" />
+            <element signature="e#9177#9215#0" expanded="true" />
+            <element signature="e#10757#10800#0" expanded="true" />
+            <element signature="e#11320#11353#0" expanded="true" />
+            <element signature="e#12206#12249#0" expanded="true" />
+            <element signature="e#12325#12370#0" expanded="true" />
+            <element signature="e#14287#14331#0" expanded="true" />
+            <element signature="e#14540#14584#0" expanded="true" />
+            <element signature="e#15104#15146#0" expanded="true" />
+            <element signature="e#17039#17082#0" expanded="true" />
+          </folding>
+        </state>
       </provider>
     </entry>
   </component>

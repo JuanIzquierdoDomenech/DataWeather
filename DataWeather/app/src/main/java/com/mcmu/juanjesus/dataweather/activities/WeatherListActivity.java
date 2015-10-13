@@ -50,6 +50,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
+import butterknife.OnItemLongClick;
 
 public class WeatherListActivity extends AppCompatActivity implements LocationListener {
 
@@ -263,11 +264,21 @@ public class WeatherListActivity extends AppCompatActivity implements LocationLi
 
     @SuppressWarnings("unused")
     @OnItemClick(R.id.weatherList)
-    public void itemSelected(int position) {
-        Log.d("WeatherListActivity", "itemSelected at" + position);
+    public void itemListClick(int position) {
+        Log.d("WeatherListActivity", "itemListClick at" + position);
 
         WeatherData weatherRowData = (WeatherData) weatherListItemAdapter.getItem(position);
-        Log.d("WeatherListActivity", "itemSelected -> " + weatherRowData);
+        Log.d("WeatherListActivity", "itemListClick -> " + weatherRowData);
+    }
+
+    @SuppressWarnings("unused")
+    @OnItemLongClick(R.id.weatherList)
+    public boolean itemListLongClick(int position) {
+        Log.d("WeatherListActivity", "itemListLongClick at" + position);
+
+        WeatherData weatherRowData = (WeatherData) weatherListItemAdapter.getItem(position);
+        Log.d("WeatherListActivity", "itemListLongClick -> " + weatherRowData);
+        return true;
     }
     //endregion UI events
 
