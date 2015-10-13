@@ -42,6 +42,8 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.Vector;
 
 import butterknife.Bind;
@@ -71,6 +73,10 @@ public class WeatherListActivity extends AppCompatActivity implements LocationLi
 
     private WeatherListItemAdapter weatherListItemAdapter;
     private Vector<WeatherData> weatherDataVector;
+
+    private Timer timer;
+    private TimerTask timerTask;
+
 
     //region Activity lifecycle
     @Override
@@ -138,16 +144,42 @@ public class WeatherListActivity extends AppCompatActivity implements LocationLi
             weatherDB = new WeatherSQLiteOpenHelper(this);
         }
 
+        // Get DB data for current user
         SharedPreferences myPrefs = getSharedPreferences("MyPrefsFile", Context.MODE_PRIVATE);
         String currentUser = myPrefs.getString(getString(R.string.share_prefs_user_logged), "");
         weatherDataVector = weatherDB.getUserWeatherDataVector(currentUser);
 
+        // Create the adapter for the list and update it
         weatherListItemAdapter = new WeatherListItemAdapter(this, weatherDataVector);
         weatherList.setAdapter(weatherListItemAdapter);
 
+        // Show user name in textview
         usernameTextView.setText(currentUser);
 
         Log.d("WeatherListActivity", "onResume -> showing data for this user -> " + currentUser + ", entries " + weatherDataVector.size());
+
+        // Insert into database every X minutes
+        String insertFrequencyMinutesStr = defaultSharedPreferences.getString(getString(R.string.share_prefs_insert_freq), "60");
+        int insertFrequencyMinutesInt = Integer.parseInt(insertFrequencyMinutesStr);
+        insertFrequencyMinutesInt *= 60;    // Translate to minutes
+
+        timer = new Timer();
+        timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                Log.d("WeatherListActivity", "onResume -> Timer schedule executing");
+                if(lastJsonWeatherData != null) {
+                    mainThreadHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            insertIntoDB();
+                        }
+                    });
+                }
+            }
+        };
+        Log.d("WeatherListActivity", "onResume -> scheculing timer every " + (insertFrequencyMinutesInt/60) + " minutes");
+        timer.scheduleAtFixedRate(timerTask, insertFrequencyMinutesInt*1000, insertFrequencyMinutesInt*1000); // Delay X minutes since activity onResume
     }
 
     // -------------------------------------------------------------------> Activity running
@@ -225,39 +257,8 @@ public class WeatherListActivity extends AppCompatActivity implements LocationLi
 
         Toast.makeText(this, getString(R.string.inserting_entry_db), Toast.LENGTH_SHORT).show();
 
-        WeatherUtilities.WeatherType weatherType = WeatherUtilities.WeatherType.CLEAR;
-        try {
-            JSONObject currentWeather = lastJsonWeatherData.getJSONArray("weather").getJSONObject(0);
-            weatherType = WeatherUtilities.getWeatherType(currentWeather.getInt("id"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        if(weatherDB == null) {
-
-            // Create database helper
-            weatherDB = new WeatherSQLiteOpenHelper(getApplicationContext());
-        }
-
-        // Insert into database
-        SharedPreferences myPrefs = getSharedPreferences("MyPrefsFile", Context.MODE_PRIVATE);
-        String currentUser = myPrefs.getString(getString(R.string.share_prefs_user_logged), "");
-
-        ContentValues values = new ContentValues();
-        values.put(WeatherSQLiteOpenHelper.FIELD_ROW_USER, currentUser);
-        values.put(WeatherSQLiteOpenHelper.FIELD_ROW_LOCATION, getLocationName(lastLocationData));
-        // values.put(WeatherSQLiteOpenHelper.FIELD_ROW_LOCATION, "Cocentaina");
-        values.put(WeatherSQLiteOpenHelper.FIELD_ROW_LAT, lastLocationData.getLatitude());
-        values.put(WeatherSQLiteOpenHelper.FIELD_ROW_LON, lastLocationData.getLongitude());
-        values.put(WeatherSQLiteOpenHelper.FIELD_ROW_WEATHER, weatherType.toString());
-        values.put(WeatherSQLiteOpenHelper.FIELD_ROW_DATE, DateUtilities.milisToDate(System.currentTimeMillis()));
-
-        Log.d("WeatherListActivity", "addWeatherButtonClicked inserting " + values.toString());
-        weatherDB.insert(values);
-
-        // Notify the adapter for vector data changes
-        weatherDataVector = weatherDB.getUserWeatherDataVector(currentUser);
-        weatherListItemAdapter.updateItems(weatherDataVector);
+        // Insert current weather data into db
+        insertIntoDB();
     }
 
     @SuppressWarnings("unused")
@@ -275,6 +276,11 @@ public class WeatherListActivity extends AppCompatActivity implements LocationLi
 
         // Erase username from preferences
         logOutUser();
+
+        // Stop timer task
+        timerTask.cancel();
+        timer.cancel();
+        timer.purge();
 
         // Go back to login activity
         Intent loginActivityIntent = new Intent(this, LoginActivity.class);
@@ -423,4 +429,44 @@ public class WeatherListActivity extends AppCompatActivity implements LocationLi
         return result;
     }
     //endregion Geocoder
+
+
+    //region DB
+    private void insertIntoDB() {
+
+        WeatherUtilities.WeatherType weatherType = WeatherUtilities.WeatherType.CLEAR;
+        try {
+            JSONObject currentWeather = lastJsonWeatherData.getJSONArray("weather").getJSONObject(0);
+            weatherType = WeatherUtilities.getWeatherType(currentWeather.getInt("id"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        if(weatherDB == null) {
+
+            // Create database helper
+            weatherDB = new WeatherSQLiteOpenHelper(getApplicationContext());
+        }
+
+        // Insert into database
+        SharedPreferences myPrefs = getSharedPreferences("MyPrefsFile", Context.MODE_PRIVATE);
+        String currentUser = myPrefs.getString(getString(R.string.share_prefs_user_logged), "");
+
+        ContentValues values = new ContentValues();
+        values.put(WeatherSQLiteOpenHelper.FIELD_ROW_USER, currentUser);
+        values.put(WeatherSQLiteOpenHelper.FIELD_ROW_LOCATION, getLocationName(lastLocationData));
+        // values.put(WeatherSQLiteOpenHelper.FIELD_ROW_LOCATION, "Cocentaina");
+        values.put(WeatherSQLiteOpenHelper.FIELD_ROW_LAT, lastLocationData.getLatitude());
+        values.put(WeatherSQLiteOpenHelper.FIELD_ROW_LON, lastLocationData.getLongitude());
+        values.put(WeatherSQLiteOpenHelper.FIELD_ROW_WEATHER, weatherType.toString());
+        values.put(WeatherSQLiteOpenHelper.FIELD_ROW_DATE, DateUtilities.milisToDate(System.currentTimeMillis()));
+
+        Log.d("WeatherListActivity", "insertIntoDB inserting " + values.toString());
+        weatherDB.insert(values);
+
+        // Notify the adapter for vector data changes
+        weatherDataVector = weatherDB.getUserWeatherDataVector(currentUser);
+        weatherListItemAdapter.updateItems(weatherDataVector);
+    }
+    //endregion DB
 }

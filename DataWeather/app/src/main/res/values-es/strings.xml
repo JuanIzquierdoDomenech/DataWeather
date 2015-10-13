@@ -45,4 +45,8 @@
     <string name="action_sort_by_location">Ordenar por lugar</string>
     <string name="no_location_data_available">No se encuentran datos de localización, lo sentimos</string>
     <string name="action_sort_by_date">Ordenar por fecha</string>
+    <string name="location_updates">Actualización de localización</string>
+    <string name="share_prefs_insert_freq">com.mcmu.juanjesus.dataweather.INSERT_FREQ</string>
+    <string name="insert_frequency">Frecuencia de inserción</string>
+    <string name="insert_frequency_summary">Frecuencia, en minutos, en que la app inserta datos del tiempo en la base de datos. Por defecto, cada 1 hora.</string>
 </resources>

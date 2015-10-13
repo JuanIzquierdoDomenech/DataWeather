@@ -45,4 +45,8 @@
     <string name="action_sort_by_location">Sort by location</string>
     <string name="no_location_data_available">Sorry, there is no location data available</string>
     <string name="action_sort_by_date">Sort by date</string>
+    <string name="location_updates">Location updates</string>
+    <string name="share_prefs_insert_freq">com.mcmu.juanjesus.dataweather.INSERT_FREQ</string>
+    <string name="insert_frequency">Insert frequency</string>
+    <string name="insert_frequency_summary">Frequency, in minutes, that the app stores weather data into the database. By default, 1 hour.</string>
 </resources>

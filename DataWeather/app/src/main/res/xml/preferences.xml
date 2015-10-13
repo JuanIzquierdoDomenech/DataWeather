@@ -18,4 +18,13 @@
             android:defaultValue="10" />
     </PreferenceCategory>
 
+    <PreferenceCategory
+        android:title="@string/location_updates">
+        <EditTextPreference
+            android:key="@string/share_prefs_insert_freq"
+            android:title="@string/insert_frequency"
+            android:summary="@string/insert_frequency_summary"
+            android:defaultValue="60" />
+    </PreferenceCategory>
+
 </PreferenceScreen>
