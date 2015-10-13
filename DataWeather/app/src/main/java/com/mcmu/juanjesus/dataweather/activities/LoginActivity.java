@@ -197,7 +197,7 @@ public class LoginActivity extends AppCompatActivity
         super.onStart();
 
         // Connect google api client
-        // mGoogleApiClient.connect();
+        mGoogleApiClient.connect();
 
         // Check if any location service is enabled
         if(!mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
@@ -269,7 +269,7 @@ public class LoginActivity extends AppCompatActivity
         mWeatherSQLiteOpenHelper = null;
 
         // Disconnect google api client
-        // mGoogleApiClient.disconnect();
+        mGoogleApiClient.disconnect();
 
         super.onStop();
     }
