@@ -42,4 +42,7 @@
     <string name="location_min_distance_summary">Distancia minima, en metros, entre actualizaciones</string>
     <string name="share_prefs_update_meters">com.mcmu.juanjesus.dataweather.MIN_DISTANCE</string>
     <string name="inserting_entry_db">Insertando entrada en la base de datos</string>
+    <string name="action_sort_by_location">Ordenar por lugar</string>
+    <string name="no_location_data_available">No se encuentran datos de localización, lo sentimos</string>
+    <string name="action_sort_by_date">Ordenar por fecha</string>
 </resources>

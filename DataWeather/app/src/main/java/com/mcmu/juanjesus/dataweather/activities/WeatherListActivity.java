@@ -189,6 +189,12 @@ public class WeatherListActivity extends AppCompatActivity implements LocationLi
             case R.id.action_change_user:
                 changeUser();
                 return true;
+            case R.id.action_sort_by_location:
+                weatherListItemAdapter.sort("location");
+                break;
+            case R.id.action_sort_by_date:
+                weatherListItemAdapter.sort("date");
+                break;
             default:
                 break;
         }
@@ -205,7 +211,7 @@ public class WeatherListActivity extends AppCompatActivity implements LocationLi
         Log.d("WeatherListActivity", "addWeatherButtonClicked");
 
         if(lastJsonWeatherData == null) {
-            Toast.makeText(this, getString(R.string.weather_data_not_found), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.no_location_data_available), Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -232,6 +238,7 @@ public class WeatherListActivity extends AppCompatActivity implements LocationLi
         ContentValues values = new ContentValues();
         values.put(WeatherSQLiteOpenHelper.FIELD_ROW_USER, currentUser);
         values.put(WeatherSQLiteOpenHelper.FIELD_ROW_LOCATION, getLocationName(lastLocationData));
+        // values.put(WeatherSQLiteOpenHelper.FIELD_ROW_LOCATION, "Cocentaina");
         values.put(WeatherSQLiteOpenHelper.FIELD_ROW_LAT, lastLocationData.getLatitude());
         values.put(WeatherSQLiteOpenHelper.FIELD_ROW_LON, lastLocationData.getLongitude());
         values.put(WeatherSQLiteOpenHelper.FIELD_ROW_WEATHER, weatherType.toString());

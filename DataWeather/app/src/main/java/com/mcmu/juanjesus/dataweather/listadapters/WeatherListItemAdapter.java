@@ -13,6 +13,8 @@ import com.mcmu.juanjesus.dataweather.R;
 import com.mcmu.juanjesus.dataweather.models.WeatherData;
 import com.mcmu.juanjesus.dataweather.utilities.WeatherUtilities;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Vector;
 
 public class WeatherListItemAdapter extends BaseAdapter {
@@ -102,7 +104,21 @@ public class WeatherListItemAdapter extends BaseAdapter {
         originalWeatherDataList = newItems;
         notifyDataSetChanged();
     }
-    
+
+    public void sort(final String field) {
+        Collections.sort(originalWeatherDataList, new Comparator<WeatherData>() {
+            @Override
+            public int compare(WeatherData lhs, WeatherData rhs) {
+                if (field.equals("location")) {
+                    return lhs.getLocation().compareTo(rhs.getLocation());
+                } else if (field.equals("date")) {
+                    return lhs.getDate().compareTo(rhs.getDate());
+                }
+                    return 0;
+            }
+        });
+        notifyDataSetChanged();
+    }
 }
 
 

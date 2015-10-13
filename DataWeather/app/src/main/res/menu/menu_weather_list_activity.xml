@@ -5,6 +5,18 @@
     tools:context=".WeatherListActivity">
 
     <item
+        android:id="@+id/action_sort_by_location"
+        android:title="@string/action_sort_by_location"
+        android:orderInCategory="90"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/action_sort_by_date"
+        android:title="@string/action_sort_by_date"
+        android:orderInCategory="91"
+        app:showAsAction="never"/>
+
+    <item
         android:id="@+id/action_settings"
         android:title="@string/action_settings"
         android:orderInCategory="100"
