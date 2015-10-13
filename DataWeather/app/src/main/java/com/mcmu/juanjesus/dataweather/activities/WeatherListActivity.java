@@ -278,6 +278,8 @@ public class WeatherListActivity extends AppCompatActivity implements LocationLi
 
         WeatherData weatherRowData = (WeatherData) weatherListItemAdapter.getItem(position);
         Log.d("WeatherListActivity", "itemListLongClick -> " + weatherRowData);
+
+        deleteEntryFromDB(weatherRowData);
         return true;
     }
     //endregion UI events
@@ -444,6 +446,7 @@ public class WeatherListActivity extends AppCompatActivity implements LocationLi
 
     //region DB
     private void insertIntoDB() {
+        Log.d("WeatherListActivity", "insertIntoDB");
 
         WeatherUtilities.WeatherType weatherType = WeatherUtilities.WeatherType.CLEAR;
         try {
@@ -478,6 +481,10 @@ public class WeatherListActivity extends AppCompatActivity implements LocationLi
         // Notify the adapter for vector data changes
         weatherDataVector = weatherDB.getUserWeatherDataVector(currentUser);
         weatherListItemAdapter.updateItems(weatherDataVector);
+    }
+
+    private void deleteEntryFromDB(WeatherData wd) {
+        Log.d("WeatherListActivity", "deleteEntryFromDB: " + wd);
     }
     //endregion DB
 }
