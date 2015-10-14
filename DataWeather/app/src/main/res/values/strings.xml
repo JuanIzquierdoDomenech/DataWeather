@@ -54,4 +54,7 @@
     <string name="delete">Delete</string>
     <string name="error_connect_google_play_services">There was an issue with sign-in, please try again later</string>
     <string name="sign_out">Sign out</string>
+    <string name="achievements">Achievements</string>
+    <string name="sign_in_gplus_needed">You need to sign in with your Google account first</string>
+    <string name="close">Close</string>
 </resources>

@@ -54,4 +54,7 @@
     <string name="delete">Borrar</string>
     <string name="error_connect_google_play_services">Ha habido un problema con el registro. Inténtelo mas tarde.</string>
     <string name="sign_out">Desconectarse</string>
+    <string name="achievements">Logros</string>
+    <string name="sign_in_gplus_needed">Necesitas iniciar sesión con tu cuenta de Google</string>
+    <string name="close">Cerrar</string>
 </resources>

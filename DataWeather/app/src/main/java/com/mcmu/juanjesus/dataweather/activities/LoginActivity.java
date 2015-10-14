@@ -341,6 +341,13 @@ public class LoginActivity extends AppCompatActivity
             case R.id.action_share_current_weather:
                 shareCurrentWeather();
                 break;
+            case R.id.action_show_achievements:
+                if(mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
+                    startActivityForResult(Games.Achievements.getAchievementsIntent(mGoogleApiClient), 1);
+                } else {
+                    AlertDialogUtilities.showNeedSigniInGooglePlusAlert(this);
+                }
+                break;
             default:
                 break;
         }
@@ -435,11 +442,7 @@ public class LoginActivity extends AppCompatActivity
 
             // Unlock Welcome! achievement
             if(mGoogleApiClient.isConnected() && mGoogleApiClient != null) {
-                Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_logro1));
-                Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_logro2));
-                Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_logro3));
-                Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_logro4));
-                Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_logro5));
+                Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_welcome));
             }
 
             // Change activity

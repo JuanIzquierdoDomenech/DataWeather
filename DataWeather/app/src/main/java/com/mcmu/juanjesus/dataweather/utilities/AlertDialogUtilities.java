@@ -40,4 +40,12 @@ public class AlertDialogUtilities {
         alert.setNegativeButton(c.getString(R.string.cancel), null);
         alert.show();
     }
+
+    public static void showNeedSigniInGooglePlusAlert(final Context c) {
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(c);
+        alert.setMessage(c.getString(R.string.sign_in_gplus_needed));
+        alert.setPositiveButton(c.getString(R.string.close), null);
+        alert.show();
+    }
 }
