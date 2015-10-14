@@ -1,6 +1,6 @@
 # Synopsis #
 
-This is an Android project that is intended to store in a remote database the weather where the user is.
+This is an Android project that is intended to store in a local SQLite database the weather where the user is.
 
 ![Alt text](http://fulginitivo.com/wp-content/uploads/2015/09/rainy-day-wallpapers.jpg "Rainy day :)")
 
