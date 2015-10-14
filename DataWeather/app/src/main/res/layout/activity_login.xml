@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:text="@string/sign_out"
             android:visibility="gone"
-            android:layout_alignTop="@+id/signInButton"
+            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true" />
 
     </RelativeLayout>

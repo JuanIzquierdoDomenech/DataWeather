@@ -129,8 +129,7 @@ public class LoginActivity extends AppCompatActivity
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
-                .addApi(Games.API)
-                .addScope(Games.SCOPE_GAMES)
+                .addApi(Games.API).addScope(Games.SCOPE_GAMES)
                 .build();
 
         // Get SEND data
@@ -296,6 +295,27 @@ public class LoginActivity extends AppCompatActivity
         super.onRestoreInstanceState(savedInstanceState);
         Log.d("LoginActivity", "onRestoreInstanceState");
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d("LoginActivity", "onActivityResult -> Request:" + requestCode + " - Result:" + resultCode);
+
+        if (requestCode == RC_SIGN_IN) {
+            mSignInClicked = false;
+            mResolvingConnectionFailure = false;
+            if (resultCode == RESULT_OK) {
+                mGoogleApiClient.connect();
+            } else {
+                // Bring up an error dialog to alert the user that sign-in
+                // failed. The R.string.signin_failure should reference an error
+                // string in your strings.xml file that tells the user they
+                // could not be signed in, such as "Unable to sign in."
+                BaseGameUtils.showActivityResultError(this,
+                        requestCode, resultCode, R.string.error_connect_google_play_services);
+            }
+        }
+    }
+
     //endregion Activity lifecycle
 
 
@@ -414,12 +434,12 @@ public class LoginActivity extends AppCompatActivity
             mWeatherSQLiteOpenHelper.insert(values);
 
             // Unlock Welcome! achievement
-            if(mGoogleApiClient.isConnected()) {
-                Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_welcome));
-                Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_sth1));
-                Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_sth2));
-                Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_sth3));
-                Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_sth4));
+            if(mGoogleApiClient.isConnected() && mGoogleApiClient != null) {
+                Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_logro1));
+                Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_logro2));
+                Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_logro3));
+                Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_logro4));
+                Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_logro5));
             }
 
             // Change activity
@@ -710,6 +730,8 @@ public class LoginActivity extends AppCompatActivity
             return;
         }
 
+        // if the sign-in button was clicked or if auto sign-in is enabled,
+        // launch the sign-in flow
         if (mSignInClicked || mAutoStartSignInFlow) {
             mAutoStartSignInFlow = false;
             mSignInClicked = false;
@@ -718,7 +740,7 @@ public class LoginActivity extends AppCompatActivity
             // Attempt to resolve the connection failure using BaseGameUtils.
             // The R.string.signin_other_error value should reference a generic
             // error string in your strings.xml file, such as "There was
-            // an issue with sign in, please try again later."
+            // an issue with sign-in, please try again later."
             if (!BaseGameUtils.resolveConnectionFailure(this,
                     mGoogleApiClient, connectionResult,
                     RC_SIGN_IN, getString(R.string.error_connect_google_play_services))) {
@@ -726,7 +748,6 @@ public class LoginActivity extends AppCompatActivity
             }
         }
 
-        // Put code here to display the sign-in button
         Log.d("LoginActivity", "onConnectionFailed -> display sign-in button");
     }
     //endregion GoogleApiClient.OnConnectionFailedListener
