@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mcmu.juanjesus.dataweather" >
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -13,21 +14,23 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.WithActionBar" >
 
+        <!-- Google Play Game Services -->
         <meta-data
             android:name="com.google.android.gms.games.APP_ID"
             android:value="@string/app_id" />
-        <meta-data android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version"/>
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
 
         <!-- LoginActivity -->
         <activity
             android:name=".activities.LoginActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.WithActionBar"
-            android:launchMode="singleTask" >
-
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.WithActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
@@ -40,25 +43,22 @@
             -->
         </activity>
 
-
         <!-- WeatherListActivity -->
         <activity
             android:name=".activities.WeatherListActivity"
-            android:theme="@style/AppTheme.WithActionBar"
-            android:launchMode="singleTask" >
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.WithActionBar" >
         </activity>
 
         <!-- PreferencesActivity -->
-        <activity
-            android:name=".activities.PreferencesActivity">
+        <activity android:name=".activities.PreferencesActivity" >
         </activity>
 
         <!-- NyanActivity -->
         <activity
             android:name=".activities.NyanActivity"
-            android:theme="@style/Base.Theme.AppCompat.Dialog">
+            android:theme="@style/Base.Theme.AppCompat.Dialog" >
         </activity>
-
     </application>
 
 </manifest>

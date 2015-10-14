@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+Google Play game services IDs.
+Save this file as res/values/games-ids.xml in your project.
+-->
 <resources>
     <string name="app_id">942574831075</string>
+    <string name="package_name">com.mcmu.juanjesus.dataweather</string>
+    <string name="achievement_welcome">CgkI44varrcbEAIQAQ</string>
+    <string name="achievement_sth1">CgkI44varrcbEAIQAg</string>
+    <string name="achievement_sth2">CgkI44varrcbEAIQAw</string>
+    <string name="achievement_sth3">CgkI44varrcbEAIQBA</string>
+    <string name="achievement_sth4">CgkI44varrcbEAIQBQ</string>
 </resources>
