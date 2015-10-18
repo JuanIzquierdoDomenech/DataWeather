@@ -154,7 +154,8 @@ public class WeatherListActivity extends AppCompatActivity implements LocationLi
         weatherList.setAdapter(mWeatherListItemAdapter);
 
         // Show user name in textview
-        usernameTextView.setText(currentUser);
+        String userText = getString(R.string.user_colon) + " " + currentUser;
+        usernameTextView.setText(userText);
 
         Log.d("WeatherListActivity", "onResume -> showing data for this user -> " + currentUser + ", entries " + mWeatherDataVector.size());
 

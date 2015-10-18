@@ -97,6 +97,7 @@ public class LoginActivity extends AppCompatActivity
 
     private WeatherSQLiteOpenHelper mWeatherSQLiteOpenHelper;
 
+    //TODO: Implement GoogleApiClient as a singleton
     private GoogleApiClient mGoogleApiClient;
     private static int RC_SIGN_IN = 9001;
     private boolean mResolvingConnectionFailure = false;

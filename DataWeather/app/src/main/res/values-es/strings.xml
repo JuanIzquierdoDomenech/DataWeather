@@ -57,4 +57,5 @@
     <string name="achievements">Logros</string>
     <string name="sign_in_gplus_needed">Necesitas iniciar sesión con tu cuenta de Google</string>
     <string name="close">Cerrar</string>
+    <string name="user_colon">Usuario:</string>
 </resources>
