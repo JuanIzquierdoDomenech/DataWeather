@@ -59,4 +59,8 @@
     <string name="close">Close</string>
     <string name="user_colon">User:</string>
     <string name="sorry_no_weather_data_available">Sorry, there is no weather data available right now. Try again later.</string>
+    <string name="latitude_colon">Latitude:</string>
+    <string name="longitude_colon">Longitude:</string>
+    <string name="weather_colon">Weather:</string>
+    <string name="date_colon">Date:</string>
 </resources>

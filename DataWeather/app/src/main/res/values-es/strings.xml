@@ -59,4 +59,8 @@
     <string name="close">Cerrar</string>
     <string name="user_colon">Usuario:</string>
     <string name="sorry_no_weather_data_available">Lo sentimo, pero en estos momentos no hay datos sobre el tiempo. Inténtalo mas tarde.</string>
+    <string name="date_colon">Fecha:</string>
+    <string name="latitude_colon">Latitud:</string>
+    <string name="longitude_colon">Longitud:</string>
+    <string name="weather_colon">Tiempo:</string>
 </resources>
