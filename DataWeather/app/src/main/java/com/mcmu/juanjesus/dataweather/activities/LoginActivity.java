@@ -406,6 +406,13 @@ public class LoginActivity extends AppCompatActivity
         if (userNameText.length() == 0) {
             Toast.makeText(this, getString(R.string.cannot_empty_name), Toast.LENGTH_SHORT).show();
         } else {
+
+            // Check for weather data before insterting
+            if (mLastJsonWeatherData == null) {
+                Toast.makeText(this, getString(R.string.sorry_no_weather_data_available), Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             String userName = userNameText.getText().toString();
 
             // Store the user name in preferences

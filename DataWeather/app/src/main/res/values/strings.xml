@@ -13,20 +13,20 @@
     <string name="location_not_found">Location not found :_(</string>
 
     <string name="share_prefs_user_logged">com.mcmu.juanjesus.dataweather.LOGGED_USER</string>
-    <string name="location_service_disabled">Location service is disabled</string>
+    <string name="location_service_disabled">Location service is disabled.</string>
     <string name="go_location_settings">Go to location settings</string>
     <string name="enable">Enable</string>
     <string name="disable">Disable</string>
     <string name="cancel">Cancel</string>
-    <string name="location_updates_frequency">Location updates frequency in seconds</string>
-    <string name="location_updates_frequency_summary">How often the location system will ask for updates in user position</string>
-    <string name="location">Location</string>
+    <string name="location_updates_frequency">Location updates frequency</string>
+    <string name="location_updates_frequency_summary">How often the location system will ask for updates in user position.</string>
+    <string name="location">Location.</string>
     <string name="share_prefs_update_freq">com.mcmu.juanjesus.dataweather.UPDATES_FREQ</string>
     <string name="OPEN_WEATHER_MAP_API_KEY">39678ab6884c663ab591e5d876a46555</string>
     <string name="share_prefs_current_city">no city</string>
-    <string name="weather_data_not_found">Weather data no found</string>
+    <string name="weather_data_not_found">Weather data no found.</string>
     <string name="action_share_current_weather">Share current weather</string>
-    <string name="no_weather_data_to_share">No weather data to share</string>
+    <string name="no_weather_data_to_share">No weather data to share.</string>
     <string name="share_with">Share with...</string>
     <string name="in">in</string>
     <string name="filter_hint">Filter...</string>
@@ -39,13 +39,13 @@
     <string name="weather_snowy">Snow</string>
     <string name="weather_rainy">Rain</string>
     <string name="location_min_distance">Minimum distance</string>
-    <string name="location_min_distance_summary">Minimum distance in meters for the system to request location updates</string>
+    <string name="location_min_distance_summary">Minimum distance in meters for the system to request location updates.</string>
     <string name="share_prefs_update_meters">com.mcmu.juanjesus.dataweather.MIN_DISTANCE</string>
-    <string name="inserting_entry_db">Inserting entry into database</string>
+    <string name="inserting_entry_db">Inserting entry into database...</string>
     <string name="action_sort_by_location">Sort by location</string>
-    <string name="no_location_data_available">Sorry, there is no location data available</string>
+    <string name="no_location_data_available">Sorry, there is no location data available.</string>
     <string name="action_sort_by_date">Sort by date</string>
-    <string name="location_updates">Location updates</string>
+    <string name="location_updates">Location updates.</string>
     <string name="share_prefs_insert_freq">com.mcmu.juanjesus.dataweather.INSERT_FREQ</string>
     <string name="insert_frequency">Insert frequency</string>
     <string name="insert_frequency_summary">Frequency, in minutes, that the app stores weather data into the database. By default, 1 hour.</string>
@@ -55,7 +55,8 @@
     <string name="error_connect_google_play_services">There was an issue with sign-in, please try again later</string>
     <string name="sign_out">Sign out</string>
     <string name="achievements">Achievements</string>
-    <string name="sign_in_gplus_needed">You need to sign in with your Google account first</string>
+    <string name="sign_in_gplus_needed">You need to sign in with your Google account first.</string>
     <string name="close">Close</string>
     <string name="user_colon">User:</string>
+    <string name="sorry_no_weather_data_available">Sorry, there is no weather data available right now. Try again later.</string>
 </resources>

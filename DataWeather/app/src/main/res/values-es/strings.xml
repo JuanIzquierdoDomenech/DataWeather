@@ -11,22 +11,22 @@
     <string name="loading_location">Cargando localización...</string>
     <string name="your_location">Tu localización</string>
     <string name="location_not_found">Localización no encontrada :_(</string>
-    <string name="location_service_disabled">El servicio de localización está deshabilitado</string>
+    <string name="location_service_disabled">El servicio de localización está deshabilitado.</string>
 
     <string name="share_prefs_user_logged">com.mcmu.juanjesus.dataweather.LOGGED_USER</string>
     <string name="go_location_settings">Abrir opciones de localización</string>
     <string name="enable">Habilitar</string>
     <string name="disable">Deshabilitar</string>
     <string name="cancel">Cancelar</string>
-    <string name="location_updates_frequency">Frecuencia de actualización de la localización en segundos</string>
-    <string name="location_updates_frequency_summary">Cada cuanto tiempo se llamará al sistema de localización para averiguar tu localización</string>
-    <string name="location">Localización</string>
+    <string name="location_updates_frequency">Frecuencia de actualización de la localización</string>
+    <string name="location_updates_frequency_summary">Cada cuanto tiempo se llamará al sistema de localización para averiguar tu localización.</string>
+    <string name="location">Localización.</string>
     <string name="share_prefs_update_freq">com.mcmu.juanjesus.dataweather.UPDATES_FREQ</string>
     <string name="OPEN_WEATHER_MAP_API_KEY">39678ab6884c663ab591e5d876a46555</string>
     <string name="share_prefs_current_city">no city</string>
-    <string name="weather_data_not_found">No se han encontrado datos del tiempo</string>
+    <string name="weather_data_not_found">No se han encontrado datos del tiempo.</string>
     <string name="action_share_current_weather">Compartir tiempo actual</string>
-    <string name="no_weather_data_to_share">No hay datos del tiempo para compartir</string>
+    <string name="no_weather_data_to_share">No hay datos del tiempo para compartir.</string>
     <string name="share_with">Compartir con...</string>
     <string name="in">en</string>
     <string name="filter_hint">Filtrar...</string>
@@ -39,13 +39,13 @@
     <string name="weather_snowy">Nieva</string>
     <string name="weather_rainy">Lluvia</string>
     <string name="location_min_distance">Distancia minima</string>
-    <string name="location_min_distance_summary">Distancia minima, en metros, entre actualizaciones</string>
+    <string name="location_min_distance_summary">Distancia minima, en metros, entre actualizaciones.</string>
     <string name="share_prefs_update_meters">com.mcmu.juanjesus.dataweather.MIN_DISTANCE</string>
-    <string name="inserting_entry_db">Insertando entrada en la base de datos</string>
+    <string name="inserting_entry_db">Insertando entrada en la base de datos...</string>
     <string name="action_sort_by_location">Ordenar por lugar</string>
-    <string name="no_location_data_available">No se encuentran datos de localización, lo sentimos</string>
+    <string name="no_location_data_available">No se encuentran datos de localización, lo sentimos.</string>
     <string name="action_sort_by_date">Ordenar por fecha</string>
-    <string name="location_updates">Actualización de localización</string>
+    <string name="location_updates">Actualización de localización.</string>
     <string name="share_prefs_insert_freq">com.mcmu.juanjesus.dataweather.INSERT_FREQ</string>
     <string name="insert_frequency">Frecuencia de inserción</string>
     <string name="insert_frequency_summary">Frecuencia, en minutos, en que la app inserta datos del tiempo en la base de datos. Por defecto, cada 1 hora.</string>
@@ -55,7 +55,8 @@
     <string name="error_connect_google_play_services">Ha habido un problema con el registro. Inténtelo mas tarde.</string>
     <string name="sign_out">Desconectarse</string>
     <string name="achievements">Logros</string>
-    <string name="sign_in_gplus_needed">Necesitas iniciar sesión con tu cuenta de Google</string>
+    <string name="sign_in_gplus_needed">Necesitas iniciar sesión con tu cuenta de Google.</string>
     <string name="close">Cerrar</string>
     <string name="user_colon">Usuario:</string>
+    <string name="sorry_no_weather_data_available">Lo sentimo, pero en estos momentos no hay datos sobre el tiempo. Inténtalo mas tarde.</string>
 </resources>
