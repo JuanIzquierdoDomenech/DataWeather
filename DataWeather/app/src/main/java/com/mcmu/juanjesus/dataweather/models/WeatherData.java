@@ -1,6 +1,9 @@
 package com.mcmu.juanjesus.dataweather.models;
 
-public class WeatherData {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class WeatherData implements Parcelable {
 
     private String userName;
     private String location;
@@ -76,4 +79,38 @@ public class WeatherData {
     public void setDate(String date) {
         this.date = date;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.userName);
+        dest.writeString(this.location);
+        dest.writeFloat(this.latitude);
+        dest.writeFloat(this.longitude);
+        dest.writeString(this.weather);
+        dest.writeString(this.date);
+    }
+
+    protected WeatherData(Parcel in) {
+        this.userName = in.readString();
+        this.location = in.readString();
+        this.latitude = in.readFloat();
+        this.longitude = in.readFloat();
+        this.weather = in.readString();
+        this.date = in.readString();
+    }
+
+    public static final Creator<WeatherData> CREATOR = new Creator<WeatherData>() {
+        public WeatherData createFromParcel(Parcel source) {
+            return new WeatherData(source);
+        }
+
+        public WeatherData[] newArray(int size) {
+            return new WeatherData[size];
+        }
+    };
 }
