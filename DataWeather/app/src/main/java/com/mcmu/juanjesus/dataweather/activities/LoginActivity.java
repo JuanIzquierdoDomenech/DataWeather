@@ -23,6 +23,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -72,9 +73,9 @@ import static com.mcmu.juanjesus.dataweather.R.drawable.snowy_weather_anim;
 import static com.mcmu.juanjesus.dataweather.R.drawable.thunderstorm_weather_anim;
 
 public class LoginActivity extends AppCompatActivity
-        implements LocationListener,
+        implements LocationListener/*,
         GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener {
+        GoogleApiClient.OnConnectionFailedListener*/ {
 
     @Bind(R.id.loginUsernameEditText)protected EditText userNameText;
     @Bind(R.id.loginLetsGoButton)protected Button letsGoBtn;
@@ -97,18 +98,19 @@ public class LoginActivity extends AppCompatActivity
 
     private WeatherSQLiteOpenHelper mWeatherSQLiteOpenHelper;
 
-    //TODO: Implement GoogleApiClient as a singleton
     // private GoogleApiClient mGoogleApiClient;
-    private static int RC_SIGN_IN = 9001;
-    private boolean mResolvingConnectionFailure = false;
-    private boolean mAutoStartSignInFlow = true;
-    private boolean mSignInClicked = false;
-    boolean mExplicitSignOut = false;
-    boolean mInSignInFlow = false;
+    // private static int RC_SIGN_IN = 9001;
+    // private boolean mResolvingConnectionFailure = false;
+    // private boolean mAutoStartSignInFlow = true;
+    // private boolean mSignInClicked = false;
+    // boolean mExplicitSignOut = false;
+    // boolean mInSignInFlow = false;
 
     private boolean mExternalSendIntentReceived = false;
 
     private static final int ONE_SECOND = 1000;
+
+    private static final int REQUEST_LOCATION_PERMISSION = 11;
 
     //region Activity lifecycle
     @Override
@@ -215,16 +217,28 @@ public class LoginActivity extends AppCompatActivity
         Criteria criteria = new Criteria();
         criteria.setCostAllowed(false);
         criteria.setAltitudeRequired(false);
-        criteria.setAccuracy(Criteria.ACCURACY_FINE);
+        criteria.setAccuracy(Criteria.ACCURACY_LOW);
+        criteria.setPowerRequirement(Criteria.POWER_LOW);
         mProvider = mLocationManager.getBestProvider(criteria, false);
+
+        Log.d("LoginActivity", "Provider: " + mProvider);
 
         registerLocationListener();
 
         Location lastLocation = new Location(mProvider);
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+
+            // Has permission
             lastLocation = mLocationManager.getLastKnownLocation(mProvider);
         }
+        else
+        {
+            // Does not have permission (Android 6 and higher)
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION_PERMISSION);
+            return;
+        }
+
 
         if (lastLocation != null) {
 
@@ -242,13 +256,6 @@ public class LoginActivity extends AppCompatActivity
             // Pause spinner animation if any location was found
             loadingIndicator.clearAnimation();
             loadingIndicator.setVisibility(View.INVISIBLE);
-
-            // Notify location found
-            locationFound();
-        } else {
-
-            // Notify location lost
-            locationLost();
         }
     }
 
@@ -298,8 +305,57 @@ public class LoginActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d("LoginActivity", "onActivityResult -> Request:" + requestCode + " - Result:" + resultCode);
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_LOCATION_PERMISSION:
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // Permission granted
+                    Criteria criteria = new Criteria();
+                    criteria.setCostAllowed(false);
+                    criteria.setAltitudeRequired(false);
+                    criteria.setAccuracy(Criteria.ACCURACY_LOW);
+                    criteria.setPowerRequirement(Criteria.POWER_LOW);
+                    mProvider = mLocationManager.getBestProvider(criteria, false);
+
+                    registerLocationListener();
+
+                    Location lastLocation = new Location(mProvider);
+
+                    // It is redundant, as this code is called when the user gives permission, but android studio complains...
+                    if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                            || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                        lastLocation = mLocationManager.getLastKnownLocation(mProvider);
+                    }
+
+                    if (lastLocation != null) {
+
+                        mLastLocationData = lastLocation;
+
+                        String yourLocation = getString(R.string.your_location) + ": " + lastLocation.getLatitude() + ", " + lastLocation.getLongitude();
+                        yourLocationTextView.setText(yourLocation);
+                        String city = getLocationName(lastLocation);
+                        yourLocationTextView.append("(" + city + ")");
+
+                        // Store the current city in preferences
+                        storeCity(city);
+                        showWeatherData(city);
+
+                        // Pause spinner animation if any location was found
+                        loadingIndicator.clearAnimation();
+                        loadingIndicator.setVisibility(View.INVISIBLE);
+
+                    }
+                }
+                break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+            Log.d("LoginActivity", "onActivityResult -> Request:" + requestCode + " - Result:" + resultCode);
 
         /*if (requestCode == RC_SIGN_IN) {
             mSignInClicked = false;
@@ -525,8 +581,6 @@ public class LoginActivity extends AppCompatActivity
         loadingIndicator.clearAnimation();
         loadingIndicator.setVisibility(View.INVISIBLE);
 
-        // Notify location found
-        locationFound();
     }
 
     @Override
@@ -600,14 +654,6 @@ public class LoginActivity extends AppCompatActivity
 
 
     //region Location and weather methods
-    private void locationFound() {
-        letsGoBtn.setEnabled(true);
-    }
-
-    private void locationLost() {
-        letsGoBtn.setEnabled(false);
-    }
-
     private void storeCity(String city) {
         SharedPreferences myPrefs = getSharedPreferences("MyPrefsFile", Context.MODE_PRIVATE);
         SharedPreferences.Editor prefEditor = myPrefs.edit();
@@ -712,7 +758,7 @@ public class LoginActivity extends AppCompatActivity
 
 
     //region GoogleApiClient.ConnectionCallbacks
-    @Override
+    /*@Override
     public void onConnected(Bundle bundle) {
         Log.d("LoginActivity", "onConnected(google api client)");
 
@@ -736,7 +782,7 @@ public class LoginActivity extends AppCompatActivity
     public void onConnectionFailed(ConnectionResult connectionResult) {
         Log.d("LoginActivity", "onConnectionFailed(google api client) -> " + connectionResult.getErrorCode() + " - " + connectionResult.toString());
 
-        /*if (mResolvingConnectionFailure) {
+        if (mResolvingConnectionFailure) {
             // already resolving
             return;
         }
@@ -757,10 +803,10 @@ public class LoginActivity extends AppCompatActivity
                     RC_SIGN_IN, getString(R.string.error_connect_google_play_services))) {
                 mResolvingConnectionFailure = false;
             }
-        }*/
+        }
 
         Log.d("LoginActivity", "onConnectionFailed -> display sign-in button");
-    }
+    }*/
     //endregion GoogleApiClient.OnConnectionFailedListener
 
 
