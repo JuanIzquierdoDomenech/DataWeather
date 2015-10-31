@@ -3,11 +3,21 @@ package com.mcmu.juanjesus.dataweather.activities;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.mcmu.juanjesus.dataweather.R;
+
+import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class WeatherDetailActivity extends AppCompatActivity {
+
+    @Bind(R.id.detailLocation) TextView txtLocation;
+    @Bind(R.id.detailLatitude) TextView txtLat;
+    @Bind(R.id.detailLongitude) TextView txtLong;
+    @Bind(R.id.detailDate) TextView txtDate;
+    @Bind(R.id.detailWeather) TextView txtWeather;
+    @Bind(R.id.detailUsername) TextView txtUser;
 
     //region Activity lifecycle
     @Override
