@@ -50,6 +50,11 @@
             android:theme="@style/AppTheme.WithActionBar" >
         </activity>
 
+        <activity android:name=".activities.WeatherDetailActivity"
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.WithActionBar">
+        </activity>
+
         <!-- PreferencesActivity -->
         <activity android:name=".activities.PreferencesActivity" >
         </activity>
