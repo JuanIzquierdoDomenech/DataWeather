@@ -18,8 +18,6 @@ public class WeatherDetailActivity extends AppCompatActivity {
 
         // Butterknife injection
         ButterKnife.bind(this);
-
-
     }
 
     @Override
