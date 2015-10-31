@@ -290,7 +290,7 @@ public class WeatherListActivity extends AppCompatActivity implements LocationLi
         // Erase username from preferences
         logOutUser();
 
-        // Stop timer task
+        // Stop timer task -> Stops interting into dn
         mTimerTask.cancel();
         mTimer.cancel();
         mTimer.purge();
