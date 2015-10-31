@@ -271,6 +271,7 @@ public class WeatherListActivity extends AppCompatActivity implements LocationLi
         Log.d("WeatherListActivity", "itemListClick -> " + weatherRowData);
 
         Intent detailActivity = new Intent(this, WeatherDetailActivity.class);
+        detailActivity.putExtra("weather_data", weatherRowData);
         startActivity(detailActivity);
     }
 

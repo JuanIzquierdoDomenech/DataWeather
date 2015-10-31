@@ -1,11 +1,13 @@
 package com.mcmu.juanjesus.dataweather.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
 
 import com.mcmu.juanjesus.dataweather.R;
+import com.mcmu.juanjesus.dataweather.models.WeatherData;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -28,6 +30,16 @@ public class WeatherDetailActivity extends AppCompatActivity {
 
         // Butterknife injection
         ButterKnife.bind(this);
+
+        Intent getIntent  = getIntent();
+        WeatherData currentData  = (WeatherData )getIntent.getParcelableExtra("weather_data");
+
+        txtLocation.setText(getString(R.string.location_colon) + " " + currentData.getLocation());
+        txtLat.setText(getString(R.string.latitude_colon) + " " + currentData.getLatitude());
+        txtLong.setText(getString(R.string.longitude_colon) + " " + currentData.getLongitude());
+        txtDate.setText(getString(R.string.date_colon) + " " + currentData.getDate());
+        txtWeather.setText(getString(R.string.weather_colon) + " " + currentData.getWeather());
+        txtUser.setText(getString(R.string.user_colon) + " " + currentData.getUserName());
     }
 
     @Override

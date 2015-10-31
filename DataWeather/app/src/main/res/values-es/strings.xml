@@ -20,7 +20,7 @@
     <string name="cancel">Cancelar</string>
     <string name="location_updates_frequency">Frecuencia de actualización de la localización</string>
     <string name="location_updates_frequency_summary">Cada cuanto tiempo se llamará al sistema de localización para averiguar tu localización.</string>
-    <string name="location">Localización.</string>
+    <string name="location">Localización</string>
     <string name="share_prefs_update_freq">com.mcmu.juanjesus.dataweather.UPDATES_FREQ</string>
     <string name="OPEN_WEATHER_MAP_API_KEY">39678ab6884c663ab591e5d876a46555</string>
     <string name="share_prefs_current_city">no city</string>
@@ -63,4 +63,5 @@
     <string name="latitude_colon">Latitud:</string>
     <string name="longitude_colon">Longitud:</string>
     <string name="weather_colon">Tiempo:</string>
+    <string name="location_colon">Localización:</string>
 </resources>

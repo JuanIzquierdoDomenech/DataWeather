@@ -20,7 +20,7 @@
     <string name="cancel">Cancel</string>
     <string name="location_updates_frequency">Location updates frequency</string>
     <string name="location_updates_frequency_summary">How often the location system will ask for updates in user position.</string>
-    <string name="location">Location.</string>
+    <string name="location">Location</string>
     <string name="share_prefs_update_freq">com.mcmu.juanjesus.dataweather.UPDATES_FREQ</string>
     <string name="OPEN_WEATHER_MAP_API_KEY">39678ab6884c663ab591e5d876a46555</string>
     <string name="share_prefs_current_city">no city</string>
@@ -63,4 +63,5 @@
     <string name="longitude_colon">Longitude:</string>
     <string name="weather_colon">Weather:</string>
     <string name="date_colon">Date:</string>
+    <string name="location_colon">Location:</string>
 </resources>
