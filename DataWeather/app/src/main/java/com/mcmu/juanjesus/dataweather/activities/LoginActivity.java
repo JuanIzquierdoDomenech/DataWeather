@@ -82,8 +82,8 @@ public class LoginActivity extends AppCompatActivity
     @Bind(R.id.loginLoadingIndicator) protected ImageView loadingIndicator;
     @Bind(R.id.loginCurrentWeatherImage) protected ImageView currentWeatherImage;
 
-    @Bind(R.id.signInButton) protected com.google.android.gms.common.SignInButton signInButton;
-    @Bind(R.id.signOutButton) protected Button signOutButton;
+    //@Bind(R.id.signInButton) protected com.google.android.gms.common.SignInButton signInButton;
+    //@Bind(R.id.signOutButton) protected Button signOutButton;
 
     private LocationManager mLocationManager;
     private String mProvider;
@@ -98,7 +98,7 @@ public class LoginActivity extends AppCompatActivity
     private WeatherSQLiteOpenHelper mWeatherSQLiteOpenHelper;
 
     //TODO: Implement GoogleApiClient as a singleton
-    private GoogleApiClient mGoogleApiClient;
+    // private GoogleApiClient mGoogleApiClient;
     private static int RC_SIGN_IN = 9001;
     private boolean mResolvingConnectionFailure = false;
     private boolean mAutoStartSignInFlow = true;
@@ -127,11 +127,11 @@ public class LoginActivity extends AppCompatActivity
         }
 
         // Build google api client
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
+        /*mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(Games.API).addScope(Games.SCOPE_GAMES)
-                .build();
+                .build();*/
 
         // Get SEND data
         /*Intent sendIntent = getIntent();
@@ -200,10 +200,10 @@ public class LoginActivity extends AppCompatActivity
         super.onStart();
 
         // Connect google api client
-        if (!mInSignInFlow && !mExplicitSignOut) {
+        /*if (!mInSignInFlow && !mExplicitSignOut) {
             // auto sign in
             mGoogleApiClient.connect();
-        }
+        }*/
 
         // Check if any location service is enabled
         if(!mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
@@ -301,7 +301,7 @@ public class LoginActivity extends AppCompatActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.d("LoginActivity", "onActivityResult -> Request:" + requestCode + " - Result:" + resultCode);
 
-        if (requestCode == RC_SIGN_IN) {
+        /*if (requestCode == RC_SIGN_IN) {
             mSignInClicked = false;
             mResolvingConnectionFailure = false;
             if (resultCode == RESULT_OK) {
@@ -314,7 +314,7 @@ public class LoginActivity extends AppCompatActivity
                 BaseGameUtils.showActivityResultError(this,
                         requestCode, resultCode, R.string.error_connect_google_play_services);
             }
-        }
+        }*/
     }
 
     //endregion Activity lifecycle
@@ -342,13 +342,13 @@ public class LoginActivity extends AppCompatActivity
             case R.id.action_share_current_weather:
                 shareCurrentWeather();
                 break;
-            case R.id.action_show_achievements:
+           /* case R.id.action_show_achievements:
                 if(mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
                     startActivityForResult(Games.Achievements.getAchievementsIntent(mGoogleApiClient), 1);
                 } else {
                     AlertDialogUtilities.showNeedSigniInGooglePlusAlert(this);
                 }
-                break;
+                break;*/
             default:
                 break;
         }
@@ -442,9 +442,9 @@ public class LoginActivity extends AppCompatActivity
             mWeatherSQLiteOpenHelper.insert(values);
 
             // Unlock Welcome! achievement
-            if(mGoogleApiClient.isConnected() && mGoogleApiClient != null) {
+            /*if(mGoogleApiClient.isConnected() && mGoogleApiClient != null) {
                 Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_welcome));
-            }
+            }*/
 
             // Change activity
             Intent weatherListActivityIntent = new Intent(this, WeatherListActivity.class);
@@ -468,21 +468,21 @@ public class LoginActivity extends AppCompatActivity
     }
 
     @SuppressWarnings("unused")
-    @OnClick(R.id.signInButton)
+    //@OnClick(R.id.signInButton)
     public void signInButtonClicked(com.google.android.gms.common.SignInButton btn) {
         Log.d("LoginActivity", "signInButtonClicked");
 
         // start the asynchronous sign in flow
-        mSignInClicked = true;
-        mGoogleApiClient.connect();
+        /*mSignInClicked = true;
+        mGoogleApiClient.connect();*/
     }
 
     @SuppressWarnings("unused")
-    @OnClick(R.id.signOutButton)
+    //@OnClick(R.id.signOutButton)
     public void signOutButtonClicked(Button btn) {
         Log.d("LoginActivity", "signOutButtonClicked");
 
-        mExplicitSignOut = true;
+        /*mExplicitSignOut = true;
         if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
             mSignInClicked = false;
             Games.signOut(mGoogleApiClient);
@@ -491,7 +491,7 @@ public class LoginActivity extends AppCompatActivity
             // Show the sign in button, hide the sign out button
             signInButton.setVisibility(View.VISIBLE);
             signOutButton.setVisibility(View.GONE);
-        }
+        }*/
     }
     //endregion UI events
 
@@ -710,8 +710,8 @@ public class LoginActivity extends AppCompatActivity
         Log.d("LoginActivity", "onConnected(google api client)");
 
         // Once connected, show the sign out button and hide the sign in
-        signInButton.setVisibility(View.GONE);
-        signOutButton.setVisibility(View.VISIBLE);
+        //signInButton.setVisibility(View.GONE);
+        //signOutButton.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -719,7 +719,7 @@ public class LoginActivity extends AppCompatActivity
         Log.d("LoginActivity", "onConnectionSuspended(google api client)");
 
         // Attempt to reconnect
-        mGoogleApiClient.connect();
+        //mGoogleApiClient.connect();
     }
     //endregion GoogleApiClient.ConnectionCallbacks
 
@@ -729,7 +729,7 @@ public class LoginActivity extends AppCompatActivity
     public void onConnectionFailed(ConnectionResult connectionResult) {
         Log.d("LoginActivity", "onConnectionFailed(google api client) -> " + connectionResult.getErrorCode() + " - " + connectionResult.toString());
 
-        if (mResolvingConnectionFailure) {
+        /*if (mResolvingConnectionFailure) {
             // already resolving
             return;
         }
@@ -750,7 +750,7 @@ public class LoginActivity extends AppCompatActivity
                     RC_SIGN_IN, getString(R.string.error_connect_google_play_services))) {
                 mResolvingConnectionFailure = false;
             }
-        }
+        }*/
 
         Log.d("LoginActivity", "onConnectionFailed -> display sign-in button");
     }
